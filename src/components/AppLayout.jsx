@@ -13,13 +13,14 @@ const items = [
     {
         key: "dashboard",
         icon: <DashboardOutlined />,
-        label: <Link to="/dashboard">Dashboard</Link>,
+        label: <Link to="/dashboard" >Dashboard</Link>,
     },
     { key: "buy", icon: <DownloadOutlined />, label: <Link to="/buy">Buy</Link> },
     {
-        key: "soh",
+        key: "stock-on-hand",
         icon: <DropboxOutlined />,
         label: <Link to="/stock-on-hand">Stock on hand</Link>,
+
     },
     { key: "reports", icon: <FileTextOutlined />, label: "Reports" },
     {
@@ -75,7 +76,9 @@ const data = [
 const AppLayout = () => {
 
     const location=useLocation();
-    console.log(location);
+
+    console.log(location.pathname.slice(1))
+
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
@@ -95,7 +98,7 @@ const AppLayout = () => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={["4"]}
+          defaultSelectedKeys={[location?.pathname.slice(1)]}
           items={items}
         />
       </Sider>
