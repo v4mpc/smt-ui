@@ -1,10 +1,17 @@
 import React from "react";
 import {
+  DashboardOutlined,
+  DownloadOutlined,
+  DropboxOutlined,
+  FileTextOutlined,
   LaptopOutlined,
   NotificationOutlined,
+  SettingOutlined,
   UserOutlined,
 } from "@ant-design/icons";
-import { Breadcrumb, Layout, Menu, theme } from "antd";
+import { Breadcrumb, Layout, Menu, theme, Typography } from "antd";
+
+const { Title } = Typography;
 
 const footerStyle = {
   textAlign: "center",
@@ -12,15 +19,8 @@ const footerStyle = {
   backgroundColor: "#4096ff",
 };
 const { Header, Content, Sider, Footer } = Layout;
-const items = new Array(3).fill(null).map((_, index) => ({
-  key: String(index + 1),
-  label: `nav ${index + 1}`,
-}));
-const items1 = ["1", "2", "3"].map((key) => ({
-  key,
-  label: `nav ${key}`,
-}));
-const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
+
+const items3 = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
   (icon, index) => {
     const key = String(index + 1);
     return {
@@ -37,6 +37,25 @@ const items2 = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
     };
   },
 );
+
+const items2 = [
+  { key: "dashboard", icon: <DashboardOutlined />, label: "Dashboard" },
+  { key: "buy", icon: <DownloadOutlined />, label: "Buy" },
+  { key: "soh", icon: <DropboxOutlined />, label: "Stock on hand" },
+  { key: "reports", icon: <FileTextOutlined />, label: "Reports" },
+  {
+    key: "settings",
+    icon: <SettingOutlined />,
+    label: "Settings",
+    children: [
+      { key: "general", label: "General" },
+      { key: "units", label: "Units" },
+      { key: "products", label: "Products" },
+      { key: "roles", label: "Roles" },
+      { key: "users", label: "Users" },
+    ],
+  },
+];
 const AppLayout = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
@@ -53,17 +72,7 @@ const AppLayout = () => {
           alignItems: "center",
         }}
       >
-        <div className="demo-logo" />
-        <Menu
-          theme="dark"
-          mode="horizontal"
-          defaultSelectedKeys={["2"]}
-          items={items}
-          style={{
-            flex: 1,
-            minWidth: 0,
-          }}
-        />
+        <Title style={{ color: "#fff" }}>SMT</Title>
       </Header>
       <Layout>
         <Sider
