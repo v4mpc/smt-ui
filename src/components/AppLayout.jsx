@@ -1,4 +1,5 @@
 import React from "react";
+
 import {
   DashboardOutlined,
   DownloadOutlined,
@@ -10,6 +11,7 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Breadcrumb, Layout, Menu, theme, Typography } from "antd";
+import {Outlet} from "react-router-dom";
 
 const { Title } = Typography;
 
@@ -115,7 +117,9 @@ const AppLayout = () => {
               borderRadius: borderRadiusLG,
             }}
           >
-            Content
+            <Outlet/>
+
+
           </Content>
         </Layout>
       </Layout>
