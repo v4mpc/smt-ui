@@ -1,4 +1,4 @@
-import {Link, Outlet} from "react-router-dom";
+import {Link, Outlet,useLocation} from "react-router-dom";
 import {
     DashboardOutlined,
     DownloadOutlined,
@@ -73,6 +73,9 @@ const data = [
 ];
 
 const AppLayout = () => {
+
+    const location=useLocation();
+    console.log(location);
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();

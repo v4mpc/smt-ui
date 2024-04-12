@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { useState, useEffect } from "react";
+import dayjs from "dayjs";
 
 const BASE_URL = "http://localhost:3000";
 
@@ -7,6 +8,8 @@ export function useDashboard() {
   const [dashboardData, setDashboardData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
+  const [selectedMonth, setSelectedMonth] = useState(dayjs());
+
   const chartData = {
     labels: dashboardData?.chartLabel,
     datasets: [
@@ -41,7 +44,8 @@ export function useDashboard() {
     }
 
     fetchDashboardData();
-  }, []);
+  }, [selectedMonth]);
 
-  return [dashboardData, isLoading, chartData,error];
+
+  return [dashboardData, isLoading, chartData, selectedMonth,setSelectedMonth, error];
 }

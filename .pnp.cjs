@@ -33,6 +33,7 @@ const RAW_RUNTIME_STATE =
           ["@vitejs/plugin-react-swc", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:3.6.0"],\
           ["antd", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:5.16.1"],\
           ["chart.js", "npm:4.4.2"],\
+          ["dayjs", "npm:1.11.10"],\
           ["eslint", "npm:8.57.0"],\
           ["eslint-config-prettier", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:9.1.0"],\
           ["eslint-plugin-react", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:7.34.1"],\
@@ -5977,6 +5978,7 @@ const RAW_RUNTIME_STATE =
           ["@vitejs/plugin-react-swc", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:3.6.0"],\
           ["antd", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:5.16.1"],\
           ["chart.js", "npm:4.4.2"],\
+          ["dayjs", "npm:1.11.10"],\
           ["eslint", "npm:8.57.0"],\
           ["eslint-config-prettier", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:9.1.0"],\
           ["eslint-plugin-react", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:7.34.1"],\

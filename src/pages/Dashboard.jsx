@@ -72,14 +72,21 @@ const tableData = [
 ];
 
 export default function Dashboard() {
-  const [dashboardData, isLoading, chartData] = useDashboard();
+  const [dashboardData, isLoading, chartData, selectedMonth, setSelectedMonth] =
+    useDashboard();
   if (isLoading) return <Spin />;
   return (
     <Flex gap="middle" vertical>
       <Flex justify="space-between">
-        <h2>April 2024 | Stats</h2>
+        <h2>{selectedMonth.format("MMMM YYYY")} | Stats</h2>
         <Flex align="center">
-          <DatePicker onChange={() => {}} picker="month" />
+          <DatePicker
+            value={selectedMonth}
+            onChange={(e) => {
+              e && setSelectedMonth(e);
+            }}
+            picker="month"
+          />
         </Flex>
       </Flex>
 

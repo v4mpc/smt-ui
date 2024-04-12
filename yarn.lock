@@ -4675,6 +4675,7 @@ __metadata:
     "@vitejs/plugin-react-swc": "npm:^3.5.0"
     antd: "npm:^5.16.1"
     chart.js: "npm:^4.4.2"
+    dayjs: "npm:^1.11.10"
     eslint: "npm:^8.57.0"
     eslint-config-prettier: "npm:^9.1.0"
     eslint-plugin-react: "npm:^7.34.1"
