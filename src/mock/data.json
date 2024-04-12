@@ -36,5 +36,205 @@
       },
       "id": 98443197
     }
-  ]
+  ],
+  "dashboard": {
+    "totalSales": 453434,
+    "totalExpenses": 4532235,
+    "totalProfit": 93489,
+    "productsSold": 234,
+    "topSales": [
+      [
+        {
+          "name": "Wine - Barossa Valley Estate",
+          "quantity": 29,
+          "total": 339
+        },
+        {
+          "name": "Cherries - Bing, Canned",
+          "quantity": 85,
+          "total": 643
+        },
+        {
+          "name": "Pork - Sausage Casing",
+          "quantity": 62,
+          "total": 609
+        },
+        {
+          "name": "Praline Paste",
+          "quantity": 40,
+          "total": 473
+        },
+        {
+          "name": "Oven Mitts - 15 Inch",
+          "quantity": 92,
+          "total": 350
+        },
+        {
+          "name": "Sword Pick Asst",
+          "quantity": 22,
+          "total": 344
+        },
+        {
+          "name": "Pasta - Detalini, White, Fresh",
+          "quantity": 13,
+          "total": 597
+        },
+        {
+          "name": "Cookie Dough - Oatmeal Rasin",
+          "quantity": 95,
+          "total": 203
+        },
+        {
+          "name": "Scallops - Live In Shell",
+          "quantity": 20,
+          "total": 323
+        },
+        {
+          "name": "Potatoes - Idaho 80 Count",
+          "quantity": 63,
+          "total": 191
+        }
+      ]
+    ],
+    "topExpenses": [],
+    "topSold": [
+      {
+        "name": "Soy Protein",
+        "quanity": 40
+      },
+      {
+        "name": "Beef - Shank",
+        "quanity": 10
+      },
+      {
+        "name": "Dooleys Toffee",
+        "quanity": 79
+      },
+      {
+        "name": "Icecream - Dstk Strw Chseck",
+        "quanity": 68
+      },
+      {
+        "name": "Saskatoon Berries - Frozen",
+        "quanity": 66
+      },
+      {
+        "name": "Wine - Gewurztraminer Pierre",
+        "quanity": 20
+      },
+      {
+        "name": "Veal - Inside, Choice",
+        "quanity": 46
+      },
+      {
+        "name": "Rabbit - Legs",
+        "quanity": 99
+      },
+      {
+        "name": "Anchovy Fillets",
+        "quanity": 37
+      },
+      {
+        "name": "Compound - Passion Fruit",
+        "quanity": 80
+      }
+    ],
+    "expensesChartData": [
+      2,
+      32,
+      5,
+      6,
+      74,
+      7,
+      4,
+      74,
+      7,
+      8,
+      34,
+      7,
+      2,
+      32,
+      34,
+      34,
+      34,
+      5,
+      6,
+      74,
+      7,
+      4,
+      74,
+      7,
+      8,
+      34,
+      7,
+      46,
+      34,
+      64
+
+    ],
+    "salesChartData": [
+      32,
+      5,
+      6,
+      74,
+      7,
+      4,
+      74,
+      7,
+      8,
+      34,
+      7,
+      2,
+      32,
+      34,
+      34,
+      34,
+      5,
+      6,
+      74,
+      7,
+      4,
+      74,
+      7,
+      8,
+      34,
+      7,
+      46,
+      34,
+      64,
+      44
+    ],
+    "chartLabel": [
+      "1 Apr",
+      "2 Apr",
+      "3 Apr",
+      "4 Apr",
+      "5 Apr",
+      "6 Apr",
+      "7 Apr",
+      "8 Apr",
+      "9 Apr",
+      "10 Apr",
+      "11 Apr",
+      "12 Apr",
+      "13 Apr",
+      "14 Apr",
+      "15 Apr",
+      "16 Apr",
+      "17 Apr",
+      "18 Apr",
+      "19 Apr",
+      "20 Apr",
+      "21 Apr",
+      "22 Apr",
+      "23 Apr",
+      "24 Apr",
+      "25 Apr",
+      "26 Apr",
+      "27 Apr",
+      "28 Apr",
+      "29 Apr",
+      "30 Apr"
+    ]
+  }
 }

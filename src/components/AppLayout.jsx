@@ -1,129 +1,149 @@
-import React from "react";
-
+import {Link, Outlet} from "react-router-dom";
 import {
-  DashboardOutlined,
-  DownloadOutlined,
-  DropboxOutlined,
-  FileTextOutlined,
-  LaptopOutlined,
-  NotificationOutlined,
-  SettingOutlined,
-  UserOutlined,
+    DashboardOutlined,
+    DownloadOutlined,
+    DropboxOutlined,
+    FileTextOutlined,
+    SettingOutlined,
 } from "@ant-design/icons";
-import { Breadcrumb, Layout, Menu, theme, Typography } from "antd";
-import {Outlet} from "react-router-dom";
+import { Layout, Menu, theme,Breadcrumb,Table } from "antd";
 
-const { Title } = Typography;
-
-const footerStyle = {
-  textAlign: "center",
-  color: "#fff",
-  backgroundColor: "#4096ff",
-};
-const { Header, Content, Sider, Footer } = Layout;
-
-const items3 = [UserOutlined, LaptopOutlined, NotificationOutlined].map(
-  (icon, index) => {
-    const key = String(index + 1);
-    return {
-      key: `sub${key}`,
-      icon: React.createElement(icon),
-      label: `subnav ${key}`,
-      children: new Array(4).fill(null).map((_, j) => {
-        const subKey = index * 4 + j + 1;
-        return {
-          key: subKey,
-          label: `option${subKey}`,
-        };
-      }),
-    };
-  },
-);
-
-const items2 = [
-  { key: "dashboard", icon: <DashboardOutlined />, label: "Dashboard" },
-  { key: "buy", icon: <DownloadOutlined />, label: "Buy" },
-  { key: "soh", icon: <DropboxOutlined />, label: "Stock on hand" },
-  { key: "reports", icon: <FileTextOutlined />, label: "Reports" },
-  {
-    key: "settings",
-    icon: <SettingOutlined />,
-    label: "Settings",
-    children: [
-      { key: "general", label: "General" },
-      { key: "units", label: "Units" },
-      { key: "products", label: "Products" },
-      { key: "roles", label: "Roles" },
-      { key: "users", label: "Users" },
-    ],
-  },
+const { Header, Content, Footer, Sider } = Layout;
+const items = [
+    {
+        key: "dashboard",
+        icon: <DashboardOutlined />,
+        label: <Link to="/dashboard">Dashboard</Link>,
+    },
+    { key: "buy", icon: <DownloadOutlined />, label: <Link to="/buy">Buy</Link> },
+    {
+        key: "soh",
+        icon: <DropboxOutlined />,
+        label: <Link to="/stock-on-hand">Stock on hand</Link>,
+    },
+    { key: "reports", icon: <FileTextOutlined />, label: "Reports" },
+    {
+        key: "settings",
+        icon: <SettingOutlined />,
+        label: "Settings",
+        children: [
+            { key: "general", label: "General" },
+            { key: "units", label: "Units" },
+            { key: "products", label: "Products" },
+            { key: "roles", label: "Roles" },
+            { key: "users", label: "Users" },
+        ],
+    },
 ];
+
+
+const columns = [
+    {
+        title: 'Name',
+        dataIndex: 'name',
+    },
+    {
+        title: 'Age',
+        dataIndex: 'age',
+    },
+    {
+        title: 'Address',
+        dataIndex: 'address',
+    },
+];
+const data = [
+    {
+        key: '1',
+        name: 'John Brown',
+        age: 32,
+        address: 'New York No. 1 Lake Park',
+    },
+    {
+        key: '2',
+        name: 'Jim Green',
+        age: 42,
+        address: 'London No. 1 Lake Park',
+    },
+    {
+        key: '3',
+        name: 'Joe Black',
+        age: 32,
+        address: 'Sydney No. 1 Lake Park',
+    },
+];
+
 const AppLayout = () => {
   const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   return (
-    <Layout style={{ height: "100vh" }}>
-      <Header
+    <Layout hasSider>
+      <Sider
         style={{
-          position: "sticky",
+          overflow: "auto",
+          height: "100vh",
+          position: "fixed",
+          left: 0,
           top: 0,
-          zIndex: 1,
-          width: "100%",
-          display: "flex",
-          alignItems: "center",
+          bottom: 0,
         }}
       >
-        <Title style={{ color: "#fff" }}>SMT</Title>
-      </Header>
-      <Layout>
-        <Sider
-          width={200}
+        <div className="demo-logo-vertical" />
+        <Menu
+          theme="dark"
+          mode="inline"
+          defaultSelectedKeys={["4"]}
+          items={items}
+        />
+      </Sider>
+      <Layout
+        style={{
+          marginLeft: 200,
+        }}
+      >
+        <Header
           style={{
+            position: "sticky",
+            padding: 0,
             background: colorBgContainer,
+            top: 0,
+            zIndex: 1,
           }}
-        >
-          <Menu
-            mode="inline"
-            defaultSelectedKeys={["1"]}
-            defaultOpenKeys={["sub1"]}
-            style={{
-              height: "100%",
-              borderRight: 0,
-            }}
-            items={items2}
-          />
-        </Sider>
-        <Layout
+        />
+        <Breadcrumb
           style={{
-            padding: "0 24px 24px",
+            margin: "24px 16px 0",
           }}
         >
-          <Breadcrumb
-            style={{
-              margin: "16px 0",
-            }}
-          >
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
-          </Breadcrumb>
-          <Content
+          <Breadcrumb.Item>Home</Breadcrumb.Item>
+          <Breadcrumb.Item>List</Breadcrumb.Item>
+          <Breadcrumb.Item>App</Breadcrumb.Item>
+        </Breadcrumb>
+        <Content
+          style={{
+            margin: "24px 16px 0",
+            overflow: "initial",
+          }}
+        >
+          <div
             style={{
               padding: 24,
-              margin: 0,
-              minHeight: 280,
+
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
             }}
           >
-            <Outlet/>
-
-
-          </Content>
-        </Layout>
+         <Outlet/>
+          </div>
+        </Content>
+        <Footer
+          style={{
+            textAlign: "center",
+          }}
+        >
+          SMT ©{new Date().getFullYear()} Created by V4mpc
+        </Footer>
       </Layout>
-      <Footer style={footerStyle}>Footer</Footer>
     </Layout>
   );
 };
