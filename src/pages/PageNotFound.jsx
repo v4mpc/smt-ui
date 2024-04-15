@@ -1,3 +1,9 @@
+import { Button, Result } from 'antd';
 export default function PageNotFound() {
-  return <h1>PAGE NOT FOUND - 404</h1>;
+  return <Result
+      status="404"
+      title="404"
+      subTitle="Sorry, the page you visited does not exist."
+      extra={<Button type="primary">Back Home</Button>}
+  />
 }
