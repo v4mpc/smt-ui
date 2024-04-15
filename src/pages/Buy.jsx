@@ -7,14 +7,19 @@ import {
   Flex,
   Typography,
   DatePicker,
+  Descriptions,
+  Input,
+  Space,
 } from "antd";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import { useStockOnHand } from "../hooks/useStockOnHand.jsx";
+import { useState } from "react";
 
 const { Text, Link } = Typography;
 
 export default function Buy() {
   const [stockOnHand, setStockOnHand, isLoading, error] = useStockOnHand();
+  const [searchText, setSearchText] = useState("");
   const productColumns = [
     {
       title: "#",
@@ -24,9 +29,7 @@ export default function Buy() {
     {
       title: "Product",
       key: "product",
-      filterMode: 'tree',
-      filterSearch:true,
-
+      filterMode: "menu",
       onFilter: (value, record) => record.productName.startsWith(value),
       render: (_, record) => (
         <Flex vertical>
@@ -95,9 +98,20 @@ export default function Buy() {
       ),
     },
   ];
+  const filteredDataSource = stockOnHand.filter((item) =>
+    searchText === ""
+      ? item
+      : item.productName
+          .toString()
+          .toLowerCase()
+          .includes(searchText.toLowerCase()),
+  );
 
+  const notSales = filteredDataSource.filter((p) => p.saleQuantity <= 0);
   const sales = stockOnHand.filter((p) => p.saleQuantity > 0);
-  const notSales = stockOnHand.filter((p) => p.saleQuantity <= 0);
+  const totalSales = sales.reduce((acc, curr) => {
+   return acc + curr.saleQuantity * curr.salePrice;
+  }, 0);
 
   function handleProductAdd(product) {
     setStockOnHand((products) =>
@@ -125,7 +139,6 @@ export default function Buy() {
   }
 
   function handleInputDateChanged(product, dateValue) {
-    console.log(dateValue);
     if (dateValue == null) return;
     setStockOnHand((products) =>
       products.map((p) =>
@@ -134,20 +147,47 @@ export default function Buy() {
     );
   }
 
+  function handleFilterProducts(typedValue) {
+    setSearchText(typedValue);
+  }
+
   return (
     <>
       <Row gutter={16}>
-        <Col span={10} >
-          <Table
-            columns={productColumns}
-            dataSource={notSales}
-            bordered={true}
-            loading={isLoading}
-            rowKey="id"
-          />
+        <Col span={10}>
+          <Space direction="vertical">
+            <Input
+              placeholder="Search Product..."
+              onChange={(e) => handleFilterProducts(e.target.value)}
+            />
+            <Table
+              columns={productColumns}
+              dataSource={notSales}
+              bordered={true}
+              loading={isLoading}
+              rowKey="id"
+            />
+          </Space>
         </Col>
         <Col span={12}>
-          <Table columns={saleColumns} dataSource={sales} bordered={true} rowKey="id" />
+          <Table
+            columns={saleColumns}
+            dataSource={sales}
+            bordered={true}
+            rowKey="id"
+            summary={() => (
+              <Table.Summary fixed>
+                <Table.Summary.Row>
+                  <Table.Summary.Cell colSpan={4} index={0}>
+                    Total Sales
+                  </Table.Summary.Cell>
+                  <Table.Summary.Cell colSpan={2} index={1}>
+                    {totalSales.toLocaleString()} TZS
+                  </Table.Summary.Cell>
+                </Table.Summary.Row>
+              </Table.Summary>
+            )}
+          />
         </Col>
       </Row>
       <Row>
