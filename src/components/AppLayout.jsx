@@ -7,6 +7,7 @@ import {
     SettingOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, theme,Breadcrumb } from "antd";
+import BreadCrumbNav from "./BreadCrumbNav.jsx";
 
 const { Header, Content, Footer, Sider } = Layout;
 const items = [
@@ -116,15 +117,7 @@ const AppLayout = () => {
             zIndex: 1,
           }}
         />
-        <Breadcrumb
-          style={{
-            margin: "24px 16px 0",
-          }}
-        >
-          <Breadcrumb.Item>Home</Breadcrumb.Item>
-          <Breadcrumb.Item>List</Breadcrumb.Item>
-          <Breadcrumb.Item>App</Breadcrumb.Item>
-        </Breadcrumb>
+        <BreadCrumbNav/>
         <Content
           style={{
             margin: "24px 16px 0",
