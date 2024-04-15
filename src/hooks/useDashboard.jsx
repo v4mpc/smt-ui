@@ -1,14 +1,14 @@
-import { faker } from "@faker-js/faker";
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
+import {openNotification,BASE_URL} from "../utils.jsx";
 
-const BASE_URL = "http://localhost:3000";
 
 export function useDashboard() {
   const [dashboardData, setDashboardData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedMonth, setSelectedMonth] = useState(dayjs());
+
 
   const chartData = {
     labels: dashboardData?.chartLabel,
@@ -34,10 +34,16 @@ export function useDashboard() {
         setIsLoading(true);
         setError("");
         const resp = await fetch(`${BASE_URL}/dashboard`);
+        if (!resp.ok) {
+          console.log(resp);
+          throw new Error("Network response was not ok");
+        }
         const data = await resp.json();
         setDashboardData(data);
       } catch (e) {
-        setError("There was an error");
+        console.log(e);
+        openNotification("dashboard-error","error","Error",e.message);
+        setError(e.message);
       } finally {
         setIsLoading(false);
       }
@@ -46,6 +52,12 @@ export function useDashboard() {
     fetchDashboardData();
   }, [selectedMonth]);
 
-
-  return [dashboardData, isLoading, chartData, selectedMonth,setSelectedMonth, error];
+  return [
+    dashboardData,
+    isLoading,
+    chartData,
+    selectedMonth,
+    setSelectedMonth,
+    error,
+  ];
 }

@@ -6,7 +6,7 @@ import {
     FileTextOutlined,
     SettingOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu, theme,Breadcrumb,Table } from "antd";
+import { Layout, Menu, theme,Breadcrumb } from "antd";
 
 const { Header, Content, Footer, Sider } = Layout;
 const items = [
@@ -134,9 +134,10 @@ const AppLayout = () => {
           <div
             style={{
               padding: 24,
-
               background: colorBgContainer,
               borderRadius: borderRadiusLG,
+                minHeight: '100vh',
+
             }}
           >
          <Outlet/>

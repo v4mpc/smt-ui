@@ -1,4 +1,4 @@
-import { Flex, Statistic, DatePicker, Table, Spin } from "antd";
+import {Flex, Statistic, DatePicker, Table, Spin, Button} from "antd";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -10,7 +10,8 @@ import {
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
-import { useDashboard } from "../hooks/dashboard.jsx";
+import { useDashboard } from "../hooks/useDashboard.jsx";
+import useNotification from "../hooks/useNotification.jsx";
 
 ChartJS.register(
   CategoryScale,
@@ -74,6 +75,7 @@ const tableData = [
 export default function Dashboard() {
   const [dashboardData, isLoading, chartData, selectedMonth, setSelectedMonth] =
     useDashboard();
+  const [openNotificationWithIcon,contextHolder] = useNotification();
   if (isLoading) return <Spin />;
   return (
     <Flex gap="middle" vertical>
@@ -124,6 +126,8 @@ export default function Dashboard() {
           columns={columns}
           dataSource={tableData}
         />
+
+        <Button onClick={()=>openNotificationWithIcon("info","dg","sfsdf")}>Click me</Button>
       </Flex>
     </Flex>
   );
