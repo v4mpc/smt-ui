@@ -1,5 +1,6 @@
 import {Link, Outlet,useLocation} from "react-router-dom";
 import {
+    CreditCardOutlined,
     DashboardOutlined,
     DownloadOutlined,
     DropboxOutlined,
@@ -25,7 +26,8 @@ const items = [
     },
     { key: "buy", icon: <DownloadOutlined />, label: <Link to="/buy">Buy</Link> },
     { key: "sell", icon: <UploadOutlined />, label: <Link to="/sell">Sell</Link> },
-    { key: "reports", icon: <FileTextOutlined />, label: "Reports" },
+    { key: "expense", icon: <CreditCardOutlined />, label: <Link to="/expense">Expense</Link> },
+    { key: "reports", icon: <FileTextOutlined />, label: <Link to="/reports">Reports</Link> },
     {
         key: "settings",
         icon: <SettingOutlined />,

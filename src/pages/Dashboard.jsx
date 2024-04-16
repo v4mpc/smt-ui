@@ -1,4 +1,4 @@
-import {Flex, Statistic, DatePicker, Table, Spin, Button} from "antd";
+import { Flex, Statistic, DatePicker, Table, Spin, Button } from "antd";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -76,8 +76,8 @@ const tableData = [
 export default function Dashboard() {
   const [dashboardData, isLoading, chartData, selectedMonth, setSelectedMonth] =
     useDashboard();
-  const [openNotificationWithIcon,contextHolder] = useNotification();
-  if (isLoading) return <Loader/>;
+  const [openNotificationWithIcon, contextHolder] = useNotification();
+  // if (isLoading) return <Loader/>;
   return (
     <Flex gap="middle" vertical>
       <Flex justify="space-between">
@@ -93,43 +93,58 @@ export default function Dashboard() {
         </Flex>
       </Flex>
 
-      <Flex vertical>
-        <Flex justify="space-between">
-          <Statistic title="Total Sales" value={dashboardData?.totalSales} />
-          <Statistic
-            title="Total Expenses"
-            value={dashboardData?.totalExpenses}
-          />
-          <Statistic title="Total Profit" value={dashboardData?.totalProfit} />
-          <Statistic
-            title="Products Sold"
-            value={dashboardData?.productsSold}
-          />
-        </Flex>
-      </Flex>
+      {isLoading ? (
+        <Loader />
+      ) : (
+        <>
+          <Flex vertical>
+            <Flex justify="space-between">
+              <Statistic
+                title="Total Sales"
+                value={dashboardData?.totalSales}
+              />
+              <Statistic
+                title="Total Expenses"
+                value={dashboardData?.totalExpenses}
+              />
+              <Statistic
+                title="Total Profit"
+                value={dashboardData?.totalProfit}
+              />
+              <Statistic
+                title="Products Sold"
+                value={dashboardData?.productsSold}
+              />
+            </Flex>
+          </Flex>
+          <Flex vertical>
+            <Line options={options} data={chartData} />
+          </Flex>
+          <Flex vertical={false} justify="space-between">
+            <Table
+              title={() => "Top Sales"}
+              columns={columns}
+              dataSource={tableData}
+            />
+            <Table
+              title={() => "Top Expenses"}
+              columns={columns}
+              dataSource={tableData}
+            />
+            <Table
+              title={() => "Top Selling"}
+              columns={columns}
+              dataSource={tableData}
+            />
 
-      <Flex vertical>
-        <Line options={options} data={chartData} />
-      </Flex>
-      <Flex vertical={false} justify="space-between">
-        <Table
-          title={() => "Top Sales"}
-          columns={columns}
-          dataSource={tableData}
-        />
-        <Table
-          title={() => "Top Expenses"}
-          columns={columns}
-          dataSource={tableData}
-        />
-        <Table
-          title={() => "Top Selling"}
-          columns={columns}
-          dataSource={tableData}
-        />
-
-        <Button onClick={()=>openNotificationWithIcon("info","dg","sfsdf")}>Click me</Button>
-      </Flex>
+            <Button
+              onClick={() => openNotificationWithIcon("info", "dg", "sfsdf")}
+            >
+              Click me
+            </Button>
+          </Flex>
+        </>
+      )}
     </Flex>
   );
 }
