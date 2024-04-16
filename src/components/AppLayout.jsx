@@ -99,7 +99,7 @@ const AppLayout = () => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={[location?.pathname.slice(1)]}
+          selectedKeys={[location?.pathname.slice(1)]}
           items={items}
         />
       </Sider>

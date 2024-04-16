@@ -8,7 +8,7 @@
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
-    "json-server": "json-server -d 500  --watch src/mock/data.json"
+    "json-server": "json-server -d 1000  --watch src/mock/data.json"
   },
   "dependencies": {
     "@ant-design/icons": "^5.3.6",

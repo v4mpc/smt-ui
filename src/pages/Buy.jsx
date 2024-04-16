@@ -14,6 +14,7 @@ import {
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import { useStockOnHand } from "../hooks/useStockOnHand.jsx";
 import { useState } from "react";
+import AsyncModal from "../components/AsyncModal.jsx";
 
 const { Text, Link } = Typography;
 
@@ -110,7 +111,7 @@ export default function Buy() {
   const notSales = filteredDataSource.filter((p) => p.saleQuantity <= 0);
   const sales = stockOnHand.filter((p) => p.saleQuantity > 0);
   const totalSales = sales.reduce((acc, curr) => {
-   return acc + curr.saleQuantity * curr.salePrice;
+    return acc + curr.saleQuantity * curr.salePrice;
   }, 0);
 
   function handleProductAdd(product) {
@@ -190,9 +191,9 @@ export default function Buy() {
           />
         </Col>
       </Row>
-      <Row>
+      <Row justify="end">
         <Col>
-          <Button type="primary">Sale</Button>
+          <AsyncModal postData={sales}></AsyncModal>
         </Col>
       </Row>
     </>

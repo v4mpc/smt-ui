@@ -26,7 +26,7 @@ export function useFetch(data, setData, urlPath, errorNotificationKey) {
     }
 
     fetchData();
-  }, [setData, urlPath]);
+  }, [setData, urlPath,errorNotificationKey]);
 
   return [data, isLoading, error];
 }
