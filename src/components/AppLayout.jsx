@@ -4,7 +4,7 @@ import {
     DownloadOutlined,
     DropboxOutlined,
     FileTextOutlined,
-    SettingOutlined,
+    SettingOutlined, UploadOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, theme,Breadcrumb } from "antd";
 import BreadCrumbNav from "./BreadCrumbNav.jsx";
@@ -16,13 +16,15 @@ const items = [
         icon: <DashboardOutlined />,
         label: <Link to="/dashboard" >Dashboard</Link>,
     },
-    { key: "buy", icon: <DownloadOutlined />, label: <Link to="/buy">Buy</Link> },
+
     {
         key: "stock-on-hand",
         icon: <DropboxOutlined />,
         label: <Link to="/stock-on-hand">Stock on hand</Link>,
 
     },
+    { key: "buy", icon: <DownloadOutlined />, label: <Link to="/buy">Buy</Link> },
+    { key: "sell", icon: <UploadOutlined />, label: <Link to="/sell">Sell</Link> },
     { key: "reports", icon: <FileTextOutlined />, label: "Reports" },
     {
         key: "settings",

@@ -12,6 +12,7 @@ import {
 import { Line } from "react-chartjs-2";
 import { useDashboard } from "../hooks/useDashboard.jsx";
 import useNotification from "../hooks/useNotification.jsx";
+import Loader from "../components/Loader.jsx";
 
 ChartJS.register(
   CategoryScale,
@@ -76,7 +77,7 @@ export default function Dashboard() {
   const [dashboardData, isLoading, chartData, selectedMonth, setSelectedMonth] =
     useDashboard();
   const [openNotificationWithIcon,contextHolder] = useNotification();
-  if (isLoading) return <Spin />;
+  if (isLoading) return <Loader/>;
   return (
     <Flex gap="middle" vertical>
       <Flex justify="space-between">
