@@ -10,6 +10,7 @@ import {
   TreeSelect,
 } from "antd";
 import { useState } from "react";
+import { BASE_URL, fetchData, openNotification } from "../utils.jsx";
 
 const { RangePicker } = DatePicker;
 const formItemLayout = {
@@ -32,30 +33,16 @@ const formItemLayout = {
 };
 
 export default function Expense() {
-  // const [formData, setFormData] = useState({
-  //   date: null,
-  //   name: null,
-  //   amount: null,
-  //   description: null,
-  // });
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+  const [form] = Form.useForm();
 
-  const handleFormInput = (formEvent, inputName = null) => {
-    // let inputValue = null;
-    // if (inputName === "date") {
-    //   inputValue = formEvent.format("YYYY-MM-DD");
-    // } else if (inputName === "amount") {
-    //   inputValue = formEvent;
-    // } else {
-    //   inputName = formEvent.target.id;
-    //   inputValue = formEvent.target.value;
-    // }
-
-    // setFormData((curr) => ({ ...curr, [inputName]: inputValue }));
-  };
 
   const handleSubmit = (e) => {
-    let formData={...e,date:e.date.format("YYYY-MM-DD")}
+    let formData = { ...e, date: e.date.format("YYYY-MM-DD") };
     console.log(formData);
+    fetchData(formData, "expenses", setIsLoading, setError, "POST",null,form);
+
   };
 
   return (
@@ -65,7 +52,9 @@ export default function Expense() {
       style={{
         maxWidth: 600,
       }}
+      disabled={isLoading}
       onFinish={handleSubmit}
+      form={form}
     >
       <Form.Item
         label="Date"
@@ -77,7 +66,7 @@ export default function Expense() {
           },
         ]}
       >
-        <DatePicker  />
+        <DatePicker />
       </Form.Item>
       <Form.Item
         label="Name"
@@ -89,7 +78,7 @@ export default function Expense() {
           },
         ]}
       >
-        <Input  />
+        <Input />
       </Form.Item>
 
       <Form.Item
@@ -106,7 +95,6 @@ export default function Expense() {
           style={{
             width: "100%",
           }}
-
         />
       </Form.Item>
 

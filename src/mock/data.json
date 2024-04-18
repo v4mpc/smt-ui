@@ -1,4 +1,58 @@
 {
+  "expenses": [
+    {
+      "id": 1,
+      "date": "2024-04-16",
+      "name": "Food",
+      "amount": 3434,
+      "description": "Food"
+    },
+    {
+      "date": "2024-04-11",
+      "name": "weewewe",
+      "amount": 2323,
+      "id": 2
+    },
+    {
+      "date": "2024-04-11",
+      "name": "weewewe",
+      "amount": 2323,
+      "id": 3
+    },
+    {
+      "date": "2024-04-11",
+      "name": "weewewe",
+      "amount": 2323,
+      "id": 4
+    },
+    {
+      "date": "2024-04-11",
+      "name": "weewewe",
+      "amount": 2323,
+      "id": 5
+    },
+    {
+      "date": "2024-04-11",
+      "name": "sdfdsf",
+      "amount": 899,
+      "description": "989",
+      "id": 6
+    },
+    {
+      "date": "2024-04-09",
+      "name": "sdfdsf",
+      "amount": 455,
+      "description": "dfdgf",
+      "id": 7
+    },
+    {
+      "date": "2024-04-12",
+      "name": "sdfdsf",
+      "amount": 787878,
+      "description": "hjbjhbhj",
+      "id": 8
+    }
+  ],
   "products": [
     {
       "id": 1,

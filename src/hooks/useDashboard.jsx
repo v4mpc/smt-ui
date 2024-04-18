@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import {openNotification,BASE_URL} from "../utils.jsx";
+import { fetchData} from "../utils.jsx";
 
 
 export function useDashboard() {
@@ -29,27 +29,14 @@ export function useDashboard() {
   };
 
   useEffect(() => {
-    async function fetchDashboardData() {
-      try {
-        setIsLoading(true);
-        setError("");
-        const resp = await fetch(`${BASE_URL}/dashboard`);
-        if (!resp.ok) {
-          console.log(resp);
-          throw new Error("Network response was not ok");
-        }
-        const data = await resp.json();
-        setDashboardData(data);
-      } catch (e) {
-        console.log(e);
-        openNotification("dashboard-error","error","Error",e.message);
-        setError(e.message);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-
-    fetchDashboardData();
+    fetchData(
+      dashboardData,
+      "dashboard",
+      setIsLoading,
+      setError,
+      "GET",
+      setDashboardData,
+    );
   }, [selectedMonth]);
 
   return [
