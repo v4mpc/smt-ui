@@ -26,10 +26,12 @@ export default function Sell() {
       title: "#",
       dataIndex: "id",
       key: "id",
+      width:"10%"
     },
     {
       title: "Product",
       key: "product",
+
       filterMode: "menu",
       onFilter: (value, record) => record.productName.startsWith(value),
       render: (_, record) => (
@@ -47,10 +49,12 @@ export default function Sell() {
       title: "Stock on hand",
       dataIndex: "stockOnHand",
       key: "stockOnHand",
+      width:"10%",
     },
     {
       title: "Action",
       key: "action",
+      width:"10%",
       render: (_, record) => (
         <Button
           type="primary"
@@ -89,6 +93,7 @@ export default function Sell() {
     {
       title: "Action",
       key: "action",
+      width:"10%",
       render: (_, record) => (
         <Button
           type="primary"

@@ -1,4 +1,4 @@
-import {Link, Outlet,useLocation} from "react-router-dom";
+import {Link, Outlet, useLocation} from "react-router-dom";
 import {
     CreditCardOutlined,
     DashboardOutlined,
@@ -7,37 +7,37 @@ import {
     FileTextOutlined,
     SettingOutlined, UploadOutlined,
 } from "@ant-design/icons";
-import { Layout, Menu, theme,Breadcrumb } from "antd";
+import {Layout, Menu, theme, Breadcrumb} from "antd";
 import BreadCrumbNav from "./BreadCrumbNav.jsx";
 
-const { Header, Content, Footer, Sider } = Layout;
+const {Header, Content, Footer, Sider} = Layout;
 const items = [
     {
         key: "dashboard",
-        icon: <DashboardOutlined />,
-        label: <Link to="/dashboard" >Dashboard</Link>,
+        icon: <DashboardOutlined/>,
+        label: <Link to="/dashboard">Dashboard</Link>,
     },
 
     {
         key: "stock-on-hand",
-        icon: <DropboxOutlined />,
+        icon: <DropboxOutlined/>,
         label: <Link to="/stock-on-hand">Stock on hand</Link>,
 
     },
-    { key: "buy", icon: <DownloadOutlined />, label: <Link to="/buy">Buy</Link> },
-    { key: "sell", icon: <UploadOutlined />, label: <Link to="/sell">Sell</Link> },
-    { key: "expense", icon: <CreditCardOutlined />, label: <Link to="/expense">Expense</Link> },
-    { key: "reports", icon: <FileTextOutlined />, label: <Link to="/reports">Reports</Link> },
+    {key: "buy", icon: <DownloadOutlined style={{fontSize:"1.1rem"}}/>, label: <Link to="/buy">Buy</Link>},
+    {key: "sell", icon: <UploadOutlined/>, label: <Link to="/sell">Sell</Link>},
+    {key: "expense", icon: <CreditCardOutlined/>, label: <Link to="/expense">Expense</Link>},
+    {key: "reports", icon: <FileTextOutlined/>, label: <Link to="/reports">Reports</Link>},
     {
         key: "settings",
-        icon: <SettingOutlined />,
+        icon: <SettingOutlined/>,
         label: "Settings",
         children: [
-            { key: "general", label: "General" },
-            { key: "units", label: "Units" },
-            { key: "products", label: "Products" },
-            { key: "roles", label: "Roles" },
-            { key: "users", label: "Users" },
+            {key: "general", label: "General"},
+            {key: "units", label: "Units"},
+            {key: "products", label: "Products"},
+            {key: "roles", label: "Roles"},
+            {key: "users", label: "Users"},
         ],
     },
 ];
@@ -80,75 +80,76 @@ const data = [
 
 const AppLayout = () => {
 
-    const location=useLocation();
+    const location = useLocation();
 
     console.log(location.pathname.slice(1))
 
-  const {
-    token: { colorBgContainer, borderRadiusLG },
-  } = theme.useToken();
-  return (
-    <Layout hasSider>
-      <Sider
-        style={{
-          overflow: "auto",
-          height: "100vh",
-          position: "fixed",
-          left: 0,
-          top: 0,
-          bottom: 0,
-        }}
-      >
-        <div className="demo-logo-vertical" />
-        <Menu
-          theme="dark"
-          mode="inline"
-          selectedKeys={[location?.pathname.slice(1)]}
-          items={items}
-        />
-      </Sider>
-      <Layout
-        style={{
-          marginLeft: 200,
-        }}
-      >
-        <Header
-          style={{
-            position: "sticky",
-            padding: 0,
-            background: colorBgContainer,
-            top: 0,
-            zIndex: 1,
-          }}
-        />
-        <BreadCrumbNav/>
-        <Content
-          style={{
-            margin: "24px 16px 0",
-            overflow: "initial",
-          }}
-        >
-          <div
-            style={{
-              padding: 24,
-              background: colorBgContainer,
-              borderRadius: borderRadiusLG,
-                minHeight: '100vh',
+    const {
+        token: {colorBgContainer, borderRadiusLG},
+    } = theme.useToken();
+    return (
+        <Layout hasSider>
+            <Sider
+                style={{
+                    overflow: "auto",
+                    height: "100vh",
+                    position: "fixed",
+                    left: 0,
+                    top: 0,
+                    bottom: 0,
+                }}
+            >
+                <div className="demo-logo-vertical"/>
+                <Menu
+                    theme="dark"
+                    mode="inline"
+                    selectedKeys={[location?.pathname.slice(1)]}
+                    items={items}
+                    style={{fontSize: "1rem"}}
+                />
+            </Sider>
+            <Layout
+                style={{
+                    marginLeft: 200,
+                }}
+            >
+                <Header
+                    style={{
+                        position: "sticky",
+                        padding: 0,
+                        background: colorBgContainer,
+                        top: 0,
+                        zIndex: 1,
+                    }}
+                />
+                <BreadCrumbNav/>
+                <Content
+                    style={{
+                        margin: "24px 16px 0",
+                        overflow: "initial",
+                    }}
+                >
+                    <div
+                        style={{
+                            padding: 24,
+                            background: colorBgContainer,
+                            borderRadius: borderRadiusLG,
+                            minHeight: '100vh',
 
-            }}
-          >
-         <Outlet/>
-          </div>
-        </Content>
-        <Footer
-          style={{
-            textAlign: "center",
-          }}
-        >
-          SMT ©{new Date().getFullYear()} Created by V4mpc
-        </Footer>
-      </Layout>
-    </Layout>
-  );
+                        }}
+                    >
+                        <Outlet/>
+                    </div>
+                </Content>
+                <Footer
+                    style={{
+                        textAlign: "center",
+                    }}
+                >
+                    SMT ©{new Date().getFullYear()} Created by V4mpc
+                </Footer>
+            </Layout>
+        </Layout>
+    );
 };
 export default AppLayout;
