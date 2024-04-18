@@ -21,7 +21,7 @@ const items = [
     {
         key: "stock-on-hand",
         icon: <DropboxOutlined/>,
-        label: <Link to="/stock-on-hand">Stock on hand</Link>,
+        label: <Link to="/stock-on-hand?_page=1&_limit=10">Stock on hand</Link>,
 
     },
     {key: "buy", icon: <DownloadOutlined style={{fontSize:"1.1rem"}}/>, label: <Link to="/buy">Buy</Link>},
