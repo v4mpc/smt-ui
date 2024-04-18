@@ -41,6 +41,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-react-refresh", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:0.4.6"],\
           ["json-server", "npm:0.17.4"],\
           ["prettier", "npm:3.2.5"],\
+          ["qs", "npm:6.12.1"],\
           ["react", "npm:18.2.0"],\
           ["react-chartjs-2", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:5.2.0"],\
           ["react-dom", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:18.2.0"],\
@@ -4391,6 +4392,14 @@ const RAW_RUNTIME_STATE =
           ["side-channel", "npm:1.0.6"]\
         ],\
         "linkType": "HARD"\
+      }],\
+      ["npm:6.12.1", {\
+        "packageLocation": "../../.yarn/berry/cache/qs-npm-6.12.1-8172168073-10c0.zip/node_modules/qs/",\
+        "packageDependencies": [\
+          ["qs", "npm:6.12.1"],\
+          ["side-channel", "npm:1.0.6"]\
+        ],\
+        "linkType": "HARD"\
       }]\
     ]],\
     ["queue-microtask", [\
@@ -5986,6 +5995,7 @@ const RAW_RUNTIME_STATE =
           ["eslint-plugin-react-refresh", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:0.4.6"],\
           ["json-server", "npm:0.17.4"],\
           ["prettier", "npm:3.2.5"],\
+          ["qs", "npm:6.12.1"],\
           ["react", "npm:18.2.0"],\
           ["react-chartjs-2", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:5.2.0"],\
           ["react-dom", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:18.2.0"],\

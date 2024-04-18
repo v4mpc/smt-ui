@@ -30,8 +30,6 @@ export default function Buy() {
     {
       title: "Product",
       key: "product",
-      filterMode: "menu",
-      onFilter: (value, record) => record.productName.startsWith(value),
       render: (_, record) => (
         <Flex vertical>
           <Text strong>{record.productName}</Text>
@@ -99,11 +97,11 @@ export default function Buy() {
       ),
     },
   ];
+  console.log(stockOnHand);
   const filteredDataSource = stockOnHand.filter((item) =>
     searchText === ""
       ? item
       : item.productName
-          .toString()
           .toLowerCase()
           .includes(searchText.toLowerCase()),
   );
