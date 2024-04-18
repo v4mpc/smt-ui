@@ -11,9 +11,11 @@ import {
   Input,
   Space,
 } from "antd";
-import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
+import Highlighter from 'react-highlight-words';
+
+import {PlusOutlined, MinusOutlined, SearchOutlined} from "@ant-design/icons";
 import { useStockOnHand } from "../hooks/useStockOnHand.jsx";
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import AsyncModal from "../components/AsyncModal.jsx";
 import qs from "qs";
 import { BASE_URL, openNotification } from "../utils.jsx";
@@ -33,6 +35,116 @@ export default function StockOnHand() {
       current: 1,
       pageSize: 10,
     },
+  });
+
+
+
+
+  const [searchText, setSearchText] = useState('');
+  const [searchedColumn, setSearchedColumn] = useState('');
+  const searchInput = useRef(null);
+  const handleSearch = (selectedKeys, confirm, dataIndex) => {
+    confirm();
+    setSearchText(selectedKeys[0]);
+    setSearchedColumn(dataIndex);
+  };
+  const handleReset = (clearFilters) => {
+    clearFilters();
+    setSearchText('');
+  };
+  const getColumnSearchProps = (dataIndex) => ({
+    filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters, close }) => (
+        <div
+            style={{
+              padding: 8,
+            }}
+            onKeyDown={(e) => e.stopPropagation()}
+        >
+          <Input
+              ref={searchInput}
+              placeholder={`Search ${dataIndex}`}
+              value={selectedKeys[0]}
+              onChange={(e) => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+              onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+              style={{
+                marginBottom: 8,
+                display: 'block',
+              }}
+          />
+          <Space>
+            <Button
+                type="primary"
+                onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                icon={<SearchOutlined />}
+                size="small"
+                style={{
+                  width: 90,
+                }}
+            >
+              Search
+            </Button>
+            <Button
+                onClick={() => clearFilters && handleReset(clearFilters)}
+                size="small"
+                style={{
+                  width: 90,
+                }}
+            >
+              Reset
+            </Button>
+            <Button
+                type="link"
+                size="small"
+                onClick={() => {
+                  confirm({
+                    closeDropdown: false,
+                  });
+                  setSearchText(selectedKeys[0]);
+                  setSearchedColumn(dataIndex);
+                }}
+            >
+              Filter
+            </Button>
+            <Button
+                type="link"
+                size="small"
+                onClick={() => {
+                  close();
+                }}
+            >
+              close
+            </Button>
+          </Space>
+        </div>
+    ),
+    filterIcon: (filtered) => (
+        <SearchOutlined
+            style={{
+              color: filtered ? '#1677ff' : undefined,
+            }}
+        />
+    ),
+    onFilter: (value, record) =>
+        record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+    onFilterDropdownOpenChange: (visible) => {
+      if (visible) {
+        setTimeout(() => searchInput.current?.select(), 100);
+      }
+    },
+    render: (text) =>
+        searchedColumn === dataIndex ? (
+            <Highlighter
+                highlightStyle={{
+                  backgroundColor: '#ffc069',
+                  padding: 0,
+                }}
+                searchWords={[searchText]}
+                autoEscape
+                textToHighlight={text ? text.toString() : ''}
+            />
+        ) : (
+            text
+        ),
   });
 
   async function fetchData() {
@@ -65,8 +177,9 @@ export default function StockOnHand() {
     },
     {
       title: "Product",
-      key: "product",
-      render: (_, record) => record.productName,
+      key: "productName",
+      dataIndex: 'productName',
+      ...getColumnSearchProps('productName'),
     },
 
     {
@@ -102,6 +215,7 @@ export default function StockOnHand() {
   }
 
   const handleTableChange = (pagination, filters, sorter) => {
+    console.log(filters,sorter);
     setTableParams({
       pagination,
       filters,
@@ -119,11 +233,11 @@ export default function StockOnHand() {
   }, [JSON.stringify(tableParams)]);
   return (
     <Table
-        onChange={handleTableChange}
+      onChange={handleTableChange}
       columns={productColumns}
       dataSource={data}
       bordered={true}
-        pagination={tableParams.pagination}
+      pagination={tableParams.pagination}
       loading={loading}
       rowKey="id"
     />
