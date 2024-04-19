@@ -12,7 +12,7 @@ import {
   Space,
 } from "antd";
 import Highlighter from "react-highlight-words";
-import { useSearchParams } from "react-router-dom";
+import {Link, useSearchParams} from "react-router-dom";
 
 import { PlusOutlined, MinusOutlined, SearchOutlined } from "@ant-design/icons";
 import { useStockOnHand } from "../hooks/useStockOnHand.jsx";
@@ -212,8 +212,8 @@ export default function StockOnHand() {
       title: "Action",
       key: "action",
       render: (_, record) => (
-        <Button type="primary" onClick={() => handleProductAdjust(record)}>
-          Adjust
+        <Button type="primary">
+          <Link to={`adjustment/${record.id}`}>Adjustment</Link>
         </Button>
       ),
     },
