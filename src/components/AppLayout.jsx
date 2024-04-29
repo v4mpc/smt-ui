@@ -21,12 +21,13 @@ const items = [
     {
         key: "stock-on-hand",
         icon: <DropboxOutlined/>,
+        // implement if no pagination in the list page to auto add pagination by default
         label: <Link to="/stock-on-hand?_page=1&_limit=10">Stock on hand</Link>,
 
     },
     {key: "buy", icon: <DownloadOutlined style={{fontSize:"1.1rem"}}/>, label: <Link to="/buy">Buy</Link>},
     {key: "sell", icon: <UploadOutlined/>, label: <Link to="/sell">Sell</Link>},
-    {key: "expense", icon: <CreditCardOutlined/>, label: <Link to="/expense" >Expense</Link>},
+    {key: "expense", icon: <CreditCardOutlined/>, label: <Link to="/expense?_page=1&_limit=10" >Expense</Link>},
     {key: "reports", icon: <FileTextOutlined/>, label: <Link to="/reports">Reports</Link>},
     {
         key: "settings",

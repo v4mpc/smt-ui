@@ -1,38 +1,22 @@
-import {
-  Button,
-  Col,
-  Row,
-  Table,
-  InputNumber,
-  Flex,
-  Typography,
-  DatePicker,
-  Descriptions,
-  Input,
-  Space,
-  Modal,
-} from "antd";
+import { Button, Table, Input, Space } from "antd";
 import Highlighter from "react-highlight-words";
-import { Link, useSearchParams } from "react-router-dom";
-
-import { PlusOutlined, MinusOutlined, SearchOutlined } from "@ant-design/icons";
-import { useStockOnHand } from "../hooks/useStockOnHand.jsx";
+import { useSearchParams } from "react-router-dom";
+import { SearchOutlined } from "@ant-design/icons";
 import { useEffect, useState, useRef } from "react";
-import AsyncModal from "../components/AsyncModal.jsx";
 import qs from "qs";
-import { BASE_URL, openNotification } from "../utils.jsx";
-import StockAdjustmentModal from "./StockAdjustment.jsx";
-import ThousandSeparator from "../components/ThousandSeparator.jsx";
+import { BASE_URL } from "../utils.jsx";
+import StockAdjustmentModal from "../pages/StockAdjustment.jsx";
+import GenericTableModal from "./GenericTableModal.jsx";
 
-const getSohParams = (params) => ({
+const getItemParams = (params) => ({
   _limit: params.pagination?.pageSize,
   _page: params.pagination?.current,
   ...params,
 });
 
-export default function StockOnHand() {
+// listPath='/products'
+export default function GenericTable({ itemColumns, listPath, children }) {
   const [searchParams, setSearchParams] = useSearchParams();
-  // const [stockOnHand, setStockOnHand, isLoading, error] = useStockOnHand();
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
   const [tableParams, setTableParams] = useState({
@@ -42,10 +26,24 @@ export default function StockOnHand() {
     },
   });
 
+  itemColumns = itemColumns.map((obj) => {
+    if (obj.key === "action") {
+      return {
+        ...obj,
+        render: (_, record) => (
+          <Button type="primary" onClick={() => handleSetItem(record)}>
+            Edit
+          </Button>
+        ),
+      };
+    }
+    return obj;
+  });
+
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
-  const [selectedProduct, setSelectedProduct] = useState("");
+  const [selectedItem, setSelectedItem] = useState("");
 
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
@@ -162,7 +160,7 @@ export default function StockOnHand() {
   async function fetchData() {
     setLoading(true);
     const resp = await fetch(
-      `${BASE_URL}/products?${qs.stringify(getSohParams(tableParams))}`,
+      `${BASE_URL}${listPath}?${qs.stringify(getItemParams(tableParams))}`,
     );
 
     if (!resp.ok) {
@@ -176,57 +174,13 @@ export default function StockOnHand() {
       ...tableParams,
       pagination: {
         ...tableParams.pagination,
-        total: 50,
+        total: 8,
       },
     });
   }
 
-  const productColumns = [
-    {
-      title: "#",
-      dataIndex: "id",
-      key: "id",
-      width: "5%",
-    },
-    {
-      title: "Product",
-      key: "productName",
-      dataIndex: "productName",
-      width: "30%",
-      ...getColumnSearchProps("productName"),
-    },
-
-    {
-      title: "Buy price(TZS)",
-      key: "product",
-      render: (_, record) => <ThousandSeparator value={record.buyPrice} />,
-    },
-
-    {
-      title: "Sale Price(TZS)",
-      key: "product",
-      render: (_, record) => <ThousandSeparator value={record.salePrice} />,
-    },
-
-    {
-      title: "Stock on hand",
-      dataIndex: "stockOnHand",
-      key: "stockOnHand",
-      render:(_,record)=> <ThousandSeparator value={record.stockOnHand}/>
-    },
-    {
-      title: "Action",
-      key: "action",
-      render: (_, record) => (
-        <Button type="primary" onClick={() => handleSetProduct(record)}>
-          Adjust
-        </Button>
-      ),
-    },
-  ];
-
-  const handleSetProduct = (product) => {
-    setSelectedProduct(product);
+  const handleSetItem = (item) => {
+    setSelectedItem(item);
   };
 
   const handleTableChange = (pagination, filters, sorter) => {
@@ -250,18 +204,21 @@ export default function StockOnHand() {
     <>
       <Table
         onChange={handleTableChange}
-        columns={productColumns}
+        columns={itemColumns}
         dataSource={data}
         bordered={true}
         pagination={tableParams.pagination}
         loading={loading}
         rowKey="id"
       />
-      <StockAdjustmentModal
-        key={selectedProduct?.id}
-        selectedProduct={selectedProduct}
-        handleSetProduct={handleSetProduct}
-      />
+      <GenericTableModal
+        key={selectedItem?.id}
+        title="Edit expense"
+        selectedItem={selectedItem}
+        handleSetItem={handleSetItem}
+      >
+        { children }
+      </GenericTableModal>
     </>
   );
 }

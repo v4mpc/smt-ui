@@ -20,14 +20,7 @@ export default function App() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="sell" element={<Sell />} />
             <Route path="buy" element={<Buy />} />
-            <Route
-              path="expense"
-              element={
-                <CustomDrawer title="Add Expense" >
-                  <Expense />
-                </CustomDrawer>
-              }
-            />
+            <Route path="expense" element={<Expense />} />
             <Route path="reports" element={<Reports />} />
             <Route path="stock-on-hand" element={<StockOnHand />} />
 
