@@ -19,6 +19,8 @@ export default function GenericTable({ itemColumns, listPath, children }) {
   const [searchParams, setSearchParams] = useSearchParams();
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
+  const formModeRef = useRef("CREATE");
+  const [open, setOpen] = useState(false);
   const [tableParams, setTableParams] = useState({
     pagination: {
       current: searchParams.get("_page"),
@@ -180,9 +182,19 @@ export default function GenericTable({ itemColumns, listPath, children }) {
   }
 
   const handleSetItem = (item) => {
+    formModeRef.current = "UPDATE";
     setSelectedItem(item);
+    setOpen(true);
   };
 
+  const handleCreateClicked = () => {
+    formModeRef.current = "CREATE";
+    setOpen(true);
+  };
+
+  const handelModalClose = () => {
+    setOpen(false);
+  };
   const handleTableChange = (pagination, filters, sorter) => {
     setSearchParams({ _page: pagination.current, _limit: pagination.pageSize });
     setTableParams({
@@ -202,6 +214,10 @@ export default function GenericTable({ itemColumns, listPath, children }) {
   }, [JSON.stringify(tableParams)]);
   return (
     <>
+      <Button type="primary" onClick={() => handleCreateClicked()}>
+        Add
+      </Button>
+
       <Table
         onChange={handleTableChange}
         columns={itemColumns}
@@ -212,12 +228,15 @@ export default function GenericTable({ itemColumns, listPath, children }) {
         rowKey="id"
       />
       <GenericTableModal
-        key={selectedItem?.id}
-        title="Edit expense"
+        key={selectedItem?.id===null ? selectedItem.id : formModeRef.current}
+        title={formModeRef.current === "UPDATE" ? "Update item" : "Create item"}
+        formMode={formModeRef.current}
         selectedItem={selectedItem}
-        handleSetItem={handleSetItem}
+        listPath={listPath}
+        open={open}
+        handleModalClose={handelModalClose}
       >
-        { children }
+        {children}
       </GenericTableModal>
     </>
   );
