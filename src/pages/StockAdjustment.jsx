@@ -1,14 +1,13 @@
 import { useLocation } from "react-router-dom";
 import { useState } from "react";
-import {Button, Modal, Form, InputNumber, Input, Space} from "antd";
+import { Button, Modal, Form, InputNumber, Input, Space } from "antd";
+import { InfoCircleOutlined } from "@ant-design/icons";
 
 const formItemLayout = {
-  labelCol: {
-    span: 4,
-  },
-  wrapperCol: {
-    span: 14,
-  },
+  // wrapperCol: {
+  //   offset: 8,
+  //   span: 16,
+  // },
 };
 
 export default function StockAdjustmentModal({
@@ -21,12 +20,20 @@ export default function StockAdjustmentModal({
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleOk = () => {
-    setConfirmLoading(true);
-    setTimeout(() => {
-      handleSetProduct("");
-      setConfirmLoading(false);
-    }, 2000);
+  const handleOk = async () => {
+    try {
+      const values = await form?.validateFields();
+      setIsLoading(true);
+      console.log(values);
+      setConfirmLoading(true);
+      setTimeout(() => {
+        form?.resetFields();
+        handleSetProduct("");
+        setConfirmLoading(false);
+      }, 2000);
+    } catch (error) {
+      console.log("Failed:", error);
+    }
   };
   const handleCancel = () => {
     console.log("Clicked cancel button");
@@ -38,6 +45,16 @@ export default function StockAdjustmentModal({
     console.log("submit");
   };
 
+  const validateAmount = (rule, value, callback) => {
+    if (value === 0) {
+      callback("Adjustment quantity can not be zero");
+    } else if (value < 0 && value * -1 > selectedProduct.stockOnHand) {
+      callback("Negative adjustment should not exceed stock on hand");
+    } else {
+      callback();
+    }
+  };
+
   return (
     <Modal
       title="Adjust Stock"
@@ -45,12 +62,12 @@ export default function StockAdjustmentModal({
       onOk={handleOk}
       confirmLoading={confirmLoading}
       onCancel={handleCancel}
+      okText="Adjust"
     >
       <Form
         initialValues={{
           name: selectedProduct.productName,
-          stockOnHand:selectedProduct.stockOnHand,
-
+          stockOnHand: selectedProduct.stockOnHand,
         }}
         variant="outlined"
         layout="vertical"
@@ -58,67 +75,64 @@ export default function StockAdjustmentModal({
         onFinish={handleSubmit}
         form={form}
       >
-        <Space direction="vertical"
-               size="small"  >
-          <Form.Item label="Product" name="name">
-            <Input disabled={true} />
-          </Form.Item>
+        <Form.Item label="Product" name="name">
+          <Input disabled={true} />
+        </Form.Item>
 
-          <Form.Item
-              label="Stock on hand(@)"
-              name="stockOnHand"
-              help="Stock on hand as of now (2024-04-29,01:39)"
-          >
-            <InputNumber
-                style={{
-                  width: "100%",
-                }}
-                disabled={true}
-            />
-          </Form.Item>
+        <Form.Item
+          label="Stock on hand(@)"
+          tooltip={{
+            title: "Stock on hand as of now (2024-04-29,00:00)",
+            icon: <InfoCircleOutlined />,
+          }}
+          name="stockOnHand"
+        >
+          <InputNumber
+            style={{
+              width: "100%",
+            }}
+            disabled={true}
+          />
+        </Form.Item>
 
-          <Form.Item
-              label="Quantity to adjust(@)"
-              name="amount"
-              help="Negative(-) value decreases stock e.g -80, Postive value increases stock e.g 80."
-              rules={[
-                {
-                  required: true,
-                  message: "Please input!",
-                },
-              ]}
-          >
-            <InputNumber
-                style={{
-                  width: "100%",
-                }}
-            />
-          </Form.Item>
+        <Form.Item
+          label="Quantity to adjust(@)"
+          name="amount"
+          tooltip={{
+            title:
+              "Negative(-) value decreases stock e.g -80, Positive value increases stock e.g 80.",
+            icon: <InfoCircleOutlined />,
+          }}
+          rules={[
+            {
+              required: true,
+              message: "Please input a number",
+            },
 
-          <Form.Item
-              rules={[
-                {
-                  required: true,
-                  message: "Please input!",
-                },
-              ]}
-              label="Adjustment Reason"
-              name="reason"
-          >
-            <Input.TextArea />
-          </Form.Item>
-          <Form.Item
-              wrapperCol={{
-                offset: 6,
-                span: 16,
-              }}
-          >
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Form.Item>
-        </Space>
+            {
+              validator: validateAmount,
+            },
+          ]}
+        >
+          <InputNumber
+            style={{
+              width: "100%",
+            }}
+          />
+        </Form.Item>
 
+        <Form.Item
+          rules={[
+            {
+              required: true,
+              message: "Provide reason!",
+            },
+          ]}
+          label="Adjustment Reason"
+          name="reason"
+        >
+          <Input.TextArea />
+        </Form.Item>
       </Form>
     </Modal>
   );

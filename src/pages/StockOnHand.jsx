@@ -256,7 +256,7 @@ export default function StockOnHand() {
         loading={loading}
         rowKey="id"
       />
-      <StockAdjustmentModal selectedProduct={selectedProduct} handleSetProduct={handleSetProduct} />
+      <StockAdjustmentModal key={selectedProduct?.id} selectedProduct={selectedProduct} handleSetProduct={handleSetProduct} />
 
     </>
   );
