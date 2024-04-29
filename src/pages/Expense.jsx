@@ -40,7 +40,6 @@ export default function Expense() {
 
   const handleSubmit = (e) => {
     let formData = { ...e, date: e.date.format("YYYY-MM-DD") };
-    console.log(formData);
     fetchData(formData, "expenses", setIsLoading, setError, "POST",null,form);
 
   };

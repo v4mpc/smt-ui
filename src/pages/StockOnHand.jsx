@@ -10,9 +10,10 @@ import {
   Descriptions,
   Input,
   Space,
+  Modal,
 } from "antd";
 import Highlighter from "react-highlight-words";
-import {Link, useSearchParams} from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 import { PlusOutlined, MinusOutlined, SearchOutlined } from "@ant-design/icons";
 import { useStockOnHand } from "../hooks/useStockOnHand.jsx";
@@ -20,6 +21,7 @@ import { useEffect, useState, useRef } from "react";
 import AsyncModal from "../components/AsyncModal.jsx";
 import qs from "qs";
 import { BASE_URL, openNotification } from "../utils.jsx";
+import StockAdjustmentModal from "./StockAdjustment.jsx";
 
 const getSohParams = (params) => ({
   _limit: params.pagination?.pageSize,
@@ -42,6 +44,8 @@ export default function StockOnHand() {
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
+  const [selectedProduct, setSelectedProduct] = useState("");
+
   const handleSearch = (selectedKeys, confirm, dataIndex) => {
     confirm();
     setSearchText(selectedKeys[0]);
@@ -212,16 +216,16 @@ export default function StockOnHand() {
       title: "Action",
       key: "action",
       render: (_, record) => (
-        <Button type="primary">
-          <Link to={`adjustment/${record.id}`}>Adjustment</Link>
+        <Button type="primary" onClick={() => handleSetProduct(record)}>
+          Adjust
         </Button>
       ),
     },
   ];
 
-  function handleProductAdjust(record) {
-    console.log(record);
-  }
+  const handleSetProduct = (product) => {
+    setSelectedProduct(product);
+  };
 
   const handleTableChange = (pagination, filters, sorter) => {
     console.log(filters, sorter);
@@ -242,14 +246,18 @@ export default function StockOnHand() {
     fetchData();
   }, [JSON.stringify(tableParams)]);
   return (
-    <Table
-      onChange={handleTableChange}
-      columns={productColumns}
-      dataSource={data}
-      bordered={true}
-      pagination={tableParams.pagination}
-      loading={loading}
-      rowKey="id"
-    />
+    <>
+      <Table
+        onChange={handleTableChange}
+        columns={productColumns}
+        dataSource={data}
+        bordered={true}
+        pagination={tableParams.pagination}
+        loading={loading}
+        rowKey="id"
+      />
+      <StockAdjustmentModal selectedProduct={selectedProduct} handleSetProduct={handleSetProduct} />
+
+    </>
   );
 }

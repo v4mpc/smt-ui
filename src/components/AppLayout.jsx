@@ -4,7 +4,7 @@ import {
     DashboardOutlined,
     DownloadOutlined,
     DropboxOutlined,
-    FileTextOutlined,
+    FileTextOutlined, LogoutOutlined,
     SettingOutlined, UploadOutlined,
 } from "@ant-design/icons";
 import {Layout, Menu, theme, Breadcrumb} from "antd";
@@ -26,7 +26,7 @@ const items = [
     },
     {key: "buy", icon: <DownloadOutlined style={{fontSize:"1.1rem"}}/>, label: <Link to="/buy">Buy</Link>},
     {key: "sell", icon: <UploadOutlined/>, label: <Link to="/sell">Sell</Link>},
-    {key: "expense", icon: <CreditCardOutlined/>, label: <Link to="/expense">Expense</Link>},
+    {key: "expense", icon: <CreditCardOutlined/>, label: <Link to="/expense" >Expense</Link>},
     {key: "reports", icon: <FileTextOutlined/>, label: <Link to="/reports">Reports</Link>},
     {
         key: "settings",
@@ -36,10 +36,10 @@ const items = [
             {key: "general", label: "General"},
             {key: "units", label: "Units"},
             {key: "products", label: "Products"},
-            {key: "roles", label: "Roles"},
-            {key: "users", label: "Users"},
+            {key: "profile", label: "Profile"},
         ],
     },
+    {key: "logout", icon: <LogoutOutlined />, label: <Link to="/logout">Logout</Link>},
 ];
 
 

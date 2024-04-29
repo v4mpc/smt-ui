@@ -8,7 +8,7 @@ import Sell from "./pages/Sell.jsx";
 import Expense from "./pages/Expense.jsx";
 import Reports from "./pages/Reports.jsx";
 import StockAdjustment from "./pages/StockAdjustment.jsx";
-
+import CustomDrawer from "./components/CustomDrawer.jsx";
 
 export default function App() {
   return (
@@ -20,12 +20,21 @@ export default function App() {
             <Route path="dashboard" element={<Dashboard />} />
             <Route path="sell" element={<Sell />} />
             <Route path="buy" element={<Buy />} />
-            <Route path="expense" element={<Expense />} />
+            <Route
+              path="expense"
+              element={
+                <CustomDrawer title="Add Expense" >
+                  <Expense />
+                </CustomDrawer>
+              }
+            />
             <Route path="reports" element={<Reports />} />
-            <Route path="stock-on-hand" element={<StockOnHand />}/>
+            <Route path="stock-on-hand" element={<StockOnHand />} />
 
-            <Route path="stock-on-hand/adjustment/:id" element={<StockAdjustment />} />
-
+            <Route
+              path="stock-on-hand/adjustment/:id"
+              element={<StockAdjustment />}
+            />
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>
