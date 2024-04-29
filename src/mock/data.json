@@ -57,9 +57,9 @@
     {
       "id": 1,
       "productName": "Juice - Grapefruit, 341 Ml",
-      "buyPrice": 687,
-      "salePrice": 933,
-      "stockOnHand": 891,
+      "buyPrice": 6870,
+      "salePrice": 9330,
+      "stockOnHand": 8910,
       "saleQuantity": 0,
       "saleDate": "3/30/2024"
     },
@@ -922,8 +922,8 @@
       "id": 97,
       "productName": "Water - Mineral, Natural",
       "buyPrice": 373,
-      "salePrice": 917,
-      "stockOnHand": 473,
+      "salePrice": 9170,
+      "stockOnHand": 4730,
       "saleQuantity": 0,
       "saleDate": "3/24/2024"
     },

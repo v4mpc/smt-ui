@@ -20,7 +20,7 @@ import { useStockOnHand } from "../hooks/useStockOnHand.jsx";
 import { useEffect, useState, useRef } from "react";
 import AsyncModal from "../components/AsyncModal.jsx";
 import qs from "qs";
-import { BASE_URL, openNotification } from "../utils.jsx";
+import {BASE_URL, openNotification, ThousandSeparator} from "../utils.jsx";
 import StockAdjustmentModal from "./StockAdjustment.jsx";
 
 const getSohParams = (params) => ({
@@ -196,13 +196,13 @@ export default function StockOnHand() {
     },
 
     {
-      title: "Buy price",
+      title: "Buy price(TZS",
       key: "product",
-      render: (_, record) => record.buyPrice,
+      render: (_, record) => <ThousandSeparator value={record.buyPrice}/>,
     },
 
     {
-      title: "Sale Price",
+      title: "Sale Price(TZS)",
       key: "product",
       render: (_, record) => record.salePrice,
     },
