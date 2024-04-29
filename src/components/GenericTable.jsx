@@ -227,6 +227,8 @@ export default function GenericTable({ itemColumns, listPath, children }) {
         loading={loading}
         rowKey="id"
       />
+
+      {/*TODO: ended here*/}
       <GenericTableModal
         key={selectedItem?.id===null ? selectedItem.id : formModeRef.current}
         title={formModeRef.current === "UPDATE" ? "Update item" : "Create item"}
