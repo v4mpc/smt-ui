@@ -14,6 +14,8 @@ const getItemParams = (params) => ({
   ...params,
 });
 
+
+
 // listPath='/products'
 export default function GenericTable({ itemColumns, listPath, children }) {
   const [searchParams, setSearchParams] = useSearchParams();

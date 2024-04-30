@@ -1,11 +1,11 @@
 {
   "expenses": [
     {
-      "id": 1,
-      "date": "2024-04-16",
+      "date": "2024-04-23",
       "name": "Food",
       "amount": 3434,
-      "description": "Food"
+      "description": "Food",
+      "id": 1
     },
     {
       "date": "2024-04-11",
@@ -53,10 +53,18 @@
       "id": 8
     },
     {
+      "date": "2024-04-30",
       "name": "Yona",
       "amount": 1000,
       "description": "Mahundi",
       "id": 9
+    },
+    {
+      "date": "2024-04-04",
+      "name": "Vampc",
+      "amount": 7000,
+      "description": "yo yo",
+      "id": 10
     }
   ],
   "products": [

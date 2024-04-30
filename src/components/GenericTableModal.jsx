@@ -1,16 +1,8 @@
-import { useLocation } from "react-router-dom";
-import { useState } from "react";
-import { Button, Modal, Form, InputNumber, Input, Space } from "antd";
-import { InfoCircleOutlined } from "@ant-design/icons";
-import { useFetch } from "../hooks/useFetch.jsx";
-import { fetchData } from "../utils.jsx";
 
-const formItemLayout = {
-  // wrapperCol: {
-  //   offset: 8,
-  //   span: 16,
-  // },
-};
+import { useState } from "react";
+import { Modal, Form,} from "antd";
+import { DATE_FORMAT, fetchData } from "../utils.jsx";
+import dayjs from "dayjs";
 
 export default function GenericTableModal({
   title,
@@ -25,8 +17,6 @@ export default function GenericTableModal({
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  console.log(formMode);
-
   const handleOk = async () => {
     try {
       const values = await form?.validateFields();
@@ -62,7 +52,15 @@ export default function GenericTableModal({
     console.log("submit");
   };
 
-  const initialValues = formMode === "UPDATE" ? { ...selectedItem } : {};
+  const initialValues =
+    formMode === "UPDATE"
+      ? selectedItem.hasOwnProperty("date")
+        ? {
+            ...selectedItem,
+            date: dayjs(selectedItem.date, DATE_FORMAT),
+          }
+        : selectedItem
+      : {};
 
   return (
     <Modal
