@@ -19,6 +19,7 @@ export default function GenericTableModal({
   formMode,
   open,
   handleModalClose,
+  refetchData,
   children,
 }) {
   const [form] = Form.useForm();
@@ -46,6 +47,7 @@ export default function GenericTableModal({
         form,
         handleModalClose,
       );
+      refetchData();
     } catch (error) {
       console.log("Failed:", error);
     }

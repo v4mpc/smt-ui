@@ -41,7 +41,6 @@ export default function GenericTable({ itemColumns, listPath, children }) {
     }
     return obj;
   });
-
   const [searchText, setSearchText] = useState("");
   const [searchedColumn, setSearchedColumn] = useState("");
   const searchInput = useRef(null);
@@ -240,6 +239,7 @@ export default function GenericTable({ itemColumns, listPath, children }) {
           listPath={listPath}
           open={open}
           handleModalClose={handelModalClose}
+          refetchData={fetchData}
         >
           {children}
         </GenericTableModal>
