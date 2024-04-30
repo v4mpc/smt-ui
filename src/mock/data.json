@@ -51,6 +51,12 @@
       "amount": 787878,
       "description": "hjbjhbhj",
       "id": 8
+    },
+    {
+      "name": "Gido",
+      "amount": 6000,
+      "description": "Mahundi",
+      "id": 9
     }
   ],
   "products": [
@@ -954,7 +960,6 @@
       "saleQuantity": 0,
       "saleDate": "4/14/2024"
     }
-
   ],
   "dashboard": {
     "totalSales": 453434,

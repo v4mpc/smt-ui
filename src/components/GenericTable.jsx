@@ -1,4 +1,4 @@
-import { Button, Table, Input, Space } from "antd";
+import { Button, Table, Input, Space, Flex } from "antd";
 import Highlighter from "react-highlight-words";
 import { useSearchParams } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
@@ -162,7 +162,7 @@ export default function GenericTable({ itemColumns, listPath, children }) {
   async function fetchData() {
     setLoading(true);
     const resp = await fetch(
-      `${BASE_URL}${listPath}?${qs.stringify(getItemParams(tableParams))}`,
+      `${BASE_URL}/${listPath}?${qs.stringify(getItemParams(tableParams))}`,
     );
 
     if (!resp.ok) {
@@ -213,10 +213,12 @@ export default function GenericTable({ itemColumns, listPath, children }) {
     fetchData();
   }, [JSON.stringify(tableParams)]);
   return (
-    <>
-      <Button type="primary" onClick={() => handleCreateClicked()}>
-        Add
-      </Button>
+    <Flex gap="middle" vertical>
+      <Flex justify="flex-end">
+        <Button type="primary" onClick={() => handleCreateClicked()}>
+          Add
+        </Button>
+      </Flex>
 
       <Table
         onChange={handleTableChange}
@@ -227,19 +229,21 @@ export default function GenericTable({ itemColumns, listPath, children }) {
         loading={loading}
         rowKey="id"
       />
-
-      {/*TODO: ended here*/}
-      <GenericTableModal
-        key={selectedItem?.id===null ? selectedItem.id : formModeRef.current}
-        title={formModeRef.current === "UPDATE" ? "Update item" : "Create item"}
-        formMode={formModeRef.current}
-        selectedItem={selectedItem}
-        listPath={listPath}
-        open={open}
-        handleModalClose={handelModalClose}
-      >
-        {children}
-      </GenericTableModal>
-    </>
+      {open && (
+        <GenericTableModal
+          key={selectedItem?.id}
+          title={
+            formModeRef.current === "UPDATE" ? "Update item" : "Create item"
+          }
+          formMode={formModeRef.current}
+          selectedItem={selectedItem}
+          listPath={listPath}
+          open={open}
+          handleModalClose={handelModalClose}
+        >
+          {children}
+        </GenericTableModal>
+      )}
+    </Flex>
   );
 }

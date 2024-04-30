@@ -35,7 +35,7 @@ const productColumns = [
 
 export default function Expense() {
   return (
-    <GenericTable itemColumns={productColumns} listPath="/expenses">
+    <GenericTable itemColumns={productColumns} listPath="expenses">
       <>
         <Form.Item label="Expense" name="name">
           <Input />

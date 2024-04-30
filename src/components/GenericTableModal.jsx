@@ -2,6 +2,8 @@ import { useLocation } from "react-router-dom";
 import { useState } from "react";
 import { Button, Modal, Form, InputNumber, Input, Space } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
+import { useFetch } from "../hooks/useFetch.jsx";
+import { fetchData } from "../utils.jsx";
 
 const formItemLayout = {
   // wrapperCol: {
@@ -19,28 +21,31 @@ export default function GenericTableModal({
   handleModalClose,
   children,
 }) {
-
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  console.log(formMode);
 
   const handleOk = async () => {
     try {
       const values = await form?.validateFields();
-      setIsLoading(true);
-      console.log(values);
-
+      let urlPath = `${listPath}`;
+      let method = "POST";
 
       if (formMode === "UPDATE") {
-        console.log("udpate");
-      } else if (formMode === "CREATE") {
-        console.log("create");
+        urlPath = `${listPath}/${selectedItem.id}`;
+        method = "PUT";
       }
-
-      setTimeout(() => {
-        form?.resetFields();
-        handleModalClose();
-        setIsLoading(false);
-      }, 2000);
+      await fetchData(
+        values,
+        urlPath,
+        setIsLoading,
+        setError,
+        method,
+        null,
+        form,
+        handleModalClose,
+      );
     } catch (error) {
       console.log("Failed:", error);
     }
@@ -48,13 +53,14 @@ export default function GenericTableModal({
   const handleCancel = () => {
     console.log("Clicked cancel button");
     handleModalClose();
+    form?.resetFields();
   };
 
   const handleSubmit = () => {
     console.log("submit");
   };
 
-  const initialValues = formMode === "UPDATE" ? { ...selectedItem } : null;
+  const initialValues = formMode === "UPDATE" ? { ...selectedItem } : {};
 
   return (
     <Modal
@@ -66,6 +72,7 @@ export default function GenericTableModal({
       okText="Save"
     >
       <Form
+        key={formMode}
         initialValues={initialValues}
         variant="outlined"
         layout="vertical"
