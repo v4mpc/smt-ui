@@ -1,8 +1,8 @@
 import GenericTable from "../components/GenericTable.jsx";
 import ThousandSeparator from "../components/ThousandSeparator.jsx";
-import {Button, InputNumber, Form, Input, DatePicker} from "antd";
+import { InputNumber, Form, Input, DatePicker} from "antd";
 
-const productColumns = [
+const expenseColumns = [
   {
     title: "#",
     dataIndex: "id",
@@ -35,7 +35,7 @@ const productColumns = [
 
 export default function Expense() {
   return (
-    <GenericTable itemColumns={productColumns} listPath="expenses">
+    <GenericTable itemColumns={expenseColumns} listPath="expenses">
       <>
         <Form.Item
             label="Date"

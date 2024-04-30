@@ -8,7 +8,7 @@ import Sell from "./pages/Sell.jsx";
 import Expense from "./pages/Expense.jsx";
 import Reports from "./pages/Reports.jsx";
 import StockAdjustment from "./pages/StockAdjustment.jsx";
-import CustomDrawer from "./components/CustomDrawer.jsx";
+import Unit from "./pages/Unit.jsx";
 
 export default function App() {
   return (
@@ -28,6 +28,7 @@ export default function App() {
               path="stock-on-hand/adjustment/:id"
               element={<StockAdjustment />}
             />
+            <Route path="settings/units" element={<Unit />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>

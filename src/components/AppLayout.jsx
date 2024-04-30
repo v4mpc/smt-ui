@@ -7,7 +7,7 @@ import {
     FileTextOutlined, LogoutOutlined,
     SettingOutlined, UploadOutlined,
 } from "@ant-design/icons";
-import {Layout, Menu, theme, Breadcrumb} from "antd";
+import {Layout, Menu, theme} from "antd";
 import BreadCrumbNav from "./BreadCrumbNav.jsx";
 
 const {Header, Content, Footer, Sider} = Layout;
@@ -21,7 +21,7 @@ const items = [
     {
         key: "stock-on-hand",
         icon: <DropboxOutlined/>,
-        // implement if no pagination in the list page to auto add pagination by default
+        // TODO::implement if no pagination in the list page to auto add pagination by default
         label: <Link to="/stock-on-hand?_page=1&_limit=10">Stock on hand</Link>,
 
     },
@@ -35,7 +35,7 @@ const items = [
         label: "Settings",
         children: [
             {key: "general", label: "General"},
-            {key: "units", label: "Units"},
+            {key: "units", label: <Link to="/settings/units?_page=1&_limit=10">Units</Link>},
             {key: "products", label: "Products"},
             {key: "profile", label: "Profile"},
         ],
@@ -44,40 +44,6 @@ const items = [
 ];
 
 
-const columns = [
-    {
-        title: 'Name',
-        dataIndex: 'name',
-    },
-    {
-        title: 'Age',
-        dataIndex: 'age',
-    },
-    {
-        title: 'Address',
-        dataIndex: 'address',
-    },
-];
-const data = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-    },
-    {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sydney No. 1 Lake Park',
-    },
-];
 
 const AppLayout = () => {
 
