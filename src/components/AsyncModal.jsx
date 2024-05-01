@@ -7,10 +7,10 @@ import {
   openNotification,
   toSalePayload,
 } from "../utils.jsx";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
-const AsyncModal = ({ postData }) => {
+const AsyncModal = ({ postData,isSale }) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [error, setError] = useState("");
@@ -39,7 +39,7 @@ const AsyncModal = ({ postData }) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(toSalePayload(postData, false)),
+        body: JSON.stringify(toSalePayload(postData, isSale)),
       });
       if (!resp.ok) {
         throw new Error("Network response was not ok");
@@ -61,7 +61,7 @@ const AsyncModal = ({ postData }) => {
         Buy...
       </Button>
       <Modal
-        title="Confirm purchase"
+        title="Confirm action"
         open={open}
         onOk={handleOk}
         okText="Yes"
