@@ -1,7 +1,11 @@
 import { notification } from "antd";
 import dayjs from "dayjs";
 
-export const BASE_URL = "http://localhost:3000";
+// export const BASE_URL = "http://localhost:3000";
+export const BASE_URL = "http://localhost:8080";
+
+export const DEFAULT_PAGE_SIZE = 20;
+
 export const DATE_FORMAT = "YYYY-MM-DD";
 
 export const API_ROUTES = {

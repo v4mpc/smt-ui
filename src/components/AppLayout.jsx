@@ -9,6 +9,8 @@ import {
 } from "@ant-design/icons";
 import {Layout, Menu, theme} from "antd";
 import BreadCrumbNav from "./BreadCrumbNav.jsx";
+import {DEFAULT_PAGE_SIZE} from "../utils.jsx";
+
 
 const {Header, Content, Footer, Sider} = Layout;
 const items = [
@@ -22,12 +24,12 @@ const items = [
         key: "stock-on-hand",
         icon: <DropboxOutlined/>,
         // TODO::implement if no pagination in the list page to auto add pagination by default
-        label: <Link to="/stock-on-hand?_page=1&_limit=10">Stock on hand</Link>,
+        label: <Link to="/stock-on-hand?page=0">Stock on hand</Link>,
 
     },
     {key: "buy", icon: <DownloadOutlined style={{fontSize:"1.1rem"}}/>, label: <Link to="/buy">Buy</Link>},
     {key: "sell", icon: <UploadOutlined/>, label: <Link to="/sell">Sell</Link>},
-    {key: "expense", icon: <CreditCardOutlined/>, label: <Link to="/expense?_page=1&_limit=10" >Expense</Link>},
+    {key: "expense", icon: <CreditCardOutlined/>, label: <Link to="/expense?page=0" >Expense</Link>},
     {key: "reports", icon: <FileTextOutlined/>, label: <Link to="/reports">Reports</Link>},
     {
         key: "settings",
@@ -35,8 +37,8 @@ const items = [
         label: "Settings",
         children: [
             {key: "general", label: "General"},
-            {key: "units", label: <Link to="/settings/units?_page=1&_limit=10">Units</Link>},
-            {key: "products", label: <Link to="/settings/products?_page=1&_limit=10">Products</Link>},
+            {key: "units", label: <Link to={`/settings/units?page=1&size=${DEFAULT_PAGE_SIZE}`}>Units</Link>},
+            {key: "products", label: <Link to={`/settings/products?page=1&size=${DEFAULT_PAGE_SIZE}`}>Products</Link>},
             {key: "profile", label: "Profile"},
         ],
     },

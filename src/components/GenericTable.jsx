@@ -5,16 +5,12 @@ import { SearchOutlined } from "@ant-design/icons";
 import { useEffect, useState, useRef } from "react";
 import qs from "qs";
 import { BASE_URL } from "../utils.jsx";
-import StockAdjustmentModal from "../pages/StockAdjustment.jsx";
 import GenericTableModal from "./GenericTableModal.jsx";
 
 const getItemParams = (params) => ({
-  _limit: params.pagination?.pageSize,
-  _page: params.pagination?.current,
-  ...params,
+  size: params.pagination?.pageSize,
+  page: params.pagination?.current-1,
 });
-
-
 
 // listPath='/products'
 export default function GenericTable({ itemColumns, listPath, children }) {
@@ -25,8 +21,8 @@ export default function GenericTable({ itemColumns, listPath, children }) {
   const [open, setOpen] = useState(false);
   const [tableParams, setTableParams] = useState({
     pagination: {
-      current: searchParams.get("_page"),
-      pageSize: searchParams.get("_limit"),
+      current: searchParams.get("page"),
+      pageSize: searchParams.get("size"),
     },
   });
 
@@ -171,13 +167,12 @@ export default function GenericTable({ itemColumns, listPath, children }) {
       throw new Error("Network response was not ok");
     }
     const respData = await resp.json();
-    setData(respData);
+    setData(respData.content);
     setLoading(false);
     setTableParams({
-      ...tableParams,
       pagination: {
         ...tableParams.pagination,
-        total: 8,
+        total: respData.totalElements,
       },
     });
   }
@@ -196,12 +191,10 @@ export default function GenericTable({ itemColumns, listPath, children }) {
   const handelModalClose = () => {
     setOpen(false);
   };
-  const handleTableChange = (pagination, filters, sorter) => {
-    setSearchParams({ _page: pagination.current, _limit: pagination.pageSize });
+  const handleTableChange = (pagination) => {
+    setSearchParams({ page: pagination.current, size: pagination.pageSize });
     setTableParams({
       pagination,
-      filters,
-      ...sorter,
     });
 
     // `dataSource` is useless since `pageSize` changed
