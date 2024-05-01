@@ -30,7 +30,7 @@ const productColumns = [
     title: "Unit",
     key: "Unit",
     dataIndex: "unit",
-    render: (_, record) => record.unit?.code,
+    render: (_, record) => record.unitOfMeasure?.code,
   },
 
   {

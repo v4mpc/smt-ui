@@ -24,7 +24,7 @@ const items = [
         key: "stock-on-hand",
         icon: <DropboxOutlined/>,
         // TODO::implement if no pagination in the list page to auto add pagination by default
-        label: <Link to="/stock-on-hand?page=0">Stock on hand</Link>,
+        label: <Link to={`/stock-on-hand?page=1&size=${DEFAULT_PAGE_SIZE}`}>Stock on hand</Link>,
 
     },
     {key: "buy", icon: <DownloadOutlined style={{fontSize:"1.1rem"}}/>, label: <Link to="/buy">Buy</Link>},
