@@ -116,7 +116,6 @@ export default function Buy() {
   const totalSales = sales.reduce((acc, curr) => {
     return acc + curr.saleQuantity * curr.buyPrice;
   }, 0);
-  console.log(sales);
   function handleProductAdd(product) {
     setStockOnhand((stockOnHand) => stockOnHand.map(p => (product.id === p.id) ? { ...p, saleQuantity: 1 } : {...p}));
   }

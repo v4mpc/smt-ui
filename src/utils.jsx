@@ -16,6 +16,7 @@ export const API_ROUTES = {
   adjust: "stock-on-hand/adjust",
   stockOnhandAll: "stock-on-hand/all",
   units: "units",
+  bulkSale:"sales/bulk"
 };
 
 export function openNotification(key, type, title, description) {
@@ -24,6 +25,19 @@ export function openNotification(key, type, title, description) {
     message: title,
     description: description,
   });
+}
+
+export function toSalePayload(data,isSale){
+
+    return data.map(item=>({
+      productId:item.id,
+      isSale:isSale,
+      saleAdjustment:0,
+      adjustmentQuantity:item.saleQuantity,
+      adjustmentDate:dayjs(item.saleDate, DATE_FORMAT)
+
+    }));
+
 }
 
 export async function fetchData(

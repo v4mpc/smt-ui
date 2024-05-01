@@ -1,13 +1,19 @@
 import React, { useState } from "react";
 import { Button, Modal } from "antd";
-import { BASE_URL, openNotification } from "../utils.jsx";
+import {
+  API_ROUTES,
+  BASE_URL,
+  DATE_FORMAT,
+  openNotification,
+  toSalePayload,
+} from "../utils.jsx";
 import { useSearchParams, useNavigate } from "react-router-dom";
+import dayjs from "dayjs";
 
 const AsyncModal = ({ postData }) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [error, setError] = useState("");
-  const urlPath = "products";
   const navigate = useNavigate();
 
   const showModal = () => {
@@ -23,25 +29,22 @@ const AsyncModal = ({ postData }) => {
 
   async function saveSales() {
     try {
+      Date.prototype.toISOString = function () {
+        return dayjs(this).format(DATE_FORMAT);
+      };
       setConfirmLoading(true);
       setError("");
-      const resp = await fetch(`${BASE_URL}/${urlPath}`, {
+      const resp = await fetch(`${BASE_URL}/${API_ROUTES.bulkSale}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(postData),
+        body: JSON.stringify(toSalePayload(postData, false)),
       });
       if (!resp.ok) {
         throw new Error("Network response was not ok");
       }
-      // openNotification(
-      //   "sales-notification",
-      //   "success",
-      //   "Success",
-      //   "Sales was success",
-      // );
-      navigate("/stock-on-hand");
+      navigate("success");
     } catch (e) {
       console.error(e);
       openNotification("sales-notification", "error", "Error", e.message);
@@ -61,10 +64,12 @@ const AsyncModal = ({ postData }) => {
         title="Confirm purchase"
         open={open}
         onOk={handleOk}
+        okText="Yes"
+        cancelText="No"
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
       >
-        <p>{modalText}</p>
+        <p>Are you sure you want to Proceed?</p>
       </Modal>
     </>
   );
