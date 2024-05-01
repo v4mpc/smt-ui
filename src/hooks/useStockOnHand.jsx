@@ -1,13 +1,14 @@
 import { useState } from "react";
 import { useFetch } from "./useFetch.jsx";
 import dayjs from "dayjs";
+import {API_ROUTES} from "../utils.jsx";
 
 export function useStockOnHand() {
   const [stockOnHand, setStockOnHand] = useState([]);
   const [serverStockOnHand, isLoading, error] = useFetch(
     stockOnHand,
     setStockOnHand,
-    "products",
+    API_ROUTES.stock_on_hand,
     "stockOnHandErrorKey",
   );
 

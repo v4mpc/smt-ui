@@ -1,5 +1,6 @@
 import GenericTable from "../components/GenericTable.jsx";
-import { Form, Input} from "antd";
+import { Form, Input } from "antd";
+import { API_ROUTES } from "../utils.jsx";
 
 const unitColumns = [
   {
@@ -27,31 +28,35 @@ const unitColumns = [
 ];
 
 export default function Unit() {
-  return(
-
-
-
-      <GenericTable itemColumns={unitColumns} listPath="units">
-        <>
-          <Form.Item label="Code" name="code"  rules={[
+  return (
+    <GenericTable itemColumns={unitColumns} listPath={API_ROUTES.units}>
+      <>
+        <Form.Item
+          label="Code"
+          name="code"
+          rules={[
             {
               required: true,
               message: "Please input!",
             },
-          ]}>
-            <Input />
-          </Form.Item>
+          ]}
+        >
+          <Input />
+        </Form.Item>
 
-          <Form.Item label="Name" name="name"  rules={[
+        <Form.Item
+          label="Name"
+          name="name"
+          rules={[
             {
               required: true,
               message: "Please input!",
             },
-          ]}>
-            <Input />
-          </Form.Item>
-
-        </>
-      </GenericTable>
+          ]}
+        >
+          <Input />
+        </Form.Item>
+      </>
+    </GenericTable>
   );
 }

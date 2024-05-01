@@ -1,6 +1,7 @@
 import GenericTable from "../components/GenericTable.jsx";
 import ThousandSeparator from "../components/ThousandSeparator.jsx";
-import { InputNumber, Form, Input, DatePicker} from "antd";
+import { InputNumber, Form, Input, DatePicker } from "antd";
+import { API_ROUTES } from "../utils.jsx";
 
 const expenseColumns = [
   {
@@ -35,21 +36,23 @@ const expenseColumns = [
 
 export default function Expense() {
   return (
-    <GenericTable itemColumns={expenseColumns} listPath="expenses">
+    <GenericTable itemColumns={expenseColumns} listPath={API_ROUTES.expenses}>
       <>
         <Form.Item
-            label="Date"
-            name="date"
-            rules={[
-              {
-                required: true,
-                message: "Please input!",
-              },
-            ]}
+          label="Date"
+          name="date"
+          rules={[
+            {
+              required: true,
+              message: "Please input!",
+            },
+          ]}
         >
-          <DatePicker style={{
-            width: '100%',
-          }}  />
+          <DatePicker
+            style={{
+              width: "100%",
+            }}
+          />
         </Form.Item>
         <Form.Item label="Expense" name="name">
           <Input />

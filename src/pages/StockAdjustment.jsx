@@ -15,7 +15,6 @@ export default function StockAdjustmentModal({
   handleSetProduct,
 }) {
   const open = !!selectedProduct;
-  console.log(selectedProduct);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);

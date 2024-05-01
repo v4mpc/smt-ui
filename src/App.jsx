@@ -9,6 +9,7 @@ import Expense from "./pages/Expense.jsx";
 import Reports from "./pages/Reports.jsx";
 import StockAdjustment from "./pages/StockAdjustment.jsx";
 import Unit from "./pages/Unit.jsx";
+import Product from "./pages/Product.jsx";
 
 export default function App() {
   return (
@@ -29,6 +30,7 @@ export default function App() {
               element={<StockAdjustment />}
             />
             <Route path="settings/units" element={<Unit />} />
+            <Route path="settings/products" element={<Product />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>

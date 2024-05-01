@@ -1,4 +1,34 @@
 {
+  "products": [
+    {
+      "id": 6,
+      "name": "Cheese - Cheddar, Mild",
+      "buyPrice": 342,
+      "salePrice": 980,
+      "description": "",
+      "active": false,
+      "unit": {
+        "code": "@",
+        "name": "Each",
+        "id": 2
+      }
+    },
+    {
+      "name": "Helo",
+      "buyPrice": 3434,
+      "salePrice": 343,
+      "description": "dsfsdf",
+      "id": 7
+    },
+    {
+      "name": "sdfdsf",
+      "buyPrice": 343434,
+      "salePrice": 3434,
+      "active": false,
+      "description": "sdfsdf",
+      "id": 8
+    }
+  ],
   "units": [
     {
       "code": "K",
@@ -79,7 +109,7 @@
       "id": 10
     }
   ],
-  "products": [
+  "stockonhands": [
     {
       "id": 1,
       "productName": "Juice - Grapefruit, 341 Ml",

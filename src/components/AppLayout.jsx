@@ -36,7 +36,7 @@ const items = [
         children: [
             {key: "general", label: "General"},
             {key: "units", label: <Link to="/settings/units?_page=1&_limit=10">Units</Link>},
-            {key: "products", label: "Products"},
+            {key: "products", label: <Link to="/settings/products?_page=1&_limit=10">Products</Link>},
             {key: "profile", label: "Profile"},
         ],
     },

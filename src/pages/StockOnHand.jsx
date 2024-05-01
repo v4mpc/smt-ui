@@ -1,15 +1,10 @@
-import {
-  Button,
-  Table,
-  Input,
-  Space,
-} from "antd";
+import { Button, Table, Input, Space } from "antd";
 import Highlighter from "react-highlight-words";
 import { useSearchParams } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
 import { useEffect, useState, useRef } from "react";
 import qs from "qs";
-import { BASE_URL} from "../utils.jsx";
+import { API_ROUTES, BASE_URL } from "../utils.jsx";
 import StockAdjustmentModal from "./StockAdjustment.jsx";
 import ThousandSeparator from "../components/ThousandSeparator.jsx";
 
@@ -151,7 +146,7 @@ export default function StockOnHand() {
   async function fetchData() {
     setLoading(true);
     const resp = await fetch(
-      `${BASE_URL}/products?${qs.stringify(getSohParams(tableParams))}`,
+      `${BASE_URL}/${API_ROUTES.stock_on_hand}?${qs.stringify(getSohParams(tableParams))}`,
     );
 
     if (!resp.ok) {
@@ -201,7 +196,7 @@ export default function StockOnHand() {
       title: "Stock on hand",
       dataIndex: "stockOnHand",
       key: "stockOnHand",
-      render:(_,record)=> <ThousandSeparator value={record.stockOnHand}/>
+      render: (_, record) => <ThousandSeparator value={record.stockOnHand} />,
     },
     {
       title: "Action",
