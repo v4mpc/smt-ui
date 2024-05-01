@@ -12,8 +12,9 @@ export const API_ROUTES = {
   products: "products",
   expenses: "expenses",
   sales: "sales",
-  stock_on_hand: "stock-on-hand",
+  stockOnhand: "stock-on-hand",
   adjust: "stock-on-hand/adjust",
+  stockOnhandAll: "stock-on-hand/all",
   units: "units",
 };
 
@@ -62,7 +63,7 @@ export async function fetchData(
     setError("");
     const resp = await fetch(`${BASE_URL}/${path}`, initData);
     if (!resp.ok) {
-      console.log(await resp.json());
+
       throw new Error("Network response was not ok");
     }
     const respData = await resp.json();

@@ -50,9 +50,6 @@ const items = [
 const AppLayout = () => {
 
     const location = useLocation();
-
-    console.log(location.pathname.slice(1))
-
     const {
         token: {colorBgContainer, borderRadiusLG},
     } = theme.useToken();

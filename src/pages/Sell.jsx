@@ -49,12 +49,12 @@ export default function Sell() {
       title: "Stock on hand",
       dataIndex: "stockOnHand",
       key: "stockOnHand",
-      width:"10%",
+      width:"30%",
     },
     {
       title: "Action",
       key: "action",
-      width:"10%",
+      width:"30%",
       render: (_, record) => (
         <Button
           type="primary"

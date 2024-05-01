@@ -7,19 +7,20 @@ import {
   Flex,
   Typography,
   DatePicker,
-  Descriptions,
+  Tag,
   Input,
-  Space,
 } from "antd";
 import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import { useStockOnHand } from "../hooks/useStockOnHand.jsx";
 import { useState } from "react";
 import AsyncModal from "../components/AsyncModal.jsx";
+import {API_ROUTES} from "../utils.jsx";
+import ThousandSeparator from "../components/ThousandSeparator.jsx";
 
-const { Text, Link } = Typography;
+const { Text, Link,Title } = Typography;
 
 export default function Buy() {
-  const [stockOnHand, setStockOnHand, isLoading, error] = useStockOnHand();
+  const [stockOnhand, setStockOnhand, isLoading, setIsLoading,error,setError] = useStockOnHand(`${API_ROUTES.stockOnhandAll}?nonZero=true`);
   const [searchText, setSearchText] = useState("");
   const productColumns = [
     {
@@ -31,20 +32,23 @@ export default function Buy() {
       title: "Product",
       key: "product",
       render: (_, record) => (
-        <Flex vertical>
+        <Flex vertical gap="middle">
           <Text strong>{record.productName}</Text>
           <Flex gap="middle" vertical={false}>
-            <div>Buy : {record.buyPrice}</div>
-            <div>Sale : {record.salePrice}</div>
+            <Tag>Balance  <ThousandSeparator value={record.stockOnHand}/> {record.unit}</Tag>
+            <Tag bordered={false} color="processing">
+              Sale  <ThousandSeparator value={record.salePrice}/> TZS
+            </Tag>
           </Flex>
         </Flex>
       ),
     },
 
     {
-      title: "Stock on hand",
-      dataIndex: "stockOnHand",
-      key: "stockOnHand",
+      title: "Buy price(TZS)",
+      dataIndex: "buyPrice",
+      key: "buyPrice",
+      render:(_,record)=><ThousandSeparator value={record.buyPrice}/>
     },
     {
       title: "Action",
@@ -97,8 +101,7 @@ export default function Buy() {
       ),
     },
   ];
-  console.log(stockOnHand);
-  const filteredDataSource = stockOnHand.filter((item) =>
+  const filteredDataSource = stockOnhand.filter((item) =>
     searchText === ""
       ? item
       : item.productName
@@ -106,22 +109,20 @@ export default function Buy() {
           .includes(searchText.toLowerCase()),
   );
 
-  const notSales = filteredDataSource.filter((p) => p.saleQuantity <= 0);
-  const sales = stockOnHand.filter((p) => p.saleQuantity > 0);
-  const totalSales = sales.reduce((acc, curr) => {
-    return acc + curr.saleQuantity * curr.salePrice;
-  }, 0);
 
+
+  const notSales = filteredDataSource.filter(p => p.saleQuantity <= 0);
+  const sales = stockOnhand.filter(p => p.saleQuantity>0);
+  const totalSales = sales.reduce((acc, curr) => {
+    return acc + curr.saleQuantity * curr.buyPrice;
+  }, 0);
+  console.log(sales);
   function handleProductAdd(product) {
-    setStockOnHand((products) =>
-      products.map((p) =>
-        product.id === p.id ? { ...p, saleQuantity: 1 } : p,
-      ),
-    );
+    setStockOnhand((stockOnHand) => stockOnHand.map(p => (product.id === p.id) ? { ...p, saleQuantity: 1 } : {...p}));
   }
 
   function handleProductRemove(product) {
-    setStockOnHand((products) =>
+    setStockOnhand((products) =>
       products.map((p) =>
         product.id === p.id ? { ...p, saleQuantity: 0 } : p,
       ),
@@ -130,7 +131,7 @@ export default function Buy() {
 
   function handleInputQuantityChanged(product, inputValue) {
     if (inputValue == null) return;
-    setStockOnHand((products) =>
+    setStockOnhand((products) =>
       products.map((p) =>
         product.id === p.id ? { ...p, saleQuantity: inputValue } : p,
       ),
@@ -139,7 +140,7 @@ export default function Buy() {
 
   function handleInputDateChanged(product, dateValue) {
     if (dateValue == null) return;
-    setStockOnHand((products) =>
+    setStockOnhand((products) =>
       products.map((p) =>
         product.id === p.id ? { ...p, saleDate: dateValue } : p,
       ),
@@ -153,40 +154,51 @@ export default function Buy() {
   return (
     <>
       <Row gutter={16}>
-        <Col span={10}>
-          <Space direction="vertical">
-            <Input
-              placeholder="Search Product..."
-              onChange={(e) => handleFilterProducts(e.target.value)}
-            />
-            <Table
-              columns={productColumns}
-              dataSource={notSales}
-              bordered={true}
-              loading={isLoading}
-              rowKey="id"
-            />
-          </Space>
-        </Col>
-        <Col span={12}>
-          <Table
-            columns={saleColumns}
-            dataSource={sales}
+        <Col span={9}>
+
+      <Flex gap="middle" vertical>
+        <Input
+            placeholder="Search Product..."
+            onChange={(e) => handleFilterProducts(e.target.value)}
+        />
+        <Table
+            columns={productColumns}
+            dataSource={notSales}
             bordered={true}
+            loading={isLoading}
             rowKey="id"
-            summary={() => (
-              <Table.Summary fixed>
-                <Table.Summary.Row>
-                  <Table.Summary.Cell colSpan={4} index={0}>
-                    Total Sales
-                  </Table.Summary.Cell>
-                  <Table.Summary.Cell colSpan={2} index={1}>
-                    {totalSales.toLocaleString()} TZS
-                  </Table.Summary.Cell>
-                </Table.Summary.Row>
-              </Table.Summary>
-            )}
-          />
+        />
+      </Flex>
+
+        </Col>
+        <Col span={15}>
+           <Flex gap="middle" vertical>
+             <Text strong>
+               Items to Buy
+             </Text>
+             <Table
+                 columns={saleColumns}
+                 dataSource={sales}
+                 bordered={true}
+                 rowKey="id"
+                 summary={() => (
+                     <Table.Summary fixed>
+                       <Table.Summary.Row>
+                         <Table.Summary.Cell colSpan={4} index={0}>
+                           <Text strong>
+                             Total Cost
+                           </Text>
+                         </Table.Summary.Cell>
+                         <Table.Summary.Cell colSpan={2} index={1}>
+                           <Text strong>
+                             {totalSales.toLocaleString()} TZS
+                           </Text>
+                         </Table.Summary.Cell>
+                       </Table.Summary.Row>
+                     </Table.Summary>
+                 )}
+             />
+           </Flex>
         </Col>
       </Row>
       <Row justify="end">

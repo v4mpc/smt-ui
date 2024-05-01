@@ -7,7 +7,7 @@ export function useFetch(data, setData, urlPath, errorNotificationKey) {
 
   useEffect(() => {
     fetchData(data, urlPath, setIsLoading, setError, "GET", setData);
-  }, [setData, urlPath,errorNotificationKey]);
+  }, []);
 
   return [data, isLoading, error];
 }

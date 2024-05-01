@@ -146,7 +146,7 @@ export default function StockOnHand() {
   async function fetchData() {
     setLoading(true);
     const resp = await fetch(
-      `${BASE_URL}/${API_ROUTES.stock_on_hand}?${qs.stringify(getSohParams(tableParams))}`,
+      `${BASE_URL}/${API_ROUTES.stockOnhand}?${qs.stringify(getSohParams(tableParams))}`,
     );
 
     if (!resp.ok) {
