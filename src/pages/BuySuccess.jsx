@@ -11,7 +11,7 @@ const BuySuccess = () => (
                 <Link to="/dashboard">Go Dashboard</Link>
             </Button>,
             <Button key="buy">
-                <Link to="/buy">Buy Again</Link>
+                <Link to="/sell">Buy Again</Link>
             </Button>,
         ]}
     />

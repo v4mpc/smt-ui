@@ -61,7 +61,7 @@ export default function GenericBuy({urlPath, isSale}) {
     },
 
     {
-      title: `${isSale?"Sale ":"Buy "} price(TZS)`,
+      title: `${isSale?"Sell ":"Buy "} price(TZS)`,
       dataIndex: "buyPrice",
       key: "buyPrice",
       render: (_, record) => isSale?<ThousandSeparator value={record.salePrice} />:<ThousandSeparator value={record.buyPrice} />,
@@ -84,12 +84,16 @@ export default function GenericBuy({urlPath, isSale}) {
       title: "Quantity",
       key: "quantity",
       render: (_, record) => (
-        <InputNumber
-          min={0}
-          onChange={(e) => handleInputQuantityChanged(record, e)}
-          max={record.stockOnHand}
-          defaultValue={record.saleQuantity}
-        />
+          isSale?(        <InputNumber
+              min={0}
+              onChange={(e) => handleInputQuantityChanged(record, e)}
+              max={record.stockOnHand}
+              defaultValue={record.saleQuantity}
+          />):(        <InputNumber
+              min={0}
+              onChange={(e) => handleInputQuantityChanged(record, e)}
+              defaultValue={record.saleQuantity}
+          />)
       ),
     },
 
@@ -187,7 +191,7 @@ export default function GenericBuy({urlPath, isSale}) {
         </Col>
         <Col span={15}>
           <Flex gap="middle" vertical>
-            <Text strong>Items to {`${isSale?"Sale":"Buy"}`}</Text>
+            <Text strong>Items to {`${isSale?"Sell":"Buy"}`}</Text>
             <Table
               columns={saleColumns}
               dataSource={sales}
@@ -211,7 +215,7 @@ export default function GenericBuy({urlPath, isSale}) {
       </Row>
       <Row justify="end">
         <Col>
-          <AsyncModal postData={sales} isSale={false}></AsyncModal>
+          <AsyncModal postData={sales} isSale={isSale}></AsyncModal>
         </Col>
       </Row>
     </>

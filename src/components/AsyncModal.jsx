@@ -17,9 +17,18 @@ const AsyncModal = ({ postData,isSale }) => {
   const navigate = useNavigate();
 
   const showModal = () => {
+    console.log(postData);
+    if(postData.length===0){
+      openNotification("sales-notification", "warning", "Warning", `Select at least 1 item to ${isSale?"Sell":"Buy"}`);
+      return;
+    }
     setOpen(true);
   };
   const handleOk = () => {
+    if(postData.length===0){
+      openNotification("sales-notification", "warning", "Warning", `Select at least 1 item to ${isSale?"Sell":"Buy"}`);
+      return;
+    }
     saveSales();
   };
   const handleCancel = () => {
@@ -58,7 +67,7 @@ const AsyncModal = ({ postData,isSale }) => {
   return (
     <>
       <Button type="primary" size="large" onClick={showModal}>
-        Buy...
+        {`${isSale?"Sell...":"Buy..."}`}
       </Button>
       <Modal
         title="Confirm action"
@@ -69,7 +78,7 @@ const AsyncModal = ({ postData,isSale }) => {
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
       >
-        <p>Are you sure you want to Proceed?</p>
+        <p>{`Are you sure you want to ${isSale?"Sell":"Buy"} these items?`}</p>
       </Modal>
     </>
   );
