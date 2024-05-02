@@ -16,7 +16,8 @@ export const API_ROUTES = {
   adjust: "stock-on-hand/adjust",
   stockOnhandAll: "stock-on-hand/all",
   units: "units",
-  bulkSale:"sales/bulk"
+  unitsAll: "units/all",
+  bulkSale: "sales/bulk",
 };
 
 export function openNotification(key, type, title, description) {
@@ -27,17 +28,14 @@ export function openNotification(key, type, title, description) {
   });
 }
 
-export function toSalePayload(data,isSale){
-
-    return data.map(item=>({
-      productId:item.id,
-      isSale:isSale,
-      saleAdjustment:0,
-      adjustmentQuantity:item.saleQuantity,
-      adjustmentDate:dayjs(item.saleDate, DATE_FORMAT)
-
-    }));
-
+export function toSalePayload(data, isSale) {
+  return data.map((item) => ({
+    productId: item.id,
+    isSale: isSale,
+    saleAdjustment: 0,
+    adjustmentQuantity: item.saleQuantity,
+    adjustmentDate: dayjs(item.saleDate, DATE_FORMAT),
+  }));
 }
 
 export async function fetchData(
@@ -58,18 +56,24 @@ export async function fetchData(
   };
 
   if (method === "POST" || method === "PUT") {
-    console.log(data);
-    if (data.hasOwnProperty("createdAt")) {
+    let modifiedData = data;
+    if (Object.hasOwn(modifiedData, "createdAt")) {
       Date.prototype.toISOString = function () {
         return dayjs(this).format(DATE_FORMAT);
       };
-      initData.body = JSON.stringify({
-        ...data,
+      modifiedData = {
+        ...modifiedData,
         createdAt: data.createdAt.format(DATE_FORMAT),
-      });
-      console.log(initData.body);
+      };
     }
-    initData.body = JSON.stringify(data);
+
+    if (Object.hasOwn(modifiedData, "unitOfMeasure")) {
+      modifiedData = {
+        ...modifiedData,
+        unitOfMeasure: { id: modifiedData.unitOfMeasure },
+      };
+    }
+    initData.body = JSON.stringify(modifiedData);
   }
 
   try {
@@ -77,7 +81,6 @@ export async function fetchData(
     setError("");
     const resp = await fetch(`${BASE_URL}/${path}`, initData);
     if (!resp.ok) {
-
       throw new Error("Network response was not ok");
     }
     const respData = await resp.json();

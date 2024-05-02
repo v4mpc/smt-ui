@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { Modal, Form,} from "antd";
+import { Modal, Form } from "antd";
 import { DATE_FORMAT, fetchData } from "../utils.jsx";
 import dayjs from "dayjs";
 
@@ -17,6 +16,7 @@ export default function GenericTableModal({
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
   const handleOk = async () => {
     try {
       const values = await form?.validateFields();
@@ -52,15 +52,29 @@ export default function GenericTableModal({
     console.log("submit");
   };
 
-  const initialValues =
-    formMode === "UPDATE"
-      ? selectedItem.hasOwnProperty("createdAt")
-        ? {
-            ...selectedItem,
-            createdAt: dayjs(selectedItem.createdAt, DATE_FORMAT),
-          }
-        : selectedItem
-      : {};
+  let modifiedInitialValues = { ...selectedItem };
+
+  if ("UPDATE" === formMode) {
+    if (Object.hasOwn(selectedItem, "createdAt")) {
+      modifiedInitialValues = {
+        ...modifiedInitialValues,
+        createdAt: dayjs(selectedItem.createdAt, DATE_FORMAT),
+      };
+    }
+
+    if (Object.hasOwn(selectedItem, "unitOfMeasure")) {
+      modifiedInitialValues = {
+        ...modifiedInitialValues,
+        unitOfMeasure: selectedItem.unitOfMeasure.id,
+      };
+    }
+  }
+
+  if ("CREATE" === formMode) {
+    modifiedInitialValues = { active: true };
+  }
+
+  const initialValues = modifiedInitialValues;
 
   return (
     <Modal

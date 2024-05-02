@@ -1,7 +1,9 @@
 import GenericTable from "../components/GenericTable.jsx";
 import { Checkbox, Form, Input, InputNumber, Tag, Flex, Select } from "antd";
 import ThousandSeparator from "../components/ThousandSeparator.jsx";
-import { API_ROUTES } from "../utils.jsx";
+import { API_ROUTES, fetchData } from "../utils.jsx";
+import { useEffect, useState } from "react";
+import { useFetch } from "../hooks/useFetch.jsx";
 
 const productColumns = [
   {
@@ -51,6 +53,21 @@ const productColumns = [
 ];
 
 export default function Product() {
+  const [data, setData] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState("");
+
+  useEffect(() => {
+    fetchData(
+      data,
+      API_ROUTES.unitsAll,
+      setIsLoading,
+      setError,
+      "GET",
+      setData,
+    );
+  }, []);
+
   return (
     <GenericTable itemColumns={productColumns} listPath={API_ROUTES.products}>
       <>
@@ -67,7 +84,14 @@ export default function Product() {
           <Input />
         </Form.Item>
 
-        <Form.Item label="Buy price" name="buyPrice">
+        <Form.Item label="Buy price"
+                   rules={[
+                     {
+                       required: true,
+                       message: "Please input!",
+                     },
+                   ]}
+                   name="buyPrice">
           <InputNumber
             style={{
               width: "100%",
@@ -75,7 +99,14 @@ export default function Product() {
           />
         </Form.Item>
 
-        <Form.Item label="Sale price" name="salePrice">
+        <Form.Item label="Sale price"
+                   rules={[
+                     {
+                       required: true,
+                       message: "Please input!",
+                     },
+                   ]}
+                   name="salePrice">
           <InputNumber
             style={{
               width: "100%",
@@ -83,10 +114,16 @@ export default function Product() {
           />
         </Form.Item>
 
-        <Form.Item label="Select">
-          <Select>
-            <Select.Option value="demo">Demo</Select.Option>
-          </Select>
+        <Form.Item label="Unit"
+                   rules={[
+                     {
+                       required: true,
+                       message: "Please input!",
+                     },
+                   ]}
+
+                   name="unitOfMeasure">
+          <Select placeholder="Select unit" loading={isLoading} options={data.map(unit=>({value:unit.id,label:unit.code}))}></Select>
         </Form.Item>
 
         <Form.Item name="active" valuePropName="checked">
