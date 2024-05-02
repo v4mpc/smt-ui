@@ -7,10 +7,17 @@ import qs from "qs";
 import { BASE_URL } from "../utils.jsx";
 import GenericTableModal from "./GenericTableModal.jsx";
 
-const getItemParams = (params) => ({
-  size: params.pagination?.pageSize,
-  page: params.pagination?.current-1,
-});
+const getItemParams = (params) =>
+  params.filters.name
+    ? {
+        size: params.pagination?.pageSize,
+        page: params.pagination?.current - 1,
+        name: params.filters.name[0],
+      }
+    : {
+        size: params.pagination?.pageSize,
+        page: params.pagination?.current - 1,
+      };
 
 // listPath='/products'
 export default function GenericTable({ itemColumns, listPath, children }) {
@@ -23,6 +30,9 @@ export default function GenericTable({ itemColumns, listPath, children }) {
     pagination: {
       current: searchParams.get("page"),
       pageSize: searchParams.get("size"),
+    },
+    filters: {
+      name: searchParams.get("name"),
     },
   });
 
@@ -170,6 +180,7 @@ export default function GenericTable({ itemColumns, listPath, children }) {
     setData(respData.content);
     setLoading(false);
     setTableParams({
+      ...tableParams,
       pagination: {
         ...tableParams.pagination,
         total: respData.totalElements,
@@ -191,10 +202,26 @@ export default function GenericTable({ itemColumns, listPath, children }) {
   const handelModalClose = () => {
     setOpen(false);
   };
-  const handleTableChange = (pagination) => {
-    setSearchParams({ page: pagination.current, size: pagination.pageSize });
+  const handleTableChange = (pagination, filters) => {
+
+
+    setSearchParams((prev) =>
+      filters.name
+        ? {
+          ...prev,
+            page: pagination.current,
+            size: pagination.pageSize,
+            name: filters.name[0],
+          }
+        : {
+            ...prev,
+            page: pagination.current,
+            size: pagination.pageSize,
+          },
+    );
     setTableParams({
       pagination,
+      filters,
     });
 
     // `dataSource` is useless since `pageSize` changed

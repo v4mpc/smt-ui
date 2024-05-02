@@ -4,6 +4,8 @@ import ThousandSeparator from "../components/ThousandSeparator.jsx";
 import { API_ROUTES, fetchData } from "../utils.jsx";
 import { useEffect, useState } from "react";
 import { useFetch } from "../hooks/useFetch.jsx";
+import FilterDropdown from "../components/FilterDropdown.jsx";
+import {SearchOutlined} from "@ant-design/icons";
 
 const productColumns = [
   {
@@ -26,11 +28,22 @@ const productColumns = [
         )}
       </Flex>
     ),
+
+    filterIcon: (filtered) => (
+        <SearchOutlined
+            style={{
+              color: filtered ? "#1677ff" : undefined,
+            }}
+        />
+    ),
+    filterDropdown:({setSelectedKeys, selectedKeys, confirm, clearFilters, close,})=><FilterDropdown clearFilters={clearFilters} setSelectedKeys={setSelectedKeys} selectedKeys={selectedKeys} close={close} confirm={confirm}/>
+
+
   },
 
   {
     title: "Unit",
-    key: "Unit",
+    key: "unit",
     dataIndex: "unit",
     render: (_, record) => record.unitOfMeasure?.code,
   },
@@ -38,17 +51,20 @@ const productColumns = [
   {
     title: "Buy price(TZS)",
     key: "buyprice",
+    dataIndex: "buyprice",
     render: (_, record) => <ThousandSeparator value={record.buyPrice} />,
   },
 
   {
     title: "Sale Price(TZS)",
     key: "saleprice",
+    dataIndex: "saleprice",
     render: (_, record) => <ThousandSeparator value={record.salePrice} />,
   },
   {
     title: "Action",
     key: "action",
+    dataIndex: "action"
   },
 ];
 
