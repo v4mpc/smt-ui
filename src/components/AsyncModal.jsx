@@ -10,7 +10,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import dayjs from "dayjs";
 
-const AsyncModal = ({ postData,isSale }) => {
+const AsyncModal = ({ postData, isSale }) => {
   const [open, setOpen] = useState(false);
   const [confirmLoading, setConfirmLoading] = useState(false);
   const [error, setError] = useState("");
@@ -18,15 +18,25 @@ const AsyncModal = ({ postData,isSale }) => {
 
   const showModal = () => {
     console.log(postData);
-    if(postData.length===0){
-      openNotification("sales-notification", "warning", "Warning", `Select at least 1 item to ${isSale?"Sell":"Buy"}`);
+    if (postData.length === 0) {
+      openNotification(
+        "sales-notification",
+        "warning",
+        "Warning",
+        `Select at least 1 item to ${isSale ? "Sell" : "Buy"}`,
+      );
       return;
     }
     setOpen(true);
   };
   const handleOk = () => {
-    if(postData.length===0){
-      openNotification("sales-notification", "warning", "Warning", `Select at least 1 item to ${isSale?"Sell":"Buy"}`);
+    if (postData.length === 0) {
+      openNotification(
+        "sales-notification",
+        "warning",
+        "Warning",
+        `Select at least 1 item to ${isSale ? "Sell" : "Buy"}`,
+      );
       return;
     }
     saveSales();
@@ -53,7 +63,7 @@ const AsyncModal = ({ postData,isSale }) => {
       if (!resp.ok) {
         throw new Error("Network response was not ok");
       }
-      navigate("success");
+      navigate("/tx-success", { state: { isSale: isSale } });
     } catch (e) {
       console.error(e);
       openNotification("sales-notification", "error", "Error", e.message);
@@ -67,7 +77,7 @@ const AsyncModal = ({ postData,isSale }) => {
   return (
     <>
       <Button type="primary" size="large" onClick={showModal}>
-        {`${isSale?"Sell...":"Buy..."}`}
+        {`${isSale ? "Sell..." : "Buy..."}`}
       </Button>
       <Modal
         title="Confirm action"
@@ -78,7 +88,7 @@ const AsyncModal = ({ postData,isSale }) => {
         confirmLoading={confirmLoading}
         onCancel={handleCancel}
       >
-        <p>{`Are you sure you want to ${isSale?"Sell":"Buy"} these items?`}</p>
+        <p>{`Are you sure you want to ${isSale ? "Sell" : "Buy"} these items?`}</p>
       </Modal>
     </>
   );

@@ -1,19 +1,30 @@
+import { Button, Result } from "antd";
+import { Link, useLocation } from "react-router-dom";
 
-import { Button, Result } from 'antd';
-import {Link} from "react-router-dom";
-const BuySuccess = () => (
+const BuySuccess = () => {
+  const location = useLocation();
+  console.log(location.state);
+
+
+  // TODO:: Should not be able to navigate to this page is isSale not set
+  return (
     <Result
-        status="success"
-        title="Successfully Purchased New Products"
-        subTitle="Order number: 2017182818828182881 Cloud server configuration takes 1-5 minutes, please wait."
-        extra={[
-            <Button type="primary" key="console">
-                <Link to="/dashboard">Go Dashboard</Link>
-            </Button>,
-            <Button key="buy">
-                <Link to="/sell">Buy Again</Link>
-            </Button>,
-        ]}
+      status="success"
+      title={`Successfully ${location.state?.isSale ? "Sold" : "Bought new"} Products`}
+      subTitle="Happy Selling"
+      extra={[
+        <Button type="primary" key="console">
+          <Link to="/dashboard">Go Dashboard</Link>
+        </Button>,
+        <Button key="buy">
+          {location.state?.isSale ? (
+            <Link to="/sell">Sell Again</Link>
+          ) : (
+            <Link to="/buy">Buy Again</Link>
+          )}
+        </Button>,
+      ]}
     />
-);
+  );
+};
 export default BuySuccess;
