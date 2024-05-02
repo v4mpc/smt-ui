@@ -1,6 +1,5 @@
-import { useLocation } from "react-router-dom";
 import { useState } from "react";
-import { Button, Modal, Form, InputNumber, Input, Space } from "antd";
+import { Modal, Form, InputNumber, Input, } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
 
 const formItemLayout = {
@@ -47,7 +46,7 @@ export default function StockAdjustmentModal({
   const validateAmount = (rule, value, callback) => {
     if (value === 0) {
       callback("Adjustment quantity can not be zero");
-    } else if (value < 0 && value * -1 > selectedProduct.stockOnHand) {
+    } else if (value < 0 && value * -1 > selectedProduct.stockOnhand) {
       callback("Negative adjustment should not exceed stock on hand");
     } else {
       callback();
@@ -65,8 +64,8 @@ export default function StockAdjustmentModal({
     >
       <Form
         initialValues={{
-          name: selectedProduct.productName,
-          stockOnHand: selectedProduct.stockOnHand,
+          name: selectedProduct.product?.name,
+          stockOnhand: selectedProduct.stockOnhand,
         }}
         variant="outlined"
         layout="vertical"
@@ -84,7 +83,7 @@ export default function StockAdjustmentModal({
             title: "Stock on hand as of now (2024-04-29,00:00)",
             icon: <InfoCircleOutlined />,
           }}
-          name="stockOnHand"
+          name="stockOnhand"
         >
           <InputNumber
             style={{

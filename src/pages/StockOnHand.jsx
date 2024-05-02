@@ -183,13 +183,15 @@ export default function StockOnHand() {
 
     {
       title: "Buy price(TZS)",
-      key: "product",
+      key: "buy",
+      dataIndex: "buy",
       render: (_, record) => <ThousandSeparator value={record.product.buyPrice} />,
     },
 
     {
-      title: "Sale Price(TZS)",
-      key: "product",
+      title: "Sell Price(TZS)",
+      key: "sell",
+      dataIndex: "sell",
       render: (_, record) => <ThousandSeparator value={record.product.salePrice} />,
     },
 
@@ -202,6 +204,7 @@ export default function StockOnHand() {
     {
       title: "Action",
       key: "action",
+      dataIndex: "action",
       render: (_, record) => (
         <Button type="primary" onClick={() => handleSetProduct(record)}>
           Adjust
@@ -243,7 +246,7 @@ export default function StockOnHand() {
         rowKey="id"
       />
       <StockAdjustmentModal
-        key={selectedProduct?.id}
+        key={selectedProduct.product?.id}
         selectedProduct={selectedProduct}
         handleSetProduct={handleSetProduct}
       />
