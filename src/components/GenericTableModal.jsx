@@ -54,10 +54,10 @@ export default function GenericTableModal({
 
   const initialValues =
     formMode === "UPDATE"
-      ? selectedItem.hasOwnProperty("date")
+      ? selectedItem.hasOwnProperty("createdAt")
         ? {
             ...selectedItem,
-            date: dayjs(selectedItem.date, DATE_FORMAT),
+            createdAt: dayjs(selectedItem.createdAt, DATE_FORMAT),
           }
         : selectedItem
       : {};

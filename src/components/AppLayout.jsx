@@ -29,7 +29,7 @@ const items = [
     },
     {key: "buy", icon: <DownloadOutlined style={{fontSize:"1.1rem"}}/>, label: <Link to="/buy">Buy</Link>},
     {key: "sell", icon: <UploadOutlined/>, label: <Link to="/sell">Sell</Link>},
-    {key: "expense", icon: <CreditCardOutlined/>, label: <Link to="/expense?page=0" >Expense</Link>},
+    {key: "expense", icon: <CreditCardOutlined/>, label: <Link to={`/expense?page=1&size=${DEFAULT_PAGE_SIZE}`} >Expense</Link>},
     {key: "reports", icon: <FileTextOutlined/>, label: <Link to="/reports">Reports</Link>},
     {
         key: "settings",

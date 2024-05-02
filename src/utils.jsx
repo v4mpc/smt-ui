@@ -59,13 +59,13 @@ export async function fetchData(
 
   if (method === "POST" || method === "PUT") {
     console.log(data);
-    if (data.hasOwnProperty("date")) {
+    if (data.hasOwnProperty("createdAt")) {
       Date.prototype.toISOString = function () {
         return dayjs(this).format(DATE_FORMAT);
       };
       initData.body = JSON.stringify({
         ...data,
-        date: data.date.format(DATE_FORMAT),
+        createdAt: data.createdAt.format(DATE_FORMAT),
       });
       console.log(initData.body);
     }

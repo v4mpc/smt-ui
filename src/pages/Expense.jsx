@@ -12,8 +12,8 @@ const expenseColumns = [
   },
   {
     title: "Date",
-    key: "date",
-    dataIndex: "date",
+    key: "createdAt",
+    dataIndex: "createdAt",
     width: "30%",
   },
 
@@ -40,11 +40,11 @@ export default function Expense() {
       <>
         <Form.Item
           label="Date"
-          name="date"
+          name="createdAt"
           rules={[
             {
               required: true,
-              message: "Please input!",
+              message: "Please date",
             },
           ]}
         >
@@ -54,10 +54,24 @@ export default function Expense() {
             }}
           />
         </Form.Item>
-        <Form.Item label="Expense" name="name">
+        <Form.Item
+            rules={[
+              {
+                required: true,
+                message: "Please name",
+              },
+            ]}
+            label="Expense" name="name">
           <Input />
         </Form.Item>
-        <Form.Item label="Amount" name="amount">
+        <Form.Item
+            rules={[
+              {
+                required: true,
+                message: "Please amount",
+              },
+            ]}
+            label="Amount" name="amount">
           <InputNumber
             style={{
               width: "100%",
