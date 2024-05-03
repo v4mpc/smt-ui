@@ -137,7 +137,7 @@ export default function Dashboard() {
             </Flex>
           </Flex>
           <Flex vertical>
-            <Line options={options} data={chartData} />
+            <Line options={options} data={chartData} height={"90%"} />
           </Flex>
           <Flex vertical={false} gap="middle">
             <Table
