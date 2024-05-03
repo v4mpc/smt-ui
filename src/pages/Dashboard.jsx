@@ -1,4 +1,4 @@
-import { Flex, Statistic, DatePicker, Table, Spin, Button } from "antd";
+import { Flex, Statistic, DatePicker, Table, Spin, Button, Card } from "antd";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -40,53 +40,49 @@ const options = {
 };
 
 const columns = [
-
   {
     title: "Date",
     dataIndex: "createdAt",
-    key:"createdAt"
+    key: "createdAt",
   },
-    {
+  {
     title: "Product",
     dataIndex: "productName",
-    key:"productName"
+    key: "productName",
   },
   {
     title: "Sold",
     dataIndex: "quantity",
-    key:"quantity"
+    key: "quantity",
   },
   {
     title: "Total(TZS)",
     dataIndex: "total",
-    key:"total",
-    render:(_,record)=>(<ThousandSeparator value={record.quantity*record.salePrice}/>)
+    key: "total",
+    render: (_, record) => (
+      <ThousandSeparator value={record.quantity * record.salePrice} />
+    ),
   },
 ];
 
-
-
 const expensesColumn = [
-
   {
     title: "Date",
     dataIndex: "createdAt",
-    key:"createdAt"
+    key: "createdAt",
   },
   {
     title: "Name",
     dataIndex: "name",
-    key:"name"
+    key: "name",
   },
   {
     title: "Amount(TZS)",
     dataIndex: "amount",
-    key:"amount",
-    render:(_,record)=>(<ThousandSeparator value={record.amount}/>)
-
+    key: "amount",
+    render: (_, record) => <ThousandSeparator value={record.amount} />,
   },
 ];
-
 
 export default function Dashboard() {
   const [dashboardData, isLoading, chartData, selectedMonth, setSelectedMonth] =
@@ -119,8 +115,8 @@ export default function Dashboard() {
               />
 
               <Statistic
-                  title="Sales Profit"
-                  value={dashboardData?.totalSalesProfit}
+                title="Sales Profit"
+                value={dashboardData?.totalSalesProfit}
               />
               <Statistic
                 title="Total Expenses"
@@ -140,23 +136,35 @@ export default function Dashboard() {
             <Line options={options} data={chartData} height={"90%"} />
           </Flex>
           <Flex vertical={false} gap="middle">
-            <Table
-              title={() => "Top Sales"}
-              columns={columns}
-              bordered={true}
-              dataSource={dashboardData?.topSales}
-              style={{width:"50%"}}
-            />
-            <Table
-              title={() => "Top Expenses"}
-              columns={expensesColumn}
-              bordered={true}
-              style={{
-                width:"50%",
+            <Card
+                styles={{ body: { padding: "0px" } }}
+                style={{
+                  width: "50%",
+                }}
+            >
 
-            }}
-              dataSource={dashboardData?.topExpenses}
-            />
+                <Table
+                    title={() => "Top Sales"}
+                    columns={columns}
+                    dataSource={dashboardData?.topSales}
+                />
+
+            </Card>
+
+
+
+            <Card
+              styles={{ body: { padding: "0px" } }}
+              style={{
+                width: "50%",
+              }}
+            >
+              <Table
+                title={() => "Top Expenses"}
+                columns={expensesColumn}
+                dataSource={dashboardData?.topExpenses}
+              />
+            </Card>
           </Flex>
         </>
       )}
