@@ -13,6 +13,7 @@ import { Line } from "react-chartjs-2";
 import { useDashboard } from "../hooks/useDashboard.jsx";
 import useNotification from "../hooks/useNotification.jsx";
 import Loader from "../components/Loader.jsx";
+import ThousandSeparator from "../components/ThousandSeparator.jsx";
 
 ChartJS.register(
   CategoryScale,
@@ -39,45 +40,58 @@ const options = {
 };
 
 const columns = [
+
   {
+    title: "Date",
+    dataIndex: "createdAt",
+    key:"createdAt"
+  },
+    {
     title: "Product",
-    dataIndex: "product",
+    dataIndex: "productName",
+    key:"productName"
   },
   {
     title: "Sold",
-    dataIndex: "sold",
+    dataIndex: "quantity",
+    key:"quantity"
   },
   {
-    title: "Total",
+    title: "Total(TZS)",
     dataIndex: "total",
+    key:"total",
+    render:(_,record)=>(<ThousandSeparator value={record.quantity*record.salePrice}/>)
   },
 ];
-const tableData = [
+
+
+
+const expensesColumn = [
+
   {
-    key: "1",
-    product: "John Brown",
-    sold: 32,
-    total: "New York No. 1 Lake Park",
+    title: "Date",
+    dataIndex: "createdAt",
+    key:"createdAt"
   },
   {
-    key: "2",
-    product: "Jim Green",
-    sold: 42,
-    total: "London No. 1 Lake Park",
+    title: "Name",
+    dataIndex: "name",
+    key:"name"
   },
   {
-    key: "3",
-    product: "Joe Black",
-    sold: 32,
-    total: "Sydney No. 1 Lake Park",
+    title: "Amount(TZS)",
+    dataIndex: "amount",
+    key:"amount",
+    render:(_,record)=>(<ThousandSeparator value={record.amount}/>)
+
   },
 ];
+
 
 export default function Dashboard() {
   const [dashboardData, isLoading, chartData, selectedMonth, setSelectedMonth] =
     useDashboard();
   const [openNotificationWithIcon, contextHolder] = useNotification();
-  // if (isLoading) return <Loader/>;
   return (
     <Flex gap="middle" vertical>
       <Flex justify="space-between">
@@ -97,7 +111,7 @@ export default function Dashboard() {
         <Loader />
       ) : (
         <>
-          <Flex vertical>
+          <Flex vertical gap="large">
             <Flex justify="space-between">
               <Statistic
                 title="Total Sales"
@@ -125,28 +139,24 @@ export default function Dashboard() {
           <Flex vertical>
             <Line options={options} data={chartData} />
           </Flex>
-          <Flex vertical={false} justify="space-between">
+          <Flex vertical={false} gap="middle">
             <Table
               title={() => "Top Sales"}
               columns={columns}
-              dataSource={tableData}
+              bordered={true}
+              dataSource={dashboardData?.topSales}
+              style={{width:"50%"}}
             />
             <Table
               title={() => "Top Expenses"}
-              columns={columns}
-              dataSource={tableData}
-            />
-            <Table
-              title={() => "Top Selling"}
-              columns={columns}
-              dataSource={tableData}
-            />
+              columns={expensesColumn}
+              bordered={true}
+              style={{
+                width:"50%",
 
-            <Button
-              onClick={() => openNotificationWithIcon("info", "dg", "sfsdf")}
-            >
-              Click me
-            </Button>
+            }}
+              dataSource={dashboardData?.topExpenses}
+            />
           </Flex>
         </>
       )}
