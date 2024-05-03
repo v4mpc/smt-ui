@@ -26,6 +26,9 @@ export default function GenericTableModal({
       if (formMode === "UPDATE") {
         urlPath = `${listPath}/${selectedItem.id}`;
         method = "PUT";
+        if (Object.hasOwn(selectedItem, "adjustmentDate")) {
+          urlPath = `${listPath}`;
+        }
       }
       await fetchData(
         values,

@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Modal, Form, InputNumber, Input, } from "antd";
 import { InfoCircleOutlined } from "@ant-design/icons";
+import dayjs from "dayjs";
+import {DATE_FORMAT} from "../utils.jsx";
 
 const formItemLayout = {
   // wrapperCol: {
@@ -66,6 +68,8 @@ export default function StockAdjustmentModal({
         initialValues={{
           name: selectedProduct.product?.name,
           stockOnhand: selectedProduct.stockOnhand,
+          productId:selectedProduct.product?.id,
+          adjustmentDate:dayjs().format(DATE_FORMAT)
         }}
         variant="outlined"
         layout="vertical"
@@ -73,6 +77,17 @@ export default function StockAdjustmentModal({
         onFinish={handleSubmit}
         form={form}
       >
+
+
+        <Form.Item label="ProductId" name="productId" hidden={true}>
+          <Input disabled={true} />
+        </Form.Item>
+
+
+        <Form.Item label="adjustmentDate" name="adjustmentDate" hidden={true}>
+          <Input disabled={true} />
+        </Form.Item>
+
         <Form.Item label="Product" name="name">
           <Input disabled={true} />
         </Form.Item>
@@ -95,7 +110,7 @@ export default function StockAdjustmentModal({
 
         <Form.Item
           label="Quantity to adjust(@)"
-          name="amount"
+          name="adjustmentQuantity"
           tooltip={{
             title:
               "Negative(-) value decreases stock e.g -80, Positive value increases stock e.g 80.",

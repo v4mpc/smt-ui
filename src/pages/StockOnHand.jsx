@@ -1,12 +1,15 @@
-import { Button, Table, Input, Space } from "antd";
+import { Button, Table, Input, Space,InputNumber,Form } from "antd";
 import Highlighter from "react-highlight-words";
 import { useSearchParams } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
 import { useEffect, useState, useRef } from "react";
 import qs from "qs";
-import { API_ROUTES, BASE_URL } from "../utils.jsx";
+import {API_ROUTES, BASE_URL, DATE_FORMAT} from "../utils.jsx";
 import StockAdjustmentModal from "./StockAdjustment.jsx";
 import ThousandSeparator from "../components/ThousandSeparator.jsx";
+import GenericTableModal from "../components/GenericTableModal.jsx";
+import { InfoCircleOutlined } from "@ant-design/icons";
+import dayjs from "dayjs";
 
 const getSohParams = (params) => ({
   size: params.pagination?.pageSize,
@@ -16,7 +19,8 @@ const getSohParams = (params) => ({
 
 export default function StockOnHand() {
   const [searchParams, setSearchParams] = useSearchParams();
-  // const [stockOnHand, setStockOnHand, isLoading, error] = useStockOnHand();
+  const formModeRef = useRef("CREATE");
+  const [open, setOpen] = useState(false);
   const [data, setData] = useState();
   const [loading, setLoading] = useState(false);
   const [tableParams, setTableParams] = useState({
@@ -39,6 +43,17 @@ export default function StockOnHand() {
   const handleReset = (clearFilters) => {
     clearFilters();
     setSearchText("");
+  };
+
+
+  const validateAmount = (rule, value, callback) => {
+    if (value === 0) {
+      callback("Adjustment quantity can not be zero");
+    } else if (value < 0 && value * -1 > selectedProduct.stockOnhand) {
+      callback("Negative adjustment should not exceed stock on hand");
+    } else {
+      callback();
+    }
   };
   const getColumnSearchProps = (dataIndex) => ({
     filterDropdown: ({
@@ -214,7 +229,13 @@ export default function StockOnHand() {
   ];
 
   const handleSetProduct = (product) => {
-    setSelectedProduct(product);
+    setSelectedProduct({...product,productId:product.product.id,adjustmentDate:dayjs().format(DATE_FORMAT),name:product.product.name});
+    formModeRef.current = "UPDATE";
+    setOpen(true);
+  };
+
+  const handelModalClose = () => {
+    setOpen(false);
   };
 
   const handleTableChange = (pagination, filters, sorter) => {
@@ -245,11 +266,89 @@ export default function StockOnHand() {
         loading={loading}
         rowKey="id"
       />
-      <StockAdjustmentModal
-        key={selectedProduct.product?.id}
-        selectedProduct={selectedProduct}
-        handleSetProduct={handleSetProduct}
-      />
+
+      {open && (
+          <GenericTableModal
+              key={selectedProduct?.id}
+              title={
+                formModeRef.current === "UPDATE" ? "Update item" : "Create item"
+              }
+              formMode={formModeRef.current}
+              selectedItem={selectedProduct}
+              listPath={API_ROUTES.adjust}
+              open={open}
+              handleModalClose={handelModalClose}
+              refetchData={fetchData}
+          >
+            <Form.Item label="ProductId" name="productId" hidden={true}>
+              <Input disabled={true} />
+            </Form.Item>
+
+
+            <Form.Item label="adjustmentDate" name="adjustmentDate" hidden={true}>
+              <Input disabled={true} />
+            </Form.Item>
+
+            <Form.Item label="Product" name="name">
+              <Input disabled={true} />
+            </Form.Item>
+
+            <Form.Item
+                label="Stock on hand(@)"
+                tooltip={{
+                  title: "Stock on hand as of now (2024-04-29,00:00)",
+                  icon: <InfoCircleOutlined />,
+                }}
+                name="stockOnhand"
+            >
+              <InputNumber
+                  style={{
+                    width: "100%",
+                  }}
+                  disabled={true}
+              />
+            </Form.Item>
+
+            <Form.Item
+                label="Quantity to adjust(@)"
+                name="adjustmentQuantity"
+                tooltip={{
+                  title:
+                      "Negative(-) value decreases stock e.g -80, Positive value increases stock e.g 80.",
+                  icon: <InfoCircleOutlined />,
+                }}
+                rules={[
+                  {
+                    required: true,
+                    message: "Please input a number",
+                  },
+
+                  {
+                    validator: validateAmount,
+                  },
+                ]}
+            >
+              <InputNumber
+                  style={{
+                    width: "100%",
+                  }}
+              />
+            </Form.Item>
+
+            <Form.Item
+                rules={[
+                  {
+                    required: true,
+                    message: "Provide reason!",
+                  },
+                ]}
+                label="Adjustment Reason"
+                name="reason"
+            >
+              <Input.TextArea />
+            </Form.Item>
+          </GenericTableModal>
+      )}
     </>
   );
 }
