@@ -1,4 +1,4 @@
-import { Flex, Statistic, DatePicker, Table, Spin, Button, Card } from "antd";
+import { Flex, Statistic, DatePicker, Table,Divider, Card,Tooltip } from "antd";
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -6,7 +6,7 @@ import {
   PointElement,
   LineElement,
   Title,
-  Tooltip,
+
   Legend,
 } from "chart.js";
 import { Line } from "react-chartjs-2";
@@ -14,6 +14,8 @@ import { useDashboard } from "../hooks/useDashboard.jsx";
 import useNotification from "../hooks/useNotification.jsx";
 import Loader from "../components/Loader.jsx";
 import ThousandSeparator from "../components/ThousandSeparator.jsx";
+import {DASHBOARD_DIVIDER_ORIENTATION, DASHBOARD_METRICS_PRECISION} from "../utils.jsx";
+import { InfoCircleTwoTone} from "@ant-design/icons";
 
 ChartJS.register(
   CategoryScale,
@@ -21,7 +23,6 @@ ChartJS.register(
   PointElement,
   LineElement,
   Title,
-  Tooltip,
   Legend,
 );
 
@@ -33,7 +34,7 @@ const options = {
       position: "top",
     },
     title: {
-      display: true,
+      display: false,
       text: "Sales and Expenses trends",
     },
   },
@@ -87,19 +88,23 @@ const expensesColumn = [
 export default function Dashboard() {
   const [dashboardData, isLoading, chartData, selectedMonth, setSelectedMonth] =
     useDashboard();
-  const [openNotificationWithIcon, contextHolder] = useNotification();
   return (
     <Flex gap="middle" vertical>
       <Flex justify="space-between">
-        <h2>{selectedMonth.format("MMMM YYYY")} | Stats</h2>
-        <Flex align="center">
+        <h2>{selectedMonth.format("MMMM YYYY")} | Metrics</h2>
+        <Flex align="center" gap="middle">
+
+          <Tooltip title="Select Year Month to dispay metrics" style={{marginRight:"2px"}}>
+              <span><InfoCircleTwoTone style={{fontSize:"20px"}} /></span>
+          </Tooltip>
           <DatePicker
-            value={selectedMonth}
-            onChange={(e) => {
-              e && setSelectedMonth(e);
-            }}
-            picker="month"
+              value={selectedMonth}
+              onChange={(e) => {
+                  e && setSelectedMonth(e);
+              }}
+              picker="month"
           />
+
         </Flex>
       </Flex>
 
@@ -109,32 +114,58 @@ export default function Dashboard() {
         <>
           <Flex vertical gap="large">
             <Flex justify="space-between">
+
+                <Card>
               <Statistic
                 title="Total Sales"
                 value={dashboardData?.totalSales}
+                precision={DASHBOARD_METRICS_PRECISION}
               />
+                </Card>
 
+            <Card>
+                <Statistic
+                    title="Sales Profit"
+                    value={dashboardData?.totalSalesProfit}
+                    precision={DASHBOARD_METRICS_PRECISION}
+                />
+            </Card>
+
+                <Card>
+                    <Statistic
+                        title="Total Expenses"
+                        value={dashboardData?.totalExpenses}
+                        precision={DASHBOARD_METRICS_PRECISION}
+                    />
+                </Card>
+
+          <Card>
               <Statistic
-                title="Sales Profit"
-                value={dashboardData?.totalSalesProfit}
+                  title="Net Profit"
+                  value={dashboardData?.totalNetProfit}
+                  precision={DASHBOARD_METRICS_PRECISION}
               />
-              <Statistic
-                title="Total Expenses"
-                value={dashboardData?.totalExpenses}
-              />
-              <Statistic
-                title="Net Profit"
-                value={dashboardData?.totalNetProfit}
-              />
-              <Statistic
-                title="Products Sold"
-                value={dashboardData?.productsSold}
-              />
+          </Card>
+
+                <Card>
+                    <Statistic
+                        title="Products Sold"
+                        value={dashboardData?.productsSold}
+                        precision={DASHBOARD_METRICS_PRECISION}
+                    />
+                </Card>
             </Flex>
           </Flex>
+            <Flex>
+                <Divider orientation={DASHBOARD_DIVIDER_ORIENTATION}>Sales / Expenses trends</Divider>
+            </Flex>
           <Flex vertical>
             <Line options={options} data={chartData} height={"90%"} />
           </Flex>
+            <Flex>
+                <Divider orientation={DASHBOARD_DIVIDER_ORIENTATION}>Sales / Expenses summary</Divider>
+            </Flex>
+
           <Flex vertical={false} gap="middle">
             <Card
                 styles={{ body: { padding: "0px" } }}

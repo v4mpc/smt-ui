@@ -39,7 +39,7 @@ export function useDashboard() {
       "GET",
       setDashboardData,
     );
-  }, [selectedMonth]);
+  }, [selectedMonth,yearMonth]);
 
   return [
     dashboardData,

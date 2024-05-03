@@ -8,6 +8,9 @@ export const DEFAULT_PAGE_SIZE = 20;
 
 export const DATE_FORMAT = "YYYY-MM-DD";
 
+export const DASHBOARD_METRICS_PRECISION=0;
+export const DASHBOARD_DIVIDER_ORIENTATION="left"
+
 export const API_ROUTES = {
   products: "products",
   expenses: "expenses",
