@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import { fetchData} from "../utils.jsx";
+import {API_ROUTES, fetchData} from "../utils.jsx";
+import {useSearchParams} from "react-router-dom";
 
 
 export function useDashboard() {
@@ -8,6 +9,7 @@ export function useDashboard() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const [selectedMonth, setSelectedMonth] = useState(dayjs());
+  const yearMonth=selectedMonth.format('YYYY-MM');
 
 
   const chartData = {
@@ -31,7 +33,7 @@ export function useDashboard() {
   useEffect(() => {
     fetchData(
       dashboardData,
-      "dashboard",
+      `${API_ROUTES.dashboard}?m=${yearMonth}`,
       setIsLoading,
       setError,
       "GET",

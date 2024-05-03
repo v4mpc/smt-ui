@@ -11,6 +11,7 @@ export const DATE_FORMAT = "YYYY-MM-DD";
 export const API_ROUTES = {
   products: "products",
   expenses: "expenses",
+  dashboard:"dashboard",
   sales: "sales",
   stockOnhand: "stock-on-hand",
   adjust: "stock-on-hand/adjust",

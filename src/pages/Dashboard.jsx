@@ -103,13 +103,18 @@ export default function Dashboard() {
                 title="Total Sales"
                 value={dashboardData?.totalSales}
               />
+
+              <Statistic
+                  title="Sales Profit"
+                  value={dashboardData?.totalSalesProfit}
+              />
               <Statistic
                 title="Total Expenses"
                 value={dashboardData?.totalExpenses}
               />
               <Statistic
-                title="Total Profit"
-                value={dashboardData?.totalProfit}
+                title="Net Profit"
+                value={dashboardData?.totalNetProfit}
               />
               <Statistic
                 title="Products Sold"

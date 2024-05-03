@@ -173,7 +173,6 @@ export default function GenericTable({ itemColumns, listPath, children }) {
     );
 
     if (!resp.ok) {
-      console.log(await resp.json());
       throw new Error("Network response was not ok");
     }
     const respData = await resp.json();
