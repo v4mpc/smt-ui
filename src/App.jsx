@@ -11,6 +11,7 @@ import StockAdjustment from "./pages/StockAdjustment.jsx";
 import Unit from "./pages/Unit.jsx";
 import Product from "./pages/Product.jsx";
 import BuySuccess from "./pages/BuySuccess.jsx";
+import ReportDesigner from "./pages/ReportDesigner.jsx";
 
 export default function App() {
   return (
@@ -33,6 +34,7 @@ export default function App() {
             />
             <Route path="settings/units" element={<Unit />} />
             <Route path="settings/products" element={<Product />} />
+            <Route path="settings/report-designer" element={<ReportDesigner />} />
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>

@@ -40,6 +40,7 @@ const items = [
             {key: "units", label: <Link to={`/settings/units?page=1&size=${DEFAULT_PAGE_SIZE}`}>Units</Link>},
             {key: "products", label: <Link to={`/settings/products?page=1&size=${DEFAULT_PAGE_SIZE}`}>Products</Link>},
             {key: "profile", label: "Profile"},
+            {key: "designer", label: <Link to="/settings/report-designer">Designer</Link>},
         ],
     },
     {key: "logout", icon: <LogoutOutlined />, label: <Link to="/logout">Logout</Link>},
