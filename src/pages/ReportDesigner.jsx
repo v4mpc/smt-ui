@@ -11,8 +11,8 @@ import {
   Button,
 } from "antd";
 
-import { useState } from "react";
-import { isEmpty } from "../utils.jsx";
+import {useEffect, useState} from "react";
+import {API_ROUTES, BASE_URL, fetchData, isEmpty} from "../utils.jsx";
 
 import AceEditor from "react-ace";
 
@@ -21,67 +21,6 @@ import "ace-builds/src-noconflict/mode-mysql";
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/ext-language_tools";
 
-const reports = [
-  {
-    id: 1,
-    reportName: "Ettore",
-    reportKey: "TMP",
-    description:
-      "In hac habitasse platea dictumst. Morbi vestibulum, velit id pretium iaculis, diam erat fermentum justo, nec condimentum neque sapien placerat ante. Nulla justo. Aliquam quis turpis eget elit sodales scelerisque. Mauris sit amet eros.",
-    displayOrder: 10,
-    active: false,
-    query: "select * from ettore p join sales s on s.id=p.sid;",
-    columnOption: '[{name:"jelo","displayName":"helo"}]',
-    filterOption: "[{}]",
-  },
-  {
-    id: 2,
-    reportName: "Donnamarie",
-    reportKey: "SCG",
-    description:
-      "Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi.",
-    displayOrder: 6,
-    active: false,
-    query: "select * from Donnamrie p join sales s on s.id=p.sid;",
-    columnOption: '[{name:"jelo","displayName":"helo"}]',
-    filterOption: "[{}]",
-  },
-  {
-    id: 3,
-    reportName: "Anna-diana",
-    reportKey: "WTB",
-    description:
-      "Morbi a ipsum. Integer a nibh. In quis justo. Maecenas rhoncus aliquam lacus.",
-    displayOrder: 5,
-    active: false,
-    query: "select * from anna-diana p join sales s on s.id=p.sid;",
-    columnOption: '[{name:"jelo","displayName":"helo"}]',
-    filterOption: "[{}]",
-  },
-  {
-    id: 4,
-    reportName: "Alessandro",
-    reportKey: "SUK",
-    description: "Nulla tempus.",
-    displayOrder: 9,
-    active: true,
-    query: "select * from alessandro p join sales s on s.id=p.sid;",
-    columnOption: '[{name:"jelo","displayName":"helo"}]',
-    filterOption: "[{}]",
-  },
-  {
-    id: 5,
-    reportName: "Cyrill",
-    reportKey: "YKG",
-    description:
-      "Integer ac leo. Pellentesque ultrices mattis odio. Donec vitae nisi. Nam ultrices, libero non mattis pulvinar, nulla pede ullamcorper augue, a suscipit nulla elit ac nulla. Sed vel enim sit amet nunc viverra dapibus.",
-    displayOrder: 1,
-    active: false,
-    query: "select * from products p join sales s on s.id=p.sid;",
-    columnOption: '[{name:"jelo","displayName":"helo"}]',
-    filterOption: "[{}]",
-  },
-];
 
 const AceEditorControl = ({ value, onChange, onBlur, ...rest }) => {
   return (
@@ -112,22 +51,46 @@ const ReportDesigner = () => {
     columnOption: "[]",
     filterOption: "[]",
   };
+
+  const [selectedReport, setSelectedReport] = useState(initialFormValues);
+  const [reports, setReports] = useState([]);
+  const [showForm, setshowForm] = useState(false);
+  const [selectedKeys, setSelectedKeys] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
+  const [form] = Form.useForm();
+
+
+
   const items = reports.map((p) => ({
     key: p.reportKey,
     label: <span>{`${p.active ? "✅" : "⛔️"} ${p.reportName}`}</span>,
   }));
-  const [selectedReport, setSelectedReport] = useState(initialFormValues);
-  const [showForm, setshowForm] = useState(false);
-  const [selectedKeys, setSelectedKeys] = useState([]);
+
+
+
 
   const handleshowForm = (value) => {
     setshowForm(value);
     setSelectedKeys([]);
     setSelectedReport(initialFormValues);
+
+
+
   };
 
-  const handleSubmit=(values)=>{
+  const handleSubmit=async (values)=>{
     console.log(values);
+    let urlPath = `${API_ROUTES.customReport}`;
+    let method = "POST";
+    if (Object.hasOwn(selectedReport,"id")) {
+      urlPath = `${API_ROUTES.customReport}/${selectedReport.id}`;
+      method = "PUT";
+    }
+
+    await fetchData(values,urlPath,setIsLoading,setError,method,null,form,getData);
+
+
   }
 
   const handleSetSelectedReport = ({ key }) => {
@@ -135,6 +98,26 @@ const ReportDesigner = () => {
     setshowForm(true)
     setSelectedReport(...reports.filter((r) => key === r.reportKey));
   };
+
+
+
+  async function getData() {
+    setIsLoading(true);
+    const resp = await fetch(
+        `${BASE_URL}/${API_ROUTES.customReport}`,
+    );
+    if (!resp.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const respData = await resp.json();
+    setReports(respData);
+    setIsLoading(false);
+  }
+
+
+  useEffect(() => {
+      getData()
+  }, []);
 
   return (
     <Row gutter={16}>
@@ -154,6 +137,7 @@ const ReportDesigner = () => {
       <Col span={18}>
         <Card
           title="Report details"
+
           extra={
             showForm ? (
               <Button type="primary" onClick={() => handleshowForm(false)}>
@@ -173,7 +157,8 @@ const ReportDesigner = () => {
               initialValues={selectedReport}
               layout="vertical"
               onFinish={handleSubmit}
-              disabled={false}
+              disabled={isLoading}
+              form={form}
             >
               <Form.Item
                 label="Report name"
