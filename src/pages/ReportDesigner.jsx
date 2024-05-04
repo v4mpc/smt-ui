@@ -20,6 +20,7 @@ import "ace-builds/src-noconflict/mode-json";
 import "ace-builds/src-noconflict/mode-mysql";
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/ext-language_tools";
+import DesignerForm from "../components/DesignerForm.jsx";
 
 
 const AceEditorControl = ({ value, onChange, onBlur, ...rest }) => {
@@ -48,56 +49,50 @@ const FormAceEditorItem = ({ label, name, rules, ...rest }) => {
 const ReportDesigner = () => {
   const initialFormValues = {
     active: true,
+    reportKey:null,
+    reportName:null,
+    query:'',
     columnOption: "[]",
     filterOption: "[]",
+    displayOrder:null,
+    description:null
   };
 
   const [selectedReport, setSelectedReport] = useState(initialFormValues);
   const [reports, setReports] = useState([]);
-  const [showForm, setshowForm] = useState(false);
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const [form] = Form.useForm();
 
 
 
-  const items = reports.map((p) => ({
+  const [formMode,setFormMode]=useState("CREATE");
+
+
+
+  const items = reports.map((p,index) => ({
     key: p.reportKey,
-    label: <span>{`${p.active ? "✅" : "⛔️"} ${p.reportName}`}</span>,
+    label: <span>{`${p.active ? "✅" : "⛔️"} ${index+1}. ${p.reportName}`}</span>,
   }));
 
 
 
 
-  const handleshowForm = (value) => {
-    setshowForm(value);
+  const handleShowCreateForm = () => {
     setSelectedKeys([]);
     setSelectedReport(initialFormValues);
-
-
+    setFormMode("CREATE");
 
   };
 
-  const handleSubmit=async (values)=>{
-    console.log(values);
-    let urlPath = `${API_ROUTES.customReport}`;
-    let method = "POST";
-    if (Object.hasOwn(selectedReport,"id")) {
-      urlPath = `${API_ROUTES.customReport}/${selectedReport.id}`;
-      method = "PUT";
-    }
 
-    await fetchData(values,urlPath,setIsLoading,setError,method,null,form,getData);
-
-
-  }
 
   const handleSetSelectedReport = ({ key }) => {
     setSelectedKeys([key]);
-    setshowForm(true)
     setSelectedReport(...reports.filter((r) => key === r.reportKey));
+    setFormMode("UPDATE");
   };
+
+
 
 
 
@@ -110,7 +105,8 @@ const ReportDesigner = () => {
       throw new Error("Network response was not ok");
     }
     const respData = await resp.json();
-    setReports(respData);
+    const sortedItems = [...respData].sort((a, b) => a.displayOrder-b.displayOrder);
+    setReports(sortedItems);
     setIsLoading(false);
   }
 
@@ -139,134 +135,14 @@ const ReportDesigner = () => {
           title="Report details"
 
           extra={
-            showForm ? (
-              <Button type="primary" onClick={() => handleshowForm(false)}>
-                Cancel
-              </Button>
-            ) : (
-              <Button type="primary" onClick={() => handleshowForm(true)}>
+            formMode==="CREATE" || (
+              <Button type="primary" onClick={() => handleShowCreateForm()}>
                 New Report
               </Button>
             )
           }
         >
-          { showForm ? (
-            <Form
-              key={selectedReport.reportKey}
-              variant="outlined"
-              initialValues={selectedReport}
-              layout="vertical"
-              onFinish={handleSubmit}
-              disabled={isLoading}
-              form={form}
-            >
-              <Form.Item
-                label="Report name"
-                name="reportName"
-                style={{
-                  display: "inline-block",
-                  width: "calc(50% - 8px)",
-                }}
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input!",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-
-              <Form.Item
-                label="Report key"
-                name="reportKey"
-                style={{
-                  display: "inline-block",
-                  width: "calc(50% - 8px)",
-                  margin: "0 8px",
-                }}
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input!",
-                  },
-                ]}
-              >
-                <Input />
-              </Form.Item>
-
-              <Form.Item label="Description" name="description">
-                <Input.TextArea />
-              </Form.Item>
-
-              <Form.Item
-                label="Display order"
-                rules={[
-                  {
-                    required: true,
-                    message: "Please input!",
-                  },
-                ]}
-                name="displayOrder"
-              >
-                <InputNumber
-                  style={{
-                    width: "100%",
-                  }}
-                />
-              </Form.Item>
-
-              <Form.Item name="active" valuePropName="checked">
-                <Checkbox>Active</Checkbox>
-              </Form.Item>
-
-              <FormAceEditorItem
-                label="Query"
-                name="query"
-                style={{ height: "350px", width: "100%" }}
-                mode="mysql"
-                rules={[{ required: true, message: "Query is required" }]}
-                onChange={(value) => console.log(value)}
-              />
-
-              <FormAceEditorItem
-                label="Column options"
-                name="columnOption"
-                mode="json"
-                style={{ height: "150px", width: "100%" }}
-                rules={[
-                  { required: true, message: "Column options is required" },
-                ]}
-                onChange={(value) => console.log(value)}
-              />
-
-              <FormAceEditorItem
-                label="Filter options"
-                name="filterOption"
-                mode="json"
-                style={{ height: "150px", width: "100%" }}
-                rules={[
-                  { required: true, message: "Filter options is required" },
-                ]}
-                onChange={(value) => console.log(value)}
-              />
-
-              <Form.Item
-                wrapperCol={{
-                  span: 16,
-                }}
-              >
-                <Button type="primary" htmlType="submit">
-                  Save
-                </Button>
-              </Form.Item>
-            </Form>
-          ) : (
-            <Empty
-              image={Empty.PRESENTED_IMAGE_SIMPLE}
-              description="Select or Create new report"
-            />
-          )}
+          { formMode==="CREATE"?<DesignerForm  mode={formMode}  isLoading={isLoading} getData={getData} initialValues={initialFormValues} setIsLoading={setFormMode} />:<DesignerForm  isLoading={isLoading} initialValues={selectedReport} setIsLoading={setFormMode} getData={getData}/>}
         </Card>
       </Col>
     </Row>
