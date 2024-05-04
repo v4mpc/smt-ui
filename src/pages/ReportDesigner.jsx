@@ -116,7 +116,6 @@ const ReportDesigner = () => {
     key: p.reportKey,
     label: <span>{`${p.active ? "✅" : "⛔️"} ${p.reportName}`}</span>,
   }));
-  const [form] = Form.useForm();
   const [selectedReport, setSelectedReport] = useState(initialFormValues);
   const [showForm, setshowForm] = useState(false);
   const [selectedKeys, setSelectedKeys] = useState([]);
@@ -133,7 +132,7 @@ const ReportDesigner = () => {
 
   const handleSetSelectedReport = ({ key }) => {
     setSelectedKeys([key]);
-
+    setshowForm(true)
     setSelectedReport(...reports.filter((r) => key === r.reportKey));
   };
 
@@ -167,7 +166,7 @@ const ReportDesigner = () => {
             )
           }
         >
-          {!isEmpty(selectedReport) || showForm ? (
+          { showForm ? (
             <Form
               key={selectedReport.reportKey}
               variant="outlined"
