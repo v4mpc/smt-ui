@@ -87,6 +87,7 @@ export default function GenericTableModal({
       confirmLoading={isLoading}
       onCancel={handleCancel}
       okText="Save"
+
     >
       <Form
         key={formMode}

@@ -31,6 +31,7 @@ const RAW_RUNTIME_STATE =
           ["@types/react", "npm:18.2.77"],\
           ["@types/react-dom", "npm:18.2.25"],\
           ["@vitejs/plugin-react-swc", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:3.6.0"],\
+          ["ace-builds", "npm:1.33.1"],\
           ["antd", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:5.16.1"],\
           ["chart.js", "npm:4.4.2"],\
           ["dayjs", "npm:1.11.10"],\
@@ -43,6 +44,7 @@ const RAW_RUNTIME_STATE =
           ["prettier", "npm:3.2.5"],\
           ["qs", "npm:6.12.1"],\
           ["react", "npm:18.2.0"],\
+          ["react-ace", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:11.0.1"],\
           ["react-chartjs-2", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:5.2.0"],\
           ["react-dom", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:18.2.0"],\
           ["react-highlight-words", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:0.20.0"],\
@@ -1177,6 +1179,15 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["ace-builds", [\
+      ["npm:1.33.1", {\
+        "packageLocation": "../../.yarn/berry/cache/ace-builds-npm-1.33.1-dff68ebfb7-10c0.zip/node_modules/ace-builds/",\
+        "packageDependencies": [\
+          ["ace-builds", "npm:1.33.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["acorn", [\
       ["npm:8.11.3", {\
         "packageLocation": "../../.yarn/berry/cache/acorn-npm-8.11.3-0d7ab48b38-10c0.zip/node_modules/acorn/",\
@@ -1993,6 +2004,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../.yarn/berry/cache/destroy-npm-1.2.0-6a511802e2-10c0.zip/node_modules/destroy/",\
         "packageDependencies": [\
           ["destroy", "npm:1.2.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["diff-match-patch", [\
+      ["npm:1.0.5", {\
+        "packageLocation": "../../.yarn/berry/cache/diff-match-patch-npm-1.0.5-f715ad1381-10c0.zip/node_modules/diff-match-patch/",\
+        "packageDependencies": [\
+          ["diff-match-patch", "npm:1.0.5"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -3640,6 +3660,24 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "../../.yarn/berry/cache/lodash-id-npm-0.14.1-219b309c3a-10c0.zip/node_modules/lodash-id/",\
         "packageDependencies": [\
           ["lodash-id", "npm:0.14.1"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["lodash.get", [\
+      ["npm:4.4.2", {\
+        "packageLocation": "../../.yarn/berry/cache/lodash.get-npm-4.4.2-7bda64ed87-10c0.zip/node_modules/lodash.get/",\
+        "packageDependencies": [\
+          ["lodash.get", "npm:4.4.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["lodash.isequal", [\
+      ["npm:4.5.0", {\
+        "packageLocation": "../../.yarn/berry/cache/lodash.isequal-npm-4.5.0-f8b0f64d63-10c0.zip/node_modules/lodash.isequal/",\
+        "packageDependencies": [\
+          ["lodash.isequal", "npm:4.5.0"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -5509,6 +5547,37 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["react-ace", [\
+      ["npm:11.0.1", {\
+        "packageLocation": "../../.yarn/berry/cache/react-ace-npm-11.0.1-fea4d7ac4a-10c0.zip/node_modules/react-ace/",\
+        "packageDependencies": [\
+          ["react-ace", "npm:11.0.1"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:11.0.1", {\
+        "packageLocation": "./.yarn/__virtual__/react-ace-virtual-6edb3de24d/3/.yarn/berry/cache/react-ace-npm-11.0.1-fea4d7ac4a-10c0.zip/node_modules/react-ace/",\
+        "packageDependencies": [\
+          ["react-ace", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:11.0.1"],\
+          ["@types/react", "npm:18.2.77"],\
+          ["@types/react-dom", "npm:18.2.25"],\
+          ["ace-builds", "npm:1.33.1"],\
+          ["diff-match-patch", "npm:1.0.5"],\
+          ["lodash.get", "npm:4.4.2"],\
+          ["lodash.isequal", "npm:4.5.0"],\
+          ["prop-types", "npm:15.8.1"],\
+          ["react", "npm:18.2.0"],\
+          ["react-dom", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:18.2.0"]\
+        ],\
+        "packagePeers": [\
+          "@types/react-dom",\
+          "@types/react",\
+          "react-dom",\
+          "react"\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["react-chartjs-2", [\
       ["npm:5.2.0", {\
         "packageLocation": "../../.yarn/berry/cache/react-chartjs-2-npm-5.2.0-03632f5179-10c0.zip/node_modules/react-chartjs-2/",\
@@ -6029,6 +6098,7 @@ const RAW_RUNTIME_STATE =
           ["@types/react", "npm:18.2.77"],\
           ["@types/react-dom", "npm:18.2.25"],\
           ["@vitejs/plugin-react-swc", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:3.6.0"],\
+          ["ace-builds", "npm:1.33.1"],\
           ["antd", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:5.16.1"],\
           ["chart.js", "npm:4.4.2"],\
           ["dayjs", "npm:1.11.10"],\
@@ -6041,6 +6111,7 @@ const RAW_RUNTIME_STATE =
           ["prettier", "npm:3.2.5"],\
           ["qs", "npm:6.12.1"],\
           ["react", "npm:18.2.0"],\
+          ["react-ace", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:11.0.1"],\
           ["react-chartjs-2", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:5.2.0"],\
           ["react-dom", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:18.2.0"],\
           ["react-highlight-words", "virtual:d565f52f631d74d063ca4850f85def939332f7ccbdbece507cb3a21e2c8eda5c9c4af23bbdb83f70917ba5dac9200525fc7bc4c721c601ae25cb860cae952a72#npm:0.20.0"],\

@@ -2,7 +2,8 @@ import { notification } from "antd";
 import dayjs from "dayjs";
 
 // export const BASE_URL = "http://localhost:3000";
-export const BASE_URL = "http://localhost:8080";
+// export const BASE_URL = "http://localhost:8080";
+export const BASE_URL = "https://2c88-197-250-198-59.ngrok-free.app:8080";
 
 export const DEFAULT_PAGE_SIZE = 20;
 
@@ -10,6 +11,12 @@ export const DATE_FORMAT = "YYYY-MM-DD";
 
 export const DASHBOARD_METRICS_PRECISION=0;
 export const DASHBOARD_DIVIDER_ORIENTATION="left"
+export const LINE_TENSION=0.3
+
+
+export const isEmpty = (obj) => {
+  return Object.keys(obj).length === 0;
+};
 
 export const API_ROUTES = {
   products: "products",

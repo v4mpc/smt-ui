@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
-import {API_ROUTES, fetchData} from "../utils.jsx";
+import {API_ROUTES, fetchData, LINE_TENSION} from "../utils.jsx";
 import {useSearchParams} from "react-router-dom";
 
 
@@ -20,12 +20,14 @@ export function useDashboard() {
         data: dashboardData?.expensesChartData,
         borderColor: "rgb(255, 99, 132)",
         backgroundColor: "rgba(255, 99, 132, 0.5)",
+        lineTension: LINE_TENSION
       },
       {
         label: "Sales",
         data: dashboardData?.salesChartData,
         borderColor: "rgb(53, 162, 235)",
         backgroundColor: "rgba(53, 162, 235, 0.5)",
+        lineTension: LINE_TENSION
       },
     ],
   };

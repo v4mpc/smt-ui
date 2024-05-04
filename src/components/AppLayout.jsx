@@ -52,7 +52,7 @@ const AppLayout = () => {
 
     const location = useLocation();
     const {
-        token: {colorBgContainer, borderRadiusLG},
+        token: {colorBgContainer, borderRadiusLG,headerBg},
     } = theme.useToken();
     return (
         <Layout hasSider>
@@ -73,7 +73,7 @@ const AppLayout = () => {
                     defaultOpenKeys={['settings']}
                     selectedKeys={[location?.pathname.slice(1)]}
                     items={items}
-                    style={{fontSize: "1rem"}}
+
                 />
             </Sider>
             <Layout
@@ -81,15 +81,7 @@ const AppLayout = () => {
                     marginLeft: 200,
                 }}
             >
-                <Header
-                    style={{
-                        position: "sticky",
-                        padding: 0,
-                        background: colorBgContainer,
-                        top: 0,
-                        zIndex: 1,
-                    }}
-                />
+
                 <BreadCrumbNav/>
                 <Content
                     style={{
@@ -100,7 +92,7 @@ const AppLayout = () => {
                     <div
                         style={{
                             padding: 24,
-                            background: colorBgContainer,
+
                             borderRadius: borderRadiusLG,
                             minHeight: '100vh',
 
