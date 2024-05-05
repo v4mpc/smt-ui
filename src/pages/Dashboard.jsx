@@ -16,6 +16,7 @@ import Loader from "../components/Loader.jsx";
 import ThousandSeparator from "../components/ThousandSeparator.jsx";
 import { DASHBOARD_DIVIDER_ORIENTATION, DASHBOARD_METRICS_PRECISION } from "../utils.jsx";
 import { InfoCircleTwoTone } from "@ant-design/icons";
+import dayjs from "dayjs";
 
 ChartJS.register(
   CategoryScale,
@@ -98,6 +99,7 @@ export default function Dashboard() {
             <span><InfoCircleTwoTone style={{ fontSize: "20px" }} /></span>
           </Tooltip>
           <DatePicker
+              maxDate={dayjs()}
             value={selectedMonth}
             onChange={(e) => {
               e && setSelectedMonth(e);
@@ -115,45 +117,37 @@ export default function Dashboard() {
           <Flex vertical gap="large">
             <Flex justify="space-between">
 
-              <Card>
+
                 <Statistic
                   title="Total Sales"
                   value={dashboardData?.totalSales}
                   precision={DASHBOARD_METRICS_PRECISION}
                 />
-              </Card>
 
-              <Card>
                 <Statistic
                   title="Sales Profit"
                   value={dashboardData?.totalSalesProfit}
                   precision={DASHBOARD_METRICS_PRECISION}
                 />
-              </Card>
 
-              <Card>
                 <Statistic
                   title="Total Expenses"
                   value={dashboardData?.totalExpenses}
                   precision={DASHBOARD_METRICS_PRECISION}
                 />
-              </Card>
 
-              <Card>
                 <Statistic
                   title="Net Profit"
                   value={dashboardData?.totalNetProfit}
                   precision={DASHBOARD_METRICS_PRECISION}
                 />
-              </Card>
 
-              <Card>
                 <Statistic
                   title="Products Sold"
                   value={dashboardData?.productsSold}
                   precision={DASHBOARD_METRICS_PRECISION}
                 />
-              </Card>
+
             </Flex>
           </Flex>
           <Flex>

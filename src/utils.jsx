@@ -2,7 +2,7 @@ import { notification } from "antd";
 import dayjs from "dayjs";
 
 // export const BASE_URL = "http://localhost:3000";
-export const BASE_URL = "http://localhost:8080/api";
+export const BASE_URL =import.meta.env.VITE_BASE_URL;
 
 export const DEFAULT_PAGE_SIZE = 20;
 
