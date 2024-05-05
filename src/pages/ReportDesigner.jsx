@@ -49,13 +49,8 @@ const FormAceEditorItem = ({ label, name, rules, ...rest }) => {
 const ReportDesigner = () => {
   const initialFormValues = {
     active: true,
-    reportKey:null,
-    reportName:null,
-    query:'',
     columnOption: "[]",
     filterOption: "[]",
-    displayOrder:null,
-    description:null
   };
 
   const [selectedReport, setSelectedReport] = useState(initialFormValues);
@@ -142,7 +137,7 @@ const ReportDesigner = () => {
             )
           }
         >
-          { formMode==="CREATE"?<DesignerForm  mode={formMode}  isLoading={isLoading} getData={getData} initialValues={initialFormValues} setIsLoading={setFormMode} />:<DesignerForm  isLoading={isLoading} initialValues={selectedReport} setIsLoading={setFormMode} getData={getData}/>}
+          { formMode==="CREATE"?<DesignerForm key={formMode}  mode={formMode}  isLoading={isLoading} getData={getData} initialValues={initialFormValues} setIsLoading={setFormMode} />:<DesignerForm key={selectedReport.id}  isLoading={isLoading} initialValues={selectedReport} setIsLoading={setFormMode} getData={getData}/>}
         </Card>
       </Col>
     </Row>
