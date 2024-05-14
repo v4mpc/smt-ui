@@ -3,11 +3,11 @@ import {
   API_ROUTES,
   BASE_URL,
   DATE_FORMAT,
-  fetchData,
-    filterOption,
+
+  filterOption,
   generateColumns,
   generateFilter,
-  isEmpty,
+
   toObject,
 } from "../utils.jsx";
 
@@ -15,20 +15,14 @@ import {
   Col,
   Card,
   Row,
-  Menu,
+
   Form,
-  Input,
-  InputNumber,
-  Checkbox,
-  Empty,
   Table,
   Button,
   Select,
-  DatePicker,
 } from "antd";
 import dayjs from "dayjs";
 
-const { RangePicker } = DatePicker;
 
 export default function Reports() {
   const [selectedReport, setSelectedReport] = useState(null);
@@ -63,17 +57,42 @@ export default function Reports() {
       delete modifiedData.dateRange;
     }
 
-    if (Object.hasOwn(modifiedData, "product") && modifiedData.product!==undefined) {
+    if (
+      Object.hasOwn(modifiedData, "product") &&
+      modifiedData.product !== undefined
+    ) {
       modifiedData = {
         ...modifiedData,
-        product:modifiedData.product,
+        product: modifiedData.product,
       };
     }
 
     console.log(modifiedData);
+    let initData = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    initData.body = JSON.stringify(modifiedData);
+    getReportData(initData);
   }
 
-  async function getData() {
+  async function getReportData(filterOptions) {
+    setIsLoading(true);
+    const resp = await fetch(
+      `${BASE_URL}/${API_ROUTES.fetchReportData}`,
+      filterOptions,
+    );
+    if (!resp.ok) {
+      throw new Error("Network response was not ok");
+    }
+    const respData = await resp.json();
+    console.log(respData);
+    setIsLoading(false);
+  }
+
+  async function getReportList() {
     setIsLoading(true);
     const resp = await fetch(`${BASE_URL}/${API_ROUTES.customReport}`);
     if (!resp.ok) {
@@ -88,7 +107,7 @@ export default function Reports() {
   }
 
   useEffect(() => {
-    getData();
+    getReportList();
   }, []);
 
   return (
@@ -137,6 +156,7 @@ export default function Reports() {
         >
           <Table
             columns={reportColumns}
+            loading={isLoading}
             dataSource={[]}
             bordered={true}
             rowKey="id"
