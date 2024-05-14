@@ -55,6 +55,7 @@ export function generateColumns(stringColumns) {
     key: column.name,
     width: column.width,
   }));
+
 }
 
 

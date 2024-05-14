@@ -3,31 +3,20 @@ import {
   API_ROUTES,
   BASE_URL,
   DATE_FORMAT,
-
   filterOption,
   generateColumns,
   generateFilter,
-
   toObject,
 } from "../utils.jsx";
 
-import {
-  Col,
-  Card,
-  Row,
-
-  Form,
-  Table,
-  Button,
-  Select,
-} from "antd";
+import { Col, Card, Row, Form, Table, Button, Select } from "antd";
 import dayjs from "dayjs";
-
 
 export default function Reports() {
   const [selectedReport, setSelectedReport] = useState(null);
   const [reports, setReports] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [reportData, setReportData] = useState([]);
   const filteredReports = reports.filter((report) => report.active);
   const reportColumns = selectedReport
     ? generateColumns(selectedReport.columnOption)
@@ -67,7 +56,7 @@ export default function Reports() {
       };
     }
 
-    console.log(modifiedData);
+
     let initData = {
       method: "POST",
       headers: {
@@ -88,7 +77,7 @@ export default function Reports() {
       throw new Error("Network response was not ok");
     }
     const respData = await resp.json();
-    console.log(respData);
+    setReportData(respData)
     setIsLoading(false);
   }
 
@@ -157,7 +146,7 @@ export default function Reports() {
           <Table
             columns={reportColumns}
             loading={isLoading}
-            dataSource={[]}
+            dataSource={reportData}
             bordered={true}
             rowKey="id"
           />
