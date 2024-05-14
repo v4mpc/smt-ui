@@ -1,5 +1,15 @@
 import { useEffect, useState } from "react";
-import { API_ROUTES, BASE_URL, fetchData, isEmpty } from "../utils.jsx";
+import {
+  API_ROUTES,
+  BASE_URL,
+  DATE_FORMAT,
+  fetchData,
+    filterOption,
+  generateColumns,
+  generateFilter,
+  isEmpty,
+  toObject,
+} from "../utils.jsx";
 
 import {
   Col,
@@ -11,19 +21,57 @@ import {
   InputNumber,
   Checkbox,
   Empty,
+  Table,
   Button,
   Select,
   DatePicker,
 } from "antd";
+import dayjs from "dayjs";
 
 const { RangePicker } = DatePicker;
 
 export default function Reports() {
-  const [selectedReport, setSelectedReport] = useState([]);
+  const [selectedReport, setSelectedReport] = useState(null);
   const [reports, setReports] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-
   const filteredReports = reports.filter((report) => report.active);
+  const reportColumns = selectedReport
+    ? generateColumns(selectedReport.columnOption)
+    : [];
+  const reportFilters = selectedReport
+    ? toObject(selectedReport.filterOption)
+    : [];
+  const handleReportChange = (e) => {
+    if (e) {
+      setSelectedReport(
+        ...filteredReports.filter((report) => Number(report.id) === Number(e)),
+      );
+    }
+  };
+
+  function handleApplyFilter(values) {
+    let modifiedData = values;
+    if (Object.hasOwn(modifiedData, "dateRange")) {
+      Date.prototype.toISOString = function () {
+        return dayjs(this).format(DATE_FORMAT);
+      };
+      modifiedData = {
+        ...modifiedData,
+        dateFrom: modifiedData.dateRange[0].format(DATE_FORMAT),
+        dateTo: modifiedData.dateRange[1].format(DATE_FORMAT),
+      };
+      delete modifiedData.dateRange;
+    }
+
+    if (Object.hasOwn(modifiedData, "product") && modifiedData.product!==undefined) {
+      modifiedData = {
+        ...modifiedData,
+        product:modifiedData.product,
+      };
+    }
+
+    console.log(modifiedData);
+  }
 
   async function getData() {
     setIsLoading(true);
@@ -47,7 +95,12 @@ export default function Reports() {
     <Row gutter={16}>
       <Col span={6}>
         <Card title="Report filter">
-          <Form variant="outlined" layout="vertical" disabled={isLoading}>
+          <Form
+            variant="outlined"
+            layout="vertical"
+            disabled={isLoading}
+            onFinish={handleApplyFilter}
+          >
             <Form.Item
               label="Report name"
               rules={[
@@ -56,36 +109,20 @@ export default function Reports() {
                   message: "Select report",
                 },
               ]}
-              name="product"
+              name="report"
             >
-              <Select placeholder="Select Report" options={filteredReports.map(report=>({value:report.id,label:report.reportName}))}></Select>
+              <Select
+                placeholder="Select Report"
+                onChange={handleReportChange}
+                filterOption={filterOption}
+                showSearch={true}
+                options={filteredReports.map((report) => ({
+                  value: report.id,
+                  label: report.reportName,
+                }))}
+              ></Select>
             </Form.Item>
-
-            <Form.Item
-              label="Product"
-              rules={[
-                {
-                  message: "Select product",
-                },
-              ]}
-              name="product"
-            >
-              <Select placeholder="Select Product"></Select>
-            </Form.Item>
-
-            <Form.Item
-              label="Date range"
-              name="dateRange"
-              rules={[
-                {
-                  required: true,
-                  message: "Please date",
-                },
-              ]}
-            >
-              <RangePicker style={{ width: "100%" }} />
-            </Form.Item>
-
+            {reportFilters.map((filter) => generateFilter(filter))}
             <Form.Item>
               <Button type="primary" htmlType="submit">
                 Apply filter
@@ -95,7 +132,16 @@ export default function Reports() {
         </Card>
       </Col>
       <Col span={18}>
-        <Card title="Selected Report">details</Card>
+        <Card
+          title={`${selectedReport ? selectedReport.reportName : "Select Report"}`}
+        >
+          <Table
+            columns={reportColumns}
+            dataSource={[]}
+            bordered={true}
+            rowKey="id"
+          />
+        </Card>
       </Col>
     </Row>
   );

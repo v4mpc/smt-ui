@@ -1,8 +1,9 @@
-import { notification } from "antd";
+import { notification, Select, Input, Form, DatePicker } from "antd";
 import dayjs from "dayjs";
+import ProductSelect from "./components/ProductSelect.jsx";
 
 // export const BASE_URL = "http://localhost:3000";
-export const BASE_URL =import.meta.env.VITE_BASE_URL;
+export const BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export const DEFAULT_PAGE_SIZE = 20;
 
@@ -11,6 +12,8 @@ export const DATE_FORMAT = "YYYY-MM-DD";
 export const DASHBOARD_METRICS_PRECISION = 0;
 export const DASHBOARD_DIVIDER_ORIENTATION = "left";
 export const LINE_TENSION = 0.3;
+
+const { RangePicker } = DatePicker;
 
 export const isEmpty = (obj) => {
   return Object.keys(obj).length === 0;
@@ -27,7 +30,8 @@ export const API_ROUTES = {
   units: "units",
   unitsAll: "units/all",
   bulkSale: "sales/bulk",
-  customReport:"custom-report"
+  customReport: "custom-report",
+  productAll: "products/all",
 };
 
 export function openNotification(key, type, title, description) {
@@ -36,6 +40,48 @@ export function openNotification(key, type, title, description) {
     message: title,
     description: description,
   });
+}
+
+export function toObject(data) {
+  return JSON.parse(data);
+}
+
+export function generateColumns(stringColumns) {
+  let objectColumns = toObject(stringColumns);
+  return objectColumns.map((column) => ({
+    title: column.displayName,
+    dataIndex: column.name,
+    key: column.name,
+    width: column.width,
+  }));
+}
+
+
+export function filterOption(input, option){
+  return (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
+}
+
+export function generateFilter(filter) {
+  if (filter.name === "product") {
+    return <ProductSelect key="product-select" />;
+  } else if (filter.name === "dateRange") {
+    return (
+      <Form.Item
+        label="Date range"
+        key="dateRange"
+        name="dateRange"
+        rules={[
+          {
+            required: true,
+            message: "Please date",
+          },
+        ]}
+      >
+        <RangePicker style={{ width: "100%" }} />
+      </Form.Item>
+    );
+  }
+  return null;
 }
 
 export function toSalePayload(data, isSale) {
