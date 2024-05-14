@@ -231,7 +231,7 @@ export default function GenericTable({ itemColumns, listPath, children }) {
 
   useEffect(() => {
     fetchData();
-  }, [JSON.stringify(tableParams)]);
+  }, [tableParams.pagination.current,tableParams.filters]);
   return (
     <Flex gap="middle" vertical>
       <Flex justify="flex-end">

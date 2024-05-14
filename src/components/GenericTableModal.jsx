@@ -40,7 +40,7 @@ export default function GenericTableModal({
         form,
         handleModalClose,
       );
-      // refetchData();
+      refetchData();
     } catch (error) {
       console.log("Failed:", error);
     }

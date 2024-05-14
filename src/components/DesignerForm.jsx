@@ -8,7 +8,7 @@ import {
     Button,
 } from "antd";
 
-import {useEffect, useState} from "react";
+import {lazy, useState} from "react";
 import {API_ROUTES, BASE_URL, fetchData, isEmpty} from "../utils.jsx";
 
 import AceEditor from "react-ace";
