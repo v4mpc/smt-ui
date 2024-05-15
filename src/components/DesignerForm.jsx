@@ -8,8 +8,8 @@ import {
     Button,
 } from "antd";
 
-import {lazy, useState} from "react";
-import {API_ROUTES, BASE_URL, fetchData, isEmpty} from "../utils.jsx";
+import { useState} from "react";
+import {API_ROUTES,fetchData} from "../utils.jsx";
 
 import AceEditor from "react-ace";
 
@@ -41,7 +41,7 @@ const FormAceEditorItem = ({ label, name, rules, ...rest }) => {
     );
 };
 
-const DesignerForm = ({ isLoading,setIsLoading,initialValues,getData}) => {
+const DesignerForm = ({ isLoading,setIsLoading,initialValues,getData,handleShowCreateForm}) => {
 
 
 
@@ -57,9 +57,8 @@ const DesignerForm = ({ isLoading,setIsLoading,initialValues,getData}) => {
 
 
 
-
     const handleSubmit=async (values)=>{
-        console.log(values);
+
         let urlPath = `${API_ROUTES.customReport}`;
         let method = "POST";
         if (Object.hasOwn(initialValues,"id")) {
@@ -68,6 +67,9 @@ const DesignerForm = ({ isLoading,setIsLoading,initialValues,getData}) => {
         }
 
         await fetchData(values,urlPath,setIsLoading,setError,method,null,form,getData);
+
+        handleShowCreateForm();
+
 
 
     }
@@ -147,7 +149,7 @@ const DesignerForm = ({ isLoading,setIsLoading,initialValues,getData}) => {
                 style={{ height: "350px", width: "100%" }}
                 mode="mysql"
                 rules={[{ required: true, message: "Query is required" }]}
-                onChange={(value) => console.log(value)}
+
             />
 
             <FormAceEditorItem
@@ -158,7 +160,7 @@ const DesignerForm = ({ isLoading,setIsLoading,initialValues,getData}) => {
                 rules={[
                     { required: true, message: "Column options is required" },
                 ]}
-                onChange={(value) => console.log(value)}
+
             />
 
             <FormAceEditorItem
@@ -169,7 +171,7 @@ const DesignerForm = ({ isLoading,setIsLoading,initialValues,getData}) => {
                 rules={[
                     { required: true, message: "Filter options is required" },
                 ]}
-                onChange={(value) => console.log(value)}
+
             />
 
             <Form.Item

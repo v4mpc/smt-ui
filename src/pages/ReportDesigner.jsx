@@ -4,15 +4,11 @@ import {
   Row,
   Menu,
   Form,
-  Input,
-  InputNumber,
-  Checkbox,
-  Empty,
   Button,
 } from "antd";
 
 import {useEffect, useState} from "react";
-import {API_ROUTES, BASE_URL, fetchData, isEmpty} from "../utils.jsx";
+import {API_ROUTES, BASE_URL} from "../utils.jsx";
 
 import AceEditor from "react-ace";
 
@@ -137,7 +133,7 @@ const ReportDesigner = () => {
             )
           }
         >
-          { formMode==="CREATE"?<DesignerForm key={formMode}  mode={formMode}  isLoading={isLoading} getData={getData} initialValues={initialFormValues} setIsLoading={setFormMode} />:<DesignerForm key={selectedReport.id}  isLoading={isLoading} initialValues={selectedReport} setIsLoading={setFormMode} getData={getData}/>}
+          { formMode==="CREATE"?<DesignerForm key={formMode}  mode={formMode}  isLoading={isLoading} getData={getData} initialValues={initialFormValues} setIsLoading={setFormMode} handleShowCreateForm={handleShowCreateForm} />:<DesignerForm key={selectedReport.id}  isLoading={isLoading} initialValues={selectedReport} setIsLoading={setFormMode} getData={getData} handleShowCreateForm={handleShowCreateForm}/>}
         </Card>
       </Col>
     </Row>
