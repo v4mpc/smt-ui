@@ -14,38 +14,43 @@ import BuySuccess from "./pages/BuySuccess.jsx";
 import ReportDesigner from "./pages/ReportDesigner.jsx";
 import General from "./pages/General.jsx";
 import Login from "./pages/Login.jsx";
+import {AuthProvider} from "./Providers/AuthProvider.jsx";
+import PrivateRoute from "./components/PrivateRoute.jsx";
 
 export default function App() {
   return (
-    <>
+
       <BrowserRouter>
+      <AuthProvider>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<AppLayout />}>
-            <Route index element={<Navigate to="dashboard" />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="sell" element={<Sell />} />
-            <Route path="buy" element={<Buy />} />
-            <Route path="tx-success" element={<BuySuccess />} />
-            <Route path="expense" element={<Expense />} />
-            <Route path="reports" element={<Reports />} />
-            <Route path="stock-on-hand" element={<StockOnHand />} />
 
-            <Route
-              path="stock-on-hand/adjustment/:id"
-              element={<StockAdjustment />}
-            />
-            <Route path="settings/units" element={<Unit />} />
-            <Route path="settings/products" element={<Product />} />
-            <Route path="settings/general" element={<General />} />
-            <Route
-              path="settings/report-designer"
-              element={<ReportDesigner />}
-            />
+          <Route element={<PrivateRoute />}>
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="sell" element={<Sell />} />
+              <Route path="buy" element={<Buy />} />
+              <Route path="tx-success" element={<BuySuccess />} />
+              <Route path="expense" element={<Expense />} />
+              <Route path="reports" element={<Reports />} />
+              <Route path="stock-on-hand" element={<StockOnHand />} />
+              <Route
+                  path="stock-on-hand/adjustment/:id"
+                  element={<StockAdjustment />}
+              />
+              <Route path="settings/units" element={<Unit />} />
+              <Route path="settings/products" element={<Product />} />
+              <Route path="settings/general" element={<General />} />
+              <Route
+                  path="settings/report-designer"
+                  element={<ReportDesigner />}
+              />
+
           </Route>
+
           <Route path="*" element={<PageNotFound />} />
         </Routes>
+      </AuthProvider>
       </BrowserRouter>
-    </>
+
   );
 }

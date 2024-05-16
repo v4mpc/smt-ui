@@ -6,13 +6,13 @@ import {
   DropboxOutlined,
   FileTextOutlined,
   LogoutOutlined,
-  RightCircleFilled,
   SettingOutlined,
   UploadOutlined,
 } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
 import BreadCrumbNav from "./BreadCrumbNav.jsx";
 import { DEFAULT_PAGE_SIZE } from "../utils.jsx";
+import {useAuth} from "../Providers/AuthProvider.jsx";
 
 const { Header, Content, Footer, Sider } = Layout;
 const items = [
@@ -85,12 +85,27 @@ const items = [
   {
     key: "logout",
     icon: <LogoutOutlined />,
-    label: <Link to="/logout">Logout</Link>,
+    label: "Logout"
   },
 ];
 
 const AppLayout = () => {
   const location = useLocation();
+  const { logout } = useAuth();
+
+  const handleClick = (e) => {
+    console.log('Click:', e);
+    switch (e.key) {
+      case 'logout':
+        logout();
+        break;
+      default:
+        console.log('Unknown action');
+    }
+  };
+
+
+
   const {
     token: { colorBgContainer, borderRadiusLG, headerBg },
   } = theme.useToken();
@@ -108,6 +123,7 @@ const AppLayout = () => {
       >
         <div className="demo-logo-vertical" />
         <Menu
+            onClick={handleClick}
           theme="dark"
           mode="inline"
           defaultOpenKeys={["settings"]}
