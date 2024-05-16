@@ -76,7 +76,6 @@ const items = [
           </Link>
         ),
       },
-      { key: "profile", label: "❁ Profile" },
       {
         key: "designer",
         label: <Link to="/settings/report-designer">❁ Designer</Link>,
