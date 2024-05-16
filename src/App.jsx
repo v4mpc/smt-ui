@@ -13,12 +13,14 @@ import Product from "./pages/Product.jsx";
 import BuySuccess from "./pages/BuySuccess.jsx";
 import ReportDesigner from "./pages/ReportDesigner.jsx";
 import General from "./pages/General.jsx";
+import Login from "./pages/Login.jsx";
 
 export default function App() {
   return (
     <>
       <BrowserRouter>
         <Routes>
+          <Route path="/login" element={<Login />} />
           <Route path="/" element={<AppLayout />}>
             <Route index element={<Navigate to="dashboard" />} />
             <Route path="dashboard" element={<Dashboard />} />
@@ -36,7 +38,10 @@ export default function App() {
             <Route path="settings/units" element={<Unit />} />
             <Route path="settings/products" element={<Product />} />
             <Route path="settings/general" element={<General />} />
-            <Route path="settings/report-designer" element={<ReportDesigner />} />
+            <Route
+              path="settings/report-designer"
+              element={<ReportDesigner />}
+            />
           </Route>
           <Route path="*" element={<PageNotFound />} />
         </Routes>

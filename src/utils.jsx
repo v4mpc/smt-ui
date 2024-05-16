@@ -1,4 +1,4 @@
-import { notification,Form, DatePicker } from "antd";
+import { notification, Form, DatePicker } from "antd";
 import dayjs from "dayjs";
 import ProductSelect from "./components/ProductSelect.jsx";
 
@@ -32,7 +32,8 @@ export const API_ROUTES = {
   bulkSale: "sales/bulk",
   customReport: "custom-report",
   productAll: "products/all",
-  fetchReportData:"custom-report/fetch-report"
+  fetchReportData: "custom-report/fetch-report",
+  users: "users",
 };
 
 export function openNotification(key, type, title, description) {
@@ -55,11 +56,9 @@ export function generateColumns(stringColumns) {
     key: column.name,
     width: column.width,
   }));
-
 }
 
-
-export function filterOption(input, option){
+export function filterOption(input, option) {
   return (option?.label ?? "").toLowerCase().includes(input.toLowerCase());
 }
 
