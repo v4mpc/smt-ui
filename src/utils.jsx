@@ -34,6 +34,8 @@ export const API_ROUTES = {
   productAll: "products/all",
   fetchReportData: "custom-report/fetch-report",
   users: "users",
+  login:"auth/login",
+  logout:"auth/logout"
 };
 
 export function openNotification(key, type, title, description) {

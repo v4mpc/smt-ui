@@ -1,17 +1,51 @@
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Card, Flex, Form, Input } from "antd";
 import { useAuth } from "../Providers/AuthProvider.jsx";
-import {useNavigate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import {
+  API_ROUTES,
+  BASE_URL,
+  fetchData,
+  openNotification,
+} from "../utils.jsx";
+import { useEffect, useState } from "react";
 
 const Login = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const onFinish = (values) => {
-    console.log("Received values of form: ", values);
-    login();
-    navigate("/dashboard");
+  async function postData(values) {
+    let initData = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    initData.body = JSON.stringify(values);
+    const resp = await fetch(`${BASE_URL}/${API_ROUTES.login}`, initData);
+    try {
+      if (!resp.ok) {
+        if (resp.status === 403) {
+          throw new Error("Invalid Username/Password.");
+        }
+        throw new Error("Network response was not ok");
+      }
+      login();
+      navigate("/dashboard");
+      openNotification("login-success", "success", "Success", "Login Success");
+    } catch (e) {
+      console.error(e);
+      openNotification(e.message, "error", "Error", e.message);
+      setError(e.message);
+    } finally {
+      setIsLoading(false);
+    }
+  }
 
+  const onFinish = async (values) => {
+    await postData(values);
   };
   return (
     <Flex
