@@ -34,8 +34,9 @@ export const API_ROUTES = {
   productAll: "products/all",
   fetchReportData: "custom-report/fetch-report",
   users: "users",
-  login:"auth/login",
-  logout:"auth/logout"
+  login: "auth/login",
+  logout: "auth/logout",
+  authStatus:"auth/status"
 };
 
 export function openNotification(key, type, title, description) {
@@ -44,6 +45,11 @@ export function openNotification(key, type, title, description) {
     message: title,
     description: description,
   });
+}
+
+export function fetchWithCredentials(url, options = {}) {
+  options.credentials = "include";
+  return fetch(url, options);
 }
 
 export function toObject(data) {
@@ -109,6 +115,7 @@ export async function fetchData(
 ) {
   let initData = {
     method: method,
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },

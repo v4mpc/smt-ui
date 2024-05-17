@@ -1,11 +1,9 @@
-import { Button, Table, Input, Space,InputNumber,Form } from "antd";
-import Highlighter from "react-highlight-words";
+import { Button, Table, Input, InputNumber,Form } from "antd";
+
 import { useSearchParams } from "react-router-dom";
-import { SearchOutlined } from "@ant-design/icons";
 import { useEffect, useState, useRef } from "react";
 import qs from "qs";
 import {API_ROUTES, BASE_URL, DATE_FORMAT} from "../utils.jsx";
-import StockAdjustmentModal from "./StockAdjustment.jsx";
 import ThousandSeparator from "../components/ThousandSeparator.jsx";
 import GenericTableModal from "../components/GenericTableModal.jsx";
 import { InfoCircleOutlined } from "@ant-design/icons";

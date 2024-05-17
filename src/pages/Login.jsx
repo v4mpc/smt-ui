@@ -5,10 +5,10 @@ import { useNavigate } from "react-router-dom";
 import {
   API_ROUTES,
   BASE_URL,
-  fetchData,
+
   openNotification,
 } from "../utils.jsx";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const Login = () => {
   const { login } = useAuth();
@@ -32,9 +32,10 @@ const Login = () => {
         }
         throw new Error("Network response was not ok");
       }
+      openNotification("login-success", "success", "Success", "Login Success");
       login();
       navigate("/dashboard");
-      openNotification("login-success", "success", "Success", "Login Success");
+
     } catch (e) {
       console.error(e);
       openNotification(e.message, "error", "Error", e.message);

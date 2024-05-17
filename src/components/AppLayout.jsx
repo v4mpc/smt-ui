@@ -11,7 +11,7 @@ import {
 } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
 import BreadCrumbNav from "./BreadCrumbNav.jsx";
-import { DEFAULT_PAGE_SIZE } from "../utils.jsx";
+import {API_ROUTES, BASE_URL, DEFAULT_PAGE_SIZE, openNotification} from "../utils.jsx";
 import {useAuth} from "../Providers/AuthProvider.jsx";
 
 const { Header, Content, Footer, Sider } = Layout;
@@ -93,11 +93,35 @@ const AppLayout = () => {
   const location = useLocation();
   const { logout } = useAuth();
 
+
+  async function logoutRequest() {
+    let initData = {
+      method: "POST",
+      credentials: "include",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    const resp = await fetch(`${BASE_URL}/${API_ROUTES.logout}`,initData);
+    try {
+      if (!resp.ok) {
+
+        throw new Error("Network response was not ok");
+      }
+      logout();
+
+    } catch (e) {
+      console.error(e);
+      openNotification(e.message, "error", "Error", e.message);
+    }
+  }
+
   const handleClick = (e) => {
     console.log('Click:', e);
     switch (e.key) {
       case 'logout':
-        logout();
+        logoutRequest();
         break;
       default:
         console.log('Unknown action');
