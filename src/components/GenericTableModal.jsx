@@ -15,7 +15,7 @@ export default function GenericTableModal({
 }) {
   const [form] = Form.useForm();
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const [ setError] = useState(null);
 
   const handleOk = async () => {
     try {

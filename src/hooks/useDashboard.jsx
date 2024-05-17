@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import dayjs from "dayjs";
 import {API_ROUTES, fetchData, LINE_TENSION} from "../utils.jsx";
-import {useSearchParams} from "react-router-dom";
+
 
 
 export function useDashboard() {

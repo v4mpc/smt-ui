@@ -1,5 +1,5 @@
-import AppLayout from "./components/AppLayout.jsx";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard.jsx";
 import Buy from "./pages/Buy.jsx";
 import StockOnHand from "./pages/StockOnHand.jsx";

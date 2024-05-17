@@ -1,5 +1,4 @@
 import GenericTable from "../components/GenericTable.jsx";
-import {Button, Form, Input} from "antd";
 import { API_ROUTES } from "../utils.jsx";
 import {SearchOutlined} from "@ant-design/icons";
 import FilterDropdown from "../components/FilterDropdown.jsx";

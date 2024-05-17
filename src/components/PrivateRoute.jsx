@@ -1,6 +1,5 @@
 import {
   Navigate,
-  useLocation,
 } from "react-router-dom";
 import { useAuth } from "../Providers/AuthProvider.jsx";
 import AppLayout from "./AppLayout.jsx";

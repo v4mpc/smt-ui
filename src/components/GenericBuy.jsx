@@ -14,7 +14,6 @@ import { PlusOutlined, MinusOutlined } from "@ant-design/icons";
 import { useStockOnHand } from "../hooks/useStockOnHand.jsx";
 import { useState } from "react";
 import AsyncModal from "../components/AsyncModal.jsx";
-import { API_ROUTES } from "../utils.jsx";
 import ThousandSeparator from "../components/ThousandSeparator.jsx";
 
 const { Text, Link, Title } = Typography;

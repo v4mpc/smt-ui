@@ -11,7 +11,6 @@ import {
 } from "chart.js";
 import { Line } from "react-chartjs-2";
 import { useDashboard } from "../hooks/useDashboard.jsx";
-import useNotification from "../hooks/useNotification.jsx";
 import Loader from "../components/Loader.jsx";
 import ThousandSeparator from "../components/ThousandSeparator.jsx";
 import { DASHBOARD_DIVIDER_ORIENTATION, DASHBOARD_METRICS_PRECISION } from "../utils.jsx";

@@ -3,7 +3,7 @@ import { Checkbox, Form, Input, InputNumber, Tag, Flex, Select } from "antd";
 import ThousandSeparator from "../components/ThousandSeparator.jsx";
 import { API_ROUTES, fetchData } from "../utils.jsx";
 import { useEffect, useState } from "react";
-import { useFetch } from "../hooks/useFetch.jsx";
+
 import FilterDropdown from "../components/FilterDropdown.jsx";
 import {SearchOutlined} from "@ant-design/icons";
 

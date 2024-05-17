@@ -1,4 +1,4 @@
-import { Button, Card, Flex, Form, Input, InputNumber } from "antd";
+import { Button, Card, Form, InputNumber } from "antd";
 import { useState } from "react";
 
 const GeneralConfiguration = () => {

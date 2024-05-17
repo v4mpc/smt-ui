@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
-import { useFetch } from "./useFetch.jsx";
+
 import dayjs from "dayjs";
 import {
-  API_ROUTES,
+
   BASE_URL,
-  fetchData,
+
   openNotification,
 } from "../utils.jsx";
 
