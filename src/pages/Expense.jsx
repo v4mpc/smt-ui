@@ -31,6 +31,7 @@ const expenseColumns = [
   {
     title: "Action",
     key: "action",
+    fixed: 'right',
   },
 ];
 

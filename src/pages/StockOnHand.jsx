@@ -116,6 +116,7 @@ export default function StockOnHand() {
     {
       title: "Action",
       key: "action",
+      fixed: 'right',
       dataIndex: "action",
       render: (_, record) => (
         <Button type="primary" onClick={() => handleSetProduct(record)}>
@@ -163,6 +164,7 @@ export default function StockOnHand() {
         pagination={tableParams.pagination}
         loading={loading}
         rowKey="id"
+        scroll={{ x: 'max-content' }}
       />
 
       {open && (

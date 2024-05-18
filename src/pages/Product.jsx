@@ -64,7 +64,8 @@ const productColumns = [
   {
     title: "Action",
     key: "action",
-    dataIndex: "action"
+    dataIndex: "action",
+    fixed: 'right',
   },
 ];
 

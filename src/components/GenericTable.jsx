@@ -247,6 +247,7 @@ export default function GenericTable({ itemColumns, listPath, children }) {
         bordered={true}
         pagination={tableParams.pagination}
         loading={loading}
+        scroll={{ x: 'max-content' }}
         rowKey="id"
       />
       {open && (

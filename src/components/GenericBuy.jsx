@@ -23,9 +23,6 @@ export default function GenericBuy({urlPath, isSale}) {
     stockOnhand,
     setStockOnhand,
     isLoading,
-    setIsLoading,
-    error,
-    setError,
   ] = useStockOnHand(`${urlPath}`);
   const [searchText, setSearchText] = useState("");
   const productColumns = [
@@ -33,10 +30,12 @@ export default function GenericBuy({urlPath, isSale}) {
       title: "#",
       dataIndex: "id",
       key: "id",
+
     },
     {
       title: "Product",
       key: "product",
+
       render: (_, record) => (
         <Flex vertical gap="middle">
           <Text strong>{record.productName}</Text>
@@ -68,6 +67,7 @@ export default function GenericBuy({urlPath, isSale}) {
     {
       title: "Action",
       key: "action",
+      fixed: 'right',
       render: (_, record) => (
         <Button
           type="primary"
@@ -110,6 +110,7 @@ export default function GenericBuy({urlPath, isSale}) {
     {
       title: "Action",
       key: "action",
+      fixed: 'right',
       render: (_, record) => (
         <Button
           type="primary"
@@ -185,6 +186,7 @@ export default function GenericBuy({urlPath, isSale}) {
               bordered={true}
               loading={isLoading}
               rowKey="id"
+              scroll={{ x: 'max-content' }}
             />
           </Flex>
         </Col>
@@ -195,6 +197,7 @@ export default function GenericBuy({urlPath, isSale}) {
               columns={saleColumns}
               dataSource={sales}
               bordered={true}
+              scroll={{ x: 'max-content' }}
               rowKey="id"
               summary={() => (
                 <Table.Summary fixed>

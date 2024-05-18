@@ -102,7 +102,7 @@ export default function Reports() {
   return (
     <Row gutter={16}>
       <Col span={6}>
-        <Card title="Report filter">
+        <Card title="Report filter" style={{ "overflowX":"auto"}}>
           <Form
             variant="outlined"
             layout="vertical"
@@ -141,7 +141,7 @@ export default function Reports() {
       </Col>
       <Col span={18}>
         <Card
-          title={`${selectedReport ? selectedReport.reportName : "Select Report"}`}
+          title={`${selectedReport ? selectedReport.reportName : "Select Report"}`} style={{ "overflowX":"auto"}}
         >
           <Table
             columns={reportColumns}

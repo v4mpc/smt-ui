@@ -171,6 +171,7 @@ export default function Dashboard() {
                 title={() => "Top Sales"}
                 columns={columns}
                 dataSource={dashboardData?.topSales}
+                scroll={{ x: 'max-content' }}
               />
 
             </Card>
@@ -187,6 +188,7 @@ export default function Dashboard() {
                 title={() => "Top Expenses"}
                 columns={expensesColumn}
                 dataSource={dashboardData?.topExpenses}
+                scroll={{ x: 'max-content' }}
               />
             </Card>
           </Flex>
