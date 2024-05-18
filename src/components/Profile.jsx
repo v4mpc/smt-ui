@@ -83,11 +83,11 @@ const Profile = () => {
                     label="Username"
                     name="username"
                 >
-                    <Input placeholder="username" autoComplete="off"/>
+                    <Input placeholder="username" autoComplete="nope"/>
                 </Form.Item>
 
                 <Form.Item label="Password" name="password">
-                    <Input.Password placeholder="password" autoComplete="off"/>
+                    <Input.Password placeholder="password" autoComplete="nope"/>
                 </Form.Item>
 
                 <Button type="primary" htmlType="submit">

@@ -183,7 +183,7 @@ const AppLayout = () => {
             textAlign: "center",
           }}
         >
-          SMT ©{new Date().getFullYear()} Created by V4mpc
+          SMT ©{new Date().getFullYear()} Created by ymahundi
         </Footer>
       </Layout>
     </Layout>
