@@ -5,7 +5,8 @@ import {
     InputNumber,
     Checkbox,
 
-    Button,
+
+    Button, Collapse, Table,
 } from "antd";
 
 import { useState} from "react";
@@ -49,12 +50,61 @@ const DesignerForm = ({ isLoading,setIsLoading,initialValues,getData,handleShowC
     const [form] = Form.useForm();
     const [error, setError] = useState(null);
 
-    // useEffect(() => {
-    //     if (initialValues) {
-    //         form.setFieldsValue(initialValues);
-    //     }
-    // }, [JSON.stringify(initialValues), form]);
 
+
+  const dataSource = [
+    {
+      key: '1',
+      field: 'Query',
+      value: "product -> ${product}, dateRange -> ${dateFrom} and ${dateTo}",
+      example: "select * from products where name='${product}'",
+    },
+    {
+      key: '2',
+      field: 'Column options',
+      value: "[{\"name\":\"database_column\",\"displayName\":\"table_column\"}]",
+      example: "[{\"name\":\"date\",\"displayName\":\"Date\"}]",
+    }
+    ,
+    {
+      key: '3',
+      field: 'Filter options',
+      value: "dateRange,product",
+      example: "[{\"name\":\"dateRange\"}]",
+    }
+
+]
+
+    const columns = [
+        {
+            title: 'Field',
+            dataIndex: 'field',
+            key: 'field',
+        },
+      {
+        title: 'Value',
+        dataIndex: 'value',
+        key: 'value',
+        width:"40%"
+      },
+      {
+        title: 'Example',
+        dataIndex: 'example',
+        key: 'example',
+        width:"40%"
+
+      }
+
+
+    ]
+    const items = [
+        {
+            key: '1',
+            label: 'Fields API',
+            children: <Table dataSource={dataSource} columns={columns} pagination={false} />,
+        },
+
+        ]
 
 
     const handleSubmit=async (values)=>{
@@ -97,6 +147,7 @@ const DesignerForm = ({ isLoading,setIsLoading,initialValues,getData,handleShowC
                     },
                 ]}
             >
+
                 <Input />
             </Form.Item>
 
@@ -139,9 +190,17 @@ const DesignerForm = ({ isLoading,setIsLoading,initialValues,getData,handleShowC
                 />
             </Form.Item>
 
+
+
             <Form.Item name="active" valuePropName="checked">
                 <Checkbox>Active</Checkbox>
             </Form.Item>
+
+
+            <Form.Item>
+                <Collapse items={items} />
+            </Form.Item>
+
 
             <FormAceEditorItem
                 label="Query"
