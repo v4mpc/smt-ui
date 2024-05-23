@@ -149,6 +149,12 @@ export default function Dashboard() {
                   precision={DASHBOARD_METRICS_PRECISION}
                 />
 
+              <Statistic
+                  title="Stock Value"
+                  value={dashboardData?.totalSellStock}
+                  precision={DASHBOARD_METRICS_PRECISION}
+              />
+
             </Flex>
           </Flex>
           <Flex>
@@ -174,6 +180,7 @@ export default function Dashboard() {
                 columns={columns}
                 dataSource={dashboardData?.topSales}
                 scroll={{ x: 'max-content' }}
+
               />
 
             </Card>
