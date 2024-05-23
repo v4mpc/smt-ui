@@ -91,7 +91,7 @@ export default function GenericBuy({urlPath, isSale}) {
               defaultValue={record.saleQuantity}
           />):(        <InputNumber
               min={0}
-              onChange={(e) => handleInputQuantityChanged(record, e)}
+              onBlur={(e) => handleInputQuantityChanged(record, e)}
               defaultValue={record.saleQuantity}
           />)
       ),
@@ -131,7 +131,11 @@ export default function GenericBuy({urlPath, isSale}) {
   const notSales = filteredDataSource.filter((p) => p.saleQuantity <= 0);
   const sales = stockOnhand.filter((p) => p.saleQuantity > 0);
   const totalSales = sales.reduce((acc, curr) => {
+    if(isSale){
+      return acc + curr.saleQuantity * curr.salePrice;
+    }
     return acc + curr.saleQuantity * curr.buyPrice;
+
   }, 0);
 
   function handleProductAdd(product) {
