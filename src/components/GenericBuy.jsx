@@ -85,7 +85,8 @@ export default function GenericBuy({urlPath, isSale}) {
       render: (_, record) => (
           isSale?(        <InputNumber
               min={0}
-              onChange={(e) => handleInputQuantityChanged(record, e)}
+              onBlur={(e) => handleInputQuantityChanged(record, e)}
+
               max={record.stockOnHand}
               defaultValue={record.saleQuantity}
           />):(        <InputNumber
@@ -149,7 +150,8 @@ export default function GenericBuy({urlPath, isSale}) {
     );
   }
 
-  function handleInputQuantityChanged(product, inputValue) {
+  function handleInputQuantityChanged(product, e) {
+    const inputValue=Number(e.target.value);
     if (inputValue == null) return;
     setStockOnhand((products) =>
       products.map((p) =>
